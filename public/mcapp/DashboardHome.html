@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src *;
+    img-src * 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *;
+    style-src  'self' 'unsafe-inline' *">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+    <link rel="stylesheet"
+        href="/mcapp/css/salesforce-lightning-design-system/assets/styles/salesforce-lightning-design-system.min.css">
+    <link rel="stylesheet" href="/mcapp/css/styles.css">
+    <script type="text/javascript" src="/mcapp/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/mcapp/js/dashboard.js"></script>
+</head>
+
+<body>
+    <div>
+        <img src="https://image.sflink.afsdktests.com/lib/fe3d15707564067f721270/m/1/bae131a1-9bc9-477b-9f91-422f3d7d712f.png" alt="">
+    </div>
+    <div class="slds-tabs_default">
+        <ul class="slds-tabs_default__nav" role="tablist">
+            <li class="slds-tabs_default__item slds-is-active" title="Item One" role="presentation">
+                <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0"
+                    aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item">DASHBOARD</a>
+            </li>
+        </ul>
+        <div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel"
+            aria-labelledby="tab-default-1__item">
+            <article class="slds-card">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-combobox_container">
+                                        <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click"
+                                            aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                            <div
+                                                class="slds-form-element slds-p-top--medium slds-p-horizontal--medium slds-m-bottom--small">
+                                                <div
+                                                    class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                                                    <svg aria-hidden="true"
+                                                        class="slds-input__icon slds-icon-text-default">
+                                                        <use
+                                                            xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search">
+                                                        </use>
+                                                    </svg>
+                                                    <input id="lookup" onkeyup="filter()" class="slds-input" type="text"
+                                                        aria-haspopup="true" aria-autocomplete="listbox" role="combobox"
+                                                        aria-activedescendant="" />
+                                                    <span
+                                                        class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
+                                                        <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default"
+                                                            aria-hidden="true">
+                                                            <use xlink:href="/images/symbols.svg#search">
+                                                            </use>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            </div>                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-media__body">
+
+                        </div>
+                        <div class="slds-no-flex">
+                            <button id="btn-create" class="slds-button slds-button_brand">Add OneLink</button>
+                        </div>
+                    </header>
+                </div>
+                <div class="slds-card__body">
+                    <div class="slds-col slds-size_3-of-3">
+                        <div id="dashboard-table"></div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+    <input type="hidden" id="rt" name="rt" value="">
+    <input type="hidden" id="eid" name="eid" value="">
+
+
+
+    <script>
+
+        function filter() {
+            inp = $('#lookup').val()
+            console.log(inp)
+            // This should ignore first row with th inside
+            $("tr:not(:has(>th))").each(function () {
+                if (~$(this).text().toLowerCase().indexOf(inp.toLowerCase())) {
+                    // Show the row (in case it was previously hidden)
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }</script>
+
+</body>
+
+</html>

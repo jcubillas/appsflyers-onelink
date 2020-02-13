@@ -1,0 +1,75 @@
+{
+  "name": "jb-activity-template",
+  "version": "1.0.0",
+  "description": "Journey Builder Activity Template",
+  "engines": {
+    "node": "12.14.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devsutd/journey-builder-activity-template.git"
+  },
+  "keywords": [
+    "journey",
+    "builder",
+    "salesforce marketing cloud",
+    "heroku"
+  ],
+  "author": "Devs United",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devsutd/journey-builder-activity-template/issues"
+  },
+  "homepage": "https://github.com/devsutd/journey-builder-activity-template#readme",
+  "dependencies": {
+    "@salesforce-ux/design-system": "^2.9.4",
+    "acorn": "^7.1.0",
+    "blocksdk": "^1.1.1",
+    "body-parser": "^1.18.2",
+    "bower": "^1.8.8",
+    "consolidate": "^0.15.1",
+    "crypto-js": "^3.1.9-1",
+    "css-loader": "^1.0.1",
+    "ejs": "^2.7.1",
+    "errorhandler": "^1.5.0",
+    "express": "^4.15.4",
+    "file-loader": "^2.0.0",
+    "fs": "0.0.1-security",
+    "gulp": "^3.9.1",
+    "gulp-bower": "0.0.14",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-javascript-obfuscator": "^1.1.4",
+    "gulp-json-modify": "^1.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^2.2.0",
+    "moment": "^2.22.0",
+    "moment-timezone": "^0.5.14",
+    "multer": "^1.4.2",
+    "multiconf": "^1.0.8",
+    "nodemon": "^2.0.2",
+    "npm": "^6.10.3",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.2",
+    "request-promise-native": "^1.0.5",
+    "require": "^2.4.20",
+    "save": "^2.4.0",
+    "set-cookie-parser": "^2.4.1",
+    "simple-encryptor": "^2.0.0",
+    "soap": "^0.30.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "uuid": "^3.3.3",
+    "webpack": "^4.41.5",
+    "xml2js": "^0.4.22"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.20.1",
+    "webpack-cli": "^3.3.10"
+  }
+}
