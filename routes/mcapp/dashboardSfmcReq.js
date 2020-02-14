@@ -14,7 +14,7 @@ function buildDashboard(data) {
     table += '<thead>';
     table += '<tr class="slds-line-height_reset">';
 
-    table += '<th scope="col" ><b>OneLink Name</b></th>';
+    table += '<th scope="col" colspan="2"><b>OneLink Name</b></th>';
     table += '<th scope="col" ><b>URL</b></th>';
     table += '<th scope="col" ><b># of Contents</b></th>';
     table += '<th scope="col" ><b>Parameters</b></th>';
@@ -34,7 +34,7 @@ function buildDashboard(data) {
             const element = data[index];
             table += '<tr>';
 
-            table += `<td role="gridcell"><div class="slds-truncate" >${element.LinkName}</div></td>`;
+            table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.LinkName}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.BaseURL}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.ContentsCount}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Parameters}</div></td>`;
