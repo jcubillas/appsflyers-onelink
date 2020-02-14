@@ -46,7 +46,7 @@ function buildDashboard(data) {
             table += `<div id="onelink-trigger${element.LinkID}" class="slds-dropdown-trigger slds-dropdown-trigger_click">`;
             table += `<button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true" title="Show More" onclick="$('#onelink-trigger${element.LinkID}').addClass('slds-is-open');" onmouseover="$('#onelink-trigger${element.LinkID}').addClass('slds-is-open');">`;
             table += '<svg class="slds-button__icon" aria-hidden="true">';
-            table += '<use xlink:href="/images/symbols.svg#down">';
+            table += '<use xlink:href="/mcapp/images/symbols.svg#down">';
             table += '</use>';
             table += '</svg>';
             table += '<span class="slds-assistive-text">Show More</span>';
