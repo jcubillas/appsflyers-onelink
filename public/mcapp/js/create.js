@@ -220,7 +220,7 @@ function removeSelectOption(value, selectOptions) {
 }
 
 function buildSelectOptions(element, selectOptions) {
-    let options = `<select id="${element.selectId}" name="${element.selectId}" class="Select-control">`;
+    let options = `<select id="${element.selectId}" name="${element.selectId}" class="Select-control" style="border:0!important;">`;
     options += '<option value="select" selected>Select Parameter</option>';
     for (let j = 0; j < selectOptions.length; j++) {
         const option = selectOptions[j];
