@@ -369,6 +369,18 @@ function initializeRules() {
 }
 
 $(document).ready(() => {
+    $('#linkname-help').hover(() => {
+        $('#tooltip-linkname').css('display', 'block');
+    }, () => {
+        $('#tooltip-linkname').css('display', 'none');
+    });
+
+    $('#baseurl-help').hover(() => {
+        $('#tooltip-baseurl').css('display', 'block');
+    }, () => {
+        $('#tooltip-baseurl').css('display', 'none');
+    });
+
     const urlParams = getUrlParameters();
     $('#rt').val(urlParams.refresh_token);
     $('#eid').val(urlParams.enterpriseId);
