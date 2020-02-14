@@ -18,6 +18,7 @@ const tokenConfiguration = require('./routes/mcapp/TokenConfiguration');
 
 const app = express();
 // SET STORAGE
+app.use('/', express.static(`${__dirname}/app`));
 const storage = multer.diskStorage({
     destination: (_req, _file, cb) => {
         cb(null, 'uploads');
