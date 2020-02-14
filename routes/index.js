@@ -11,7 +11,7 @@ exports.login = (req, res) => {
             if (req.query.state !== undefined) {
                 stateParam = `&state=${req.query.state}`;
             }
-            const redirectUri = `${process.env.baseAuth}/v2/authorize?response_type=code&client_id=trwp5iupkzh3nl75dyayeo2l&redirect_uri=https://appsflyers-poc-packages.herokuapp.com/login${stateParam}`;
+            const redirectUri = `${process.env.baseAuth}/v2/authorize?response_type=code&client_id=trwp5iupkzh3nl75dyayeo2l&redirect_uri=${process.env.redirectURI}${stateParam}`;
             // res.redirect('https://mc8nghvf-gp9-nfl9jcsjjs7r214.auth.marketingcloudapis.com/v2/authorize?response_type=code&client_id=g7j9nk7vj5o6dv1v9j34d9ei&redirect_uri=https://appsflyer-mc-app-dev.herokuapp.com/login&state=mystate');
             res.redirect(redirectUri);
         } else {
