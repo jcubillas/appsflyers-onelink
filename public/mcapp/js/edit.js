@@ -217,13 +217,13 @@ function createHtmlForRule(index, name, value = null, canDelete = false, isCusto
     newRule += `<button id="btn-personalization${index}" name="btn-personalization${index}" type="button" class="af-core af-button red transparent  rules-delete-param icon-only medium  " style="margin-left:10px; margin-right:10px; " onclick="$('#SFMC-personalizationString${index}').css('display','block')\">`;
     newRule += '<i class="af-button-icon fa fa-user"></i></button>';
     newRule += `<select id="SFMC-personalizationString${index}"  class="form-control" style="max-width:200px; display:none" onchange="$('#${name}').val('%%' + $('#SFMC-personalizationString${index}').val() + '%%'); $('#SFMC-personalizationString${index}').css('display','none');\ $('#${name}').blur();  fillFullUrl();">`;
-    newRule += '<option value="">Select an option</option>';
-    newRule += '<option value="emailaddr">Email Address</option>';
-    newRule += '<option value="fullname">Full Name</option>';
-    newRule += '<option value="firstname">First Name</option>';
-    newRule += '<option value="lastname">Last Name</option>';
-    newRule += '<option value="_subscriberkey">Subscriber Key</option>';
-    newRule += '<option value="mobile_number">Phone Number</option>';
+    newRule += '<option value="" class="options-personalizationstring">Select an option</option>';
+    newRule += '<option value="emailaddr" class="options-personalizationstring">Email Address</option>';
+    newRule += '<option value="fullname" class="options-personalizationstring">Full Name</option>';
+    newRule += '<option value="firstname" class="options-personalizationstring">First Name</option>';
+    newRule += '<option value="lastname" class="options-personalizationstring">Last Name</option>';
+    newRule += '<option value="_subscriberkey" class="options-personalizationstring">Subscriber Key</option>';
+    newRule += '<option value="mobile_number" class="options-personalizationstring">Phone Number</option>';
     newRule += '</select>';
 
     newRule += '</div>';
