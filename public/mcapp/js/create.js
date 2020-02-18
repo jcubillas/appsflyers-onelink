@@ -66,7 +66,7 @@ function createHtmlForRule(index, name, value = null, canDelete = false, isCusto
     newRule += '<div class="Select rules-select-param-name   Select--single is-searchable has-value">';
     newRule += `<div id= "select${index}-replace" class="Select-control">`;
     newRule += '<div class="Select-input" style="display: inline-block;">';
-    newRule += `<input id="param-${name}" value="${name}" style="width: 5px; box-sizing: content-box;"/>`;
+    newRule += `<input id="param-${name}" value="${name}" style="box-sizing: content-box;"/>`;
     newRule += '<div style="position: absolute; visibility: hidden; height: 0px; width: 0px; overflow: scroll; white-space: pre; font-size: 14px; font-family: museo_sans300; font-weight: 400; font-style: normal; letter-spacing: normal;">';
     newRule += '</div>';
     newRule += '</div>';
