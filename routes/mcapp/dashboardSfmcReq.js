@@ -15,11 +15,11 @@ function buildDashboard(data) {
     table += '<tr class="slds-line-height_reset">';
 
     table += '<th scope="col" colspan="2"><b>OneLink Name</b></th>';
+    table += '<th scope="col" colspan="2"><b>Full URL</b></th>';
     table += '<th scope="col" ><b>URL</b></th>';
     table += '<th scope="col" ><b># of Contents</b></th>';
     table += '<th scope="col" ><b>Parameters</b></th>';
     table += '<th scope="col" ><b>Custom Parameters</b></th>';
-    table += '<th scope="col" ><b>Full URL</b></th>';
     table += '<th scope="col" ><b>Created</b></th>';
     table += '<th scope="col" ><b>Modified</b></th>';
     table += '<th scope="col" ></th>';
@@ -35,11 +35,11 @@ function buildDashboard(data) {
             table += '<tr>';
 
             table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.LinkName}</div></td>`;
+            table += `<td role="gridcell"  colspan="2"><div class="slds-truncate" title="${element.FullURL}">${element.FullURL}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.BaseURL}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.ContentsCount}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Parameters}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.CustomParameters}</div></td>`;
-            table += `<td role="gridcell"><div class="slds-truncate" title="${element.FullURL}">${element.FullURL}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Created}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Modified}</div></td>`;
             table += '<td>';
