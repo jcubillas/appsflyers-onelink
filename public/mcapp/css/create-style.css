@@ -17296,3 +17296,7 @@ abbr[title] {
     color: currentColor;
     font-weight: 600;
 }
+
+.options-personalizationstring {
+	font-family: sans-serif;
+}
