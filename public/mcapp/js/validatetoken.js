@@ -18,7 +18,7 @@ function getUrlParameters() {
 
 function updateToken() {
     const postData = {
-        refresh_token: params.refresh_token,
+        refresh_token: $('#rt').val();
         Token: $('#token').val(),
         enterpriseId: $('#eid').val(),
     };
@@ -48,7 +48,7 @@ $(document).ready(() => {
     }
     $('#token').val(uuidv4());
 
-    getUrlParameters();
+    let params = getUrlParameters();
     const postData = {
         refresh_token: params.refresh_token,
         Token: $('#token').val(),
