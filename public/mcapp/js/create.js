@@ -31,12 +31,14 @@ function buildQueryString() {
     for (let index = 0; index < rules.length; index++) {
         const element = rules[index];
         qs += `${element.name}=`;
-
-        if (element.value.startsWith('%%')) {
+        if (element.value.startsWith("'%%")) {
+            qs += `${element.value}`;
+        } else if (element.value.startsWith('%%')) {
             qs += `'${element.value}'`;
         } else {
             qs += element.value;
         }
+
 
         if (index !== rules.length - 1) {
             qs += '&';
@@ -77,7 +79,7 @@ function parseCustomParameters(url) {
         console.log(params);
         for (let index = 0; index < params.length; index++) {
             const queryParam = params[index].split('=');
-            overrideParamsValues(queryParam[0], queryParam[1], true);
+            overrideParamsValues(queryParam[0], queryParam[1]);
         }
     }
 }
@@ -115,6 +117,7 @@ function dinamicInputsOnBlur(element) {
     if (json.length > 0) {
         rules = JSON.parse(json);
     }
+    // eslint-disable-next-line no-unused-vars
     let rule = '';
     for (let index = 0; index < rules.length; index++) {
         if (rules[index].name === element[0].id) {
@@ -377,13 +380,17 @@ function addEventsForComponent(element, array) {
     });
 
     let inputId = element.value;
-    if (element.value.startsWith('%%')) {
+    if (element.value.startsWith("'%%")) {
+        inputId = element.value.substring(3, element.value.length - 3);
+    } else if (element.value.startsWith('%%')) {
         inputId = element.value.substring(2, element.value.length - 2);
-    }
+    } else { inputId = element.value; }
+
 
     $(`#${inputId}`).on('click', (e) => {
         e.preventDefault();
-        if ($(`#${element.value}`).val() === '') { $(`#${element.value}`).val(''); }
+        if ($(`#${inputId}`).val() === '') { $(`#${inputId}`).val(''); }
+        //  if ($(`#${element.value}`).val() === '') { $(`#${element.value}`).val(''); }
         fillFullUrl();
     });
 
