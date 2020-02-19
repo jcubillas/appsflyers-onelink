@@ -11,8 +11,8 @@ function getUrlParameters() {
         refresh_token: url.searchParams.get('rt'),
         enterpriseId: url.searchParams.get('eid'),
     };
-
-    console.log(urlParams);
+    $('#rt').val(urlParams.refresh_token);
+    $('#eid').val(urlParams.enterpriseId);
     return urlParams;
 }
 
@@ -39,14 +39,14 @@ function buildQueryString() {
             qs += element.value;
         }
 
-
         if (index !== rules.length - 1) {
             qs += '&';
         }
     }
+    $('#rl').val(JSON.stringify(rules));
     return qs;
 }
-function overrideParamsValues(name, value) {
+function overrideParamsValues(name, value, isCustomOnblur = false) {
     let json = $('#rl').val();
     let alreadyExist = false;
     if (json.length > 0) {
@@ -65,6 +65,9 @@ function overrideParamsValues(name, value) {
             const isAttributionLink = getOption(name);
             if (isAttributionLink.Name !== undefined) {
                 rules.push(newRuleObj(rules.length, name, value));
+            } else if (isCustomOnblur === false) {
+                const customParams = `${$('#customParameters').val()}&${name}=${value}`;
+                $('#customParameters').val(customParams);
             }
         }
 
@@ -79,7 +82,7 @@ function parseCustomParameters(url) {
         console.log(params);
         for (let index = 0; index < params.length; index++) {
             const queryParam = params[index].split('=');
-            overrideParamsValues(queryParam[0], queryParam[1]);
+            overrideParamsValues(queryParam[0], queryParam[1],true);
         }
     }
 }
