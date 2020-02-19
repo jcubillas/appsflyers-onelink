@@ -91,6 +91,7 @@ function fillFullUrl() {
     $('#fullurl').val(fullUrl);
 }
 
+// eslint-disable-next-line no-unused-vars
 function onChangePersonalizationString(element) {
     const elementIndex = element[0].id[element[0].id.length - 1];
     let json = $('#rl').val();
@@ -108,12 +109,13 @@ function onChangePersonalizationString(element) {
     fillFullUrl();
 }
 
+// eslint-disable-next-line no-unused-vars
 function dinamicInputsOnBlur(element) {
     let json = $('#rl').val();
     if (json.length > 0) {
         rules = JSON.parse(json);
     }
-    let rule;
+    let rule = '';
     for (let index = 0; index < rules.length; index++) {
         if (rules[index].name === element[0].id) {
             rules[index].value = element[0].value;
@@ -209,20 +211,20 @@ function createHtmlForRule(index, name, value = null, canDelete = false, isCusto
     return newRule;
 }
 
-function setSelectOptions() {
+function setSelectOptions(restantes = false) {
     const selectOptions = [];
+    if (restantes === false) {
+        selectOptions.push({ Name: 'Channel', Value: 'af_channel' });
+        selectOptions.push({ Name: 'Adset', Value: 'af_adset' });
+        selectOptions.push({ Name: 'Ad Name', Value: 'af_ad' });
+        selectOptions.push({ Name: 'Re-Targeting Campaign', Value: 'is_retargeting' });
+    }
     selectOptions.push({ Name: 'Campaign', Value: 'c' });
-    selectOptions.push({ Name: 'Channel', Value: 'af_channel' });
-    selectOptions.push({ Name: 'Adset', Value: 'af_adset' });
-    selectOptions.push({ Name: 'Ad Name', Value: 'af_ad' });
     selectOptions.push({ Name: 'Sub Parameter 1', Value: 'af_sub1' });
     selectOptions.push({ Name: 'Sub Parameter 2', Value: 'af_sub2' });
     selectOptions.push({ Name: 'Sub Parameter 3', Value: 'af_sub3' });
     selectOptions.push({ Name: 'Sub Parameter 4', Value: 'af_sub4' });
     selectOptions.push({ Name: 'Sub Parameter 5', Value: 'af_sub5' });
-    selectOptions.push({ Name: 'Re-Targeting Campaign', Value: 'is_retargeting' });
-    // selectOptions.push({ Name: 'Custom Parameter', Value: 'custom' })
-
     return selectOptions;
 }
 
@@ -336,7 +338,7 @@ function newRuleObj(index, name, value, canDelete = false, isCustom = false, cus
 }
 
 function addRules(array) {
-    const selectOptions = setSelectOptions();
+    const selectOptions = setSelectOptions(true);
     renderComponentsBase(array);
     const allowEdit = getAllowEditCP(array);
     for (let index = 0; index < allowEdit.length; index++) {
