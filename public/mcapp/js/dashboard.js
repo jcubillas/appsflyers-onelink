@@ -39,7 +39,7 @@ $(document).ready(() => {
         },
         () => {
             console.log('lost hover');
-            //  $(this).removeClass("slds-is-open")
+            $(this).removeClass('slds-is-open');
         },
     );
 
