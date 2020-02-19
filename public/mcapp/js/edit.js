@@ -34,11 +34,9 @@ function buildQueryString() {
     for (let index = 0; index < rules.length; index++) {
         const element = rules[index];
         qs += `${element.name}=`;
-        if (element.value !== $(`#${element.name}`).val()) {
-            element.value = $(`#${element.name}`).val();
-            rules[index].value = $(`#${element.name}`).val();
-        }
-        if (element.value.startsWith('%%')) {
+        if (element.value.startsWith("'%%")) {
+            qs += `${element.value}`;
+        } else if (element.value.startsWith('%%')) {
             qs += `'${element.value}'`;
         } else {
             qs += element.value;
@@ -232,20 +230,20 @@ function createHtmlForRule(index, name, value = null, canDelete = false, isCusto
     return newRule;
 }
 
-function setSelectOptions() {
+function setSelectOptions(restantes = false) {
     const selectOptions = [];
+    if (restantes === false) {
+        selectOptions.push({ Name: 'Channel', Value: 'af_channel' });
+        selectOptions.push({ Name: 'Adset', Value: 'af_adset' });
+        selectOptions.push({ Name: 'Ad Name', Value: 'af_ad' });
+        selectOptions.push({ Name: 'Re-Targeting Campaign', Value: 'is_retargeting' });
+    }
     selectOptions.push({ Name: 'Campaign', Value: 'c' });
-    selectOptions.push({ Name: 'Channel', Value: 'af_channel' });
-    selectOptions.push({ Name: 'Adset', Value: 'af_adset' });
-    selectOptions.push({ Name: 'Ad Name', Value: 'af_ad' });
     selectOptions.push({ Name: 'Sub Parameter 1', Value: 'af_sub1' });
     selectOptions.push({ Name: 'Sub Parameter 2', Value: 'af_sub2' });
     selectOptions.push({ Name: 'Sub Parameter 3', Value: 'af_sub3' });
     selectOptions.push({ Name: 'Sub Parameter 4', Value: 'af_sub4' });
     selectOptions.push({ Name: 'Sub Parameter 5', Value: 'af_sub5' });
-    selectOptions.push({ Name: 'Re-Targeting Campaign', Value: 'is_retargeting' });
-    // selectOptions.push({ Name: 'Custom Parameter', Value: 'custom' })
-
     return selectOptions;
 }
 
@@ -253,8 +251,10 @@ function getOption(value) {
     let options = [];
     let element = {};
     options = setSelectOptions();
+    // eslint-disable-next-line no-plusplus
     for (let index = 0; index < options.length; index++) {
         if (options[index].Value === value) {
+            console.log(options[index].Value);
             element = options[index];
             break;
         }
@@ -281,9 +281,15 @@ function deleteParameter(array, element) {
 
 function renderComponentsBase(array) {
     let strRules = '';
+    let ids = '';
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
-        strRules += createHtmlForRule(element.index, element.name, element.value, element.canDelete, element.isCustom);
+        if (ids.indexOf(`${element.name} `) === -1) {
+            ids += `${element.name} `;
+            strRules += createHtmlForRule(element.index, element.name, element.value, element.canDelete, element.isCustom);
+        } else {
+            console.log(element.name);
+        }
     }
     $('#rules').html('');
     $('#rules').html(strRules);
@@ -312,8 +318,7 @@ function removeSelectOption(value, selectOptions) {
 }
 
 function buildSelectOptions(element, selectOptions) {
-    let options = `<select id="${element.selectId}" name="${element.selectId}" class="Select-control">`;
-
+    let options = `<select id="${element.selectId}" name="${element.selectId}" class="Select-control" style="border:0!important;">`;
     options += '<option value="select" selected>Select Parameter</option>';
     for (let j = 0; j < selectOptions.length; j++) {
         const option = selectOptions[j];
@@ -535,6 +540,18 @@ function getLinkData(postData) {
     });
 }
 $(document).ready(() => {
+    $('#linkname-help').hover(() => {
+        $('#tooltip-linkname').css('display', 'block');
+    }, () => {
+        $('#tooltip-linkname').css('display', 'none');
+    });
+
+    $('#baseurl-help').hover(() => {
+        $('#tooltip-baseurl').css('display', 'block');
+    }, () => {
+        $('#tooltip-baseurl').css('display', 'none');
+    });
+
     const urlParams = getUrlParameters();
     getLinkData(urlParams);
     let rules = [];
@@ -568,6 +585,67 @@ $(document).ready(() => {
         $('#error-baseURL').css('display', 'none');
     });
 
+    function parseQuerystringParameters(url) {
+        const array = url.split('?');
+        if (array.length > 1) {
+            if (array[1].split('&').length > 0) {
+                params = array[1].split('&');
+                console.log(params);
+                for (let index = 0; index < params.length; index++) {
+                    const queryParam = params[index].split('=');
+                    overrideParamsValues(queryParam[0], queryParam[1]);
+                }
+            } else {
+                params = array[1].split('=');
+                overrideParamsValues(params[0], params[1]);
+            }
+        }
+        $('#baseURL').val(array[0]);
+    }
+    function removeAttrParamsFromCustomParams(customparams) {
+        if (!customparams.startsWith('&')) { customparams = `&${customparams}`; }
+
+        params = customparams.split('&');
+        let json = $('#rl').val();
+        let customInputValue = '';
+        if (json.length > 0) {
+            rules = JSON.parse(json);
+            for (let index = 1; index < params.length; index++) {
+                const queryParam = params[index].split('=');
+                let isCustom = true;
+
+                for (let j = 0; j < rules.length; j++) {
+                    if (rules[j].name === queryParam[0]) {
+                        // eslint-disable-next-line prefer-destructuring
+                        rules[j].value = queryParam[1];
+                        $(`#${queryParam[0]}`).val(queryParam[1]);
+                        isCustom = false;
+                        break;
+                    } else {
+                        isCustom = true;
+                    }
+                }
+
+                if (isCustom === true) {
+                    console.log(customInputValue.indexOf(`${queryParam[0]}=`));
+                    const newParam = `${queryParam[0]}=${queryParam[1]}`;
+                    if (customInputValue.indexOf(`${queryParam[0]}=`) > 0) {
+                        const oldParam = customInputValue.substring(customInputValue.indexOf(`${queryParam[0]}=`), customInputValue.length);
+                        customInputValue = customInputValue.replace(oldParam.split('&')[0], newParam);
+                    } else {
+                        customInputValue += `&${newParam}`;
+                    }
+                }
+            }
+            if (customInputValue.length > 1) {
+                $('#customParameters').val(customInputValue);
+            } else {
+                $('#customParameters').val('');
+            }
+            json = JSON.stringify(rules);
+            $('#rl').val(json);
+        }
+    }
     $('#baseURL').on('blur', function (e) {
         e.preventDefault();
         const url = $(this).val();
@@ -586,7 +664,7 @@ $(document).ready(() => {
         e.preventDefault();
         const parameters = $('#customParameters').val();
         if (parameters !== undefined && parameters !== '') {
-            parseCustomParameters(parameters);
+            // parseCustomParameters(parameters);
             removeAttrParamsFromCustomParams(parameters);
         }
         fillFullUrl();
@@ -595,12 +673,14 @@ $(document).ready(() => {
 
     function validatePostData() {
         let isValid = true;
-        if ($('#linkName').val() === undefined || $('#linkName').val() === '') {
+        if ($('#linkName').val() === undefined
+            || $('#linkName').val() === '') {
             $('#error-linkName').css('display', 'block');
             isValid = false;
         }
 
-        if ($('#baseURL').val() === undefined || $('#baseURL').val() === '') {
+        if ($('#baseURL').val() === undefined
+            || $('#baseURL').val() === '') {
             $('#error-baseURL').css('display', 'block');
             isValid = false;
         }

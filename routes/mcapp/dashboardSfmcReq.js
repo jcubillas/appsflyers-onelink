@@ -44,14 +44,14 @@ function buildDashboard(data) {
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Modified}</div></td>`;
             table += '<td>';
             table += `<div id="onelink-trigger${element.LinkID}" class="slds-dropdown-trigger slds-dropdown-trigger_click">`;
-            table += `<button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true" title="Show More" onclick="$('#onelink-trigger${element.LinkID}').addClass('slds-is-open');" onmouseover="$('#onelink-trigger${element.LinkID}').addClass('slds-is-open');">`;
+            table += '<button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true" title="Show More">';
             table += '<svg class="slds-button__icon" aria-hidden="true">';
             table += '<use xlink:href="/mcapp/images/symbols.svg#down">';
             table += '</use>';
             table += '</svg>';
             table += '<span class="slds-assistive-text">Show More</span>';
             table += '</button>';
-            table += `<div class="slds-dropdown slds-dropdown_left" onmouseleave="$('#onelink-trigger${element.LinkID}').removeClass('slds-is-open');">`;
+            table += '<div class="slds-dropdown slds-dropdown_left" >';
             table += '<ul class="slds-dropdown__list" role="menu" aria-label="Show More">';
             table += '<li class="slds-dropdown__item" role="presentation">';
             table += `<a href="/dashboard/edit/?lid=${element.LinkID}&eid={0}&rt={1}" class="edit" id="edit${index}" role="menuitem" tabindex="0">`;
