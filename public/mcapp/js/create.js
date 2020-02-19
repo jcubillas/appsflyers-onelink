@@ -44,15 +44,53 @@ function buildQueryString() {
     }
     return qs;
 }
+function overrideParamsValues(name, value) {
+    let json = $('#rl').val();
+    let alreadyExist = false;
+    if (json.length > 0) {
+        rules = JSON.parse(json);
+        for (let index = 0; index < rules.length; index++) {
+            if (rules[index].name === name) {
+                rules[index].value = value;
+                alreadyExist = true;
+                break;
+            } else {
+                alreadyExist = false;
+            }
+        }
 
+        if (alreadyExist === false) {
+            const isAttributionLink = getOption(name);
+            if (isAttributionLink.Name !== undefined) {
+                rules.push(newRuleObj(rules.length, name, value));
+            }
+        }
+
+        addRules(rules);
+        json = JSON.stringify(rules);
+        $('#rl').val(json);
+    }
+}
+function parseCustomParameters(url) {
+    if (url !== '') {
+        params = url.split('&');
+        console.log(params);
+        for (let index = 0; index < params.length; index++) {
+            const queryParam = params[index].split('=');
+            overrideParamsValues(queryParam[0], queryParam[1], true);
+        }
+    }
+}
 function fillFullUrl() {
     let fullUrl = $('#baseURL').val() + buildQueryString();
     const parameters = $('#customParameters').val();
     if (parameters !== undefined && parameters !== '') {
         fullUrl += parameters;
     }
+    parseCustomParameters(fullUrl);
     $('#fullurl').val(fullUrl);
 }
+
 function onChangePersonalizationString(element) {
     const elementIndex = element[0].id[element[0].id.length - 1];
     let json = $('#rl').val();
@@ -61,16 +99,16 @@ function onChangePersonalizationString(element) {
     }
     const rule = rules[elementIndex];
     const optionValue = element[0].value;
-    $(`#${rule.name}`).val(`%%${optionValue}%%`);
+    const personalization = `%%${optionValue}%%`;
+    $(`#${rule.name}`).val(personalization);
     $(`#${element[0].id}`).css('display', 'none');
-    rules[elementIndex].value = optionValue;
+    rules[elementIndex].value = personalization;
     json = JSON.stringify(rules);
     $('#rl').val(json);
     fillFullUrl();
 }
 
 function dinamicInputsOnBlur(element) {
-
     let json = $('#rl').val();
     if (json.length > 0) {
         rules = JSON.parse(json);
@@ -88,6 +126,7 @@ function dinamicInputsOnBlur(element) {
     $('#rl').val(json);
     fillFullUrl();
 }
+
 function createHtmlForRule(index, name, value = null, canDelete = false, isCustom = false, customValue = null) {
     let newRule = '';
     newRule += '<div class="single-rule ">';
@@ -332,24 +371,6 @@ function addEventsForComponent(element, array) {
         fillFullUrl();
     });
 
-    /*  $(`#${element.name}`).on('click', (e) => {
-        e.preventDefault();
-        if ($(`#${element.name}`).val() === 'Enter Value') { $(`#${element.name}`).val(''); }
-    }); */
-
-    /* $(`#${element.name}`).on('blur', (e) => {
-        e.preventDefault();
-        if ($(`#${element.selectId} option:selected`).html() === 'Custom Parameter') {
-            element.isCustom = true;
-            element.customValue = $(`#${element.name}`).val();
-        }
-        array[element.index] = newRuleObj(element.index, element.name, $(`#${element.name}`).val(), true, element.isCustom, element.customValue);
-        const json = JSON.stringify(array);
-        $('#rl').val(json);
-        addRules(array);
-        fillFullUrl();
-    }); */
-
     let inputId = element.value;
     if (element.value.startsWith('%%')) {
         inputId = element.value.substring(2, element.value.length - 2);
@@ -433,38 +454,7 @@ $(document).ready(() => {
         e.preventDefault();
         $('#error-baseURL').css('display', 'none');
     });
-    function overrideParamsValues(name, value, isCustomOnblur = false) {
-        let json = $('#rl').val();
-        let alreadyExist = false;
-        if (json.length > 0) {
-            rules = JSON.parse(json);
-            for (let index = 0; index < rules.length; index++) {
-                if (rules[index].name === name) {
-                    rules[index].value = value;
-                    alreadyExist = true;
-                    break;
-                } else {
-                    alreadyExist = false;
-                }
-            }
-
-            if (alreadyExist === false) {
-                console.log(name);
-                const isAttributionLink = getOption(name);
-                console.log('Atr', isAttributionLink);
-                if (isAttributionLink.Name !== undefined) {
-                    rules.push(newRuleObj(rules.length, name, value));
-                } else if (isCustomOnblur === false) {
-                    const customParams = `${$('#customParameters').val()}&${name}=${value}`;
-                    $('#customParameters').val(customParams);
-                }
-            }
-
-            addRules(rules);
-            json = JSON.stringify(rules);
-            $('#rl').val(json);
-        }
-    }
+ 
     function parseQuerystringParameters(url) {
         const array = url.split('?');
         if (array.length > 1) {
@@ -482,23 +472,12 @@ $(document).ready(() => {
         }
         $('#baseURL').val(array[0]);
     }
-
-    function parseCustomParameters(url) {
-        if (url !== '') {
-            params = url.split('&');
-            console.log(params);
-            for (let index = 0; index < params.length; index++) {
-                const queryParam = params[index].split('=');
-                overrideParamsValues(queryParam[0], queryParam[1], true);
-            }
-        }
-    }
     function removeAttrParamsFromCustomParams(customparams) {
         if (!customparams.startsWith('&')) { customparams = `&${customparams}`; }
 
         params = customparams.split('&');
-        const json = $('#rl').val();
-        let customInputValue = '&';
+        let json = $('#rl').val();
+        let customInputValue = '';
         if (json.length > 0) {
             rules = JSON.parse(json);
             for (let index = 1; index < params.length; index++) {
@@ -507,6 +486,9 @@ $(document).ready(() => {
 
                 for (let j = 0; j < rules.length; j++) {
                     if (rules[j].name === queryParam[0]) {
+                        // eslint-disable-next-line prefer-destructuring
+                        rules[j].value = queryParam[1];
+                        $(`#${queryParam[0]}`).val(queryParam[1]);
                         isCustom = false;
                         break;
                     } else {
@@ -515,7 +497,14 @@ $(document).ready(() => {
                 }
 
                 if (isCustom === true) {
-                    customInputValue += `${queryParam[0]}=${queryParam[1]}`;
+                    console.log(customInputValue.indexOf(`${queryParam[0]}=`));
+                    const newParam = `${queryParam[0]}=${queryParam[1]}`;
+                    if (customInputValue.indexOf(`${queryParam[0]}=`) > 0) {
+                        const oldParam = customInputValue.substring(customInputValue.indexOf(`${queryParam[0]}=`), customInputValue.length);
+                        customInputValue = customInputValue.replace(oldParam.split('&')[0], newParam);
+                    } else {
+                        customInputValue += `&${newParam}`;
+                    }
                 }
             }
             if (customInputValue.length > 1) {
@@ -523,6 +512,8 @@ $(document).ready(() => {
             } else {
                 $('#customParameters').val('');
             }
+            json = JSON.stringify(rules);
+            $('#rl').val(json);
         }
     }
     $('#baseURL').on('blur', function (e) {
@@ -543,7 +534,7 @@ $(document).ready(() => {
         e.preventDefault();
         const parameters = $('#customParameters').val();
         if (parameters !== undefined && parameters !== '') {
-            parseCustomParameters(parameters);
+            // parseCustomParameters(parameters);
             removeAttrParamsFromCustomParams(parameters);
         }
         fillFullUrl();
