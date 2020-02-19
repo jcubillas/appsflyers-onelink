@@ -53,7 +53,41 @@ function fillFullUrl() {
     }
     $('#fullurl').val(fullUrl);
 }
+function onChangePersonalizationString(element) {
+    const elementIndex = element[0].id[element[0].id.length - 1];
+    let json = $('#rl').val();
+    if (json.length > 0) {
+        rules = JSON.parse(json);
+    }
+    const rule = rules[elementIndex];
+    const optionValue = element[0].value;
+    $(`#${rule.name}`).val(`%%${optionValue}%%`);
+    $(`#${element[0].id}`).css('display', 'none');
+    rules[elementIndex].value = optionValue;
+    json = JSON.stringify(rules);
+    $('#rl').val(json);
+    fillFullUrl();
+}
 
+function dinamicInputsOnBlur(element) {
+
+    let json = $('#rl').val();
+    if (json.length > 0) {
+        rules = JSON.parse(json);
+    }
+    let rule;
+    for (let index = 0; index < rules.length; index++) {
+        if (rules[index].name === element[0].id) {
+            rules[index].value = element[0].value;
+            rule = rules[index];
+            break;
+        }
+    }
+
+    json = JSON.stringify(rules);
+    $('#rl').val(json);
+    fillFullUrl();
+}
 function createHtmlForRule(index, name, value = null, canDelete = false, isCustom = false, customValue = null) {
     let newRule = '';
     newRule += '<div class="single-rule ">';
@@ -94,7 +128,7 @@ function createHtmlForRule(index, name, value = null, canDelete = false, isCusto
         } else {
             newRule += '<div class="input-inner">';
         }
-        newRule += `<input type="text" id="${name}" placeholder="${value}" value="${value}" class="form-control"/>`;
+        newRule += `<input type="text" id="${name}" placeholder="${value}" value="${value}" class="form-control" onblur=\"dinamicInputsOnBlur($(this))\"/>`;
         newRule += ' </div>';
         let inputId = '';
         if (isCustom && value !== 'Enter Value') {
@@ -120,7 +154,7 @@ function createHtmlForRule(index, name, value = null, canDelete = false, isCusto
 
     newRule += `<button id="btn-personalization${index}" name="btn-personalization${index}" type="button" class="af-core af-button red transparent  rules-delete-param icon-only medium  " style="margin-left:10px; margin-right:10px; " onclick=\"$('#SFMC-personalizationString${index}').css('display','block')\">`;
     newRule += '<i class="af-button-icon fa fa-user"></i></button>';
-    newRule += `<select id="SFMC-personalizationString${index}"  class="form-control" style="max-width:200px; display:none" >`;
+    newRule += `<select id="SFMC-personalizationString${index}"  class="form-control" style="max-width:200px; display:none" onchange=\"onChangePersonalizationString($(this))\">`;
     newRule += '<option value="" class="options-personalizationstring">Select an option</option>';
     newRule += '<option value="emailaddr" class="options-personalizationstring">Email Address</option>';
     newRule += '<option value="fullname" class="options-personalizationstring">Full Name</option>';
@@ -298,12 +332,12 @@ function addEventsForComponent(element, array) {
         fillFullUrl();
     });
 
-    $(`#${element.name}`).on('click', (e) => {
+    /*  $(`#${element.name}`).on('click', (e) => {
         e.preventDefault();
         if ($(`#${element.name}`).val() === 'Enter Value') { $(`#${element.name}`).val(''); }
-    });
+    }); */
 
-    $(`#${element.name}`).on('blur', (e) => {
+    /* $(`#${element.name}`).on('blur', (e) => {
         e.preventDefault();
         if ($(`#${element.selectId} option:selected`).html() === 'Custom Parameter') {
             element.isCustom = true;
@@ -314,7 +348,7 @@ function addEventsForComponent(element, array) {
         $('#rl').val(json);
         addRules(array);
         fillFullUrl();
-    });
+    }); */
 
     let inputId = element.value;
     if (element.value.startsWith('%%')) {
@@ -337,20 +371,6 @@ function addEventsForComponent(element, array) {
         fillFullUrl();
     });
     console.log('element name', element.name);
-
-    $(`#SFMC-personalizationString${element.index}`).on('click', (e) => {
-        e.preventDefault();
-        fillFullUrl();
-    });
-
-    $(`#SFMC-personalizationString${element.index}`).on('change', (e) => {
-        console.log(e);
-        const optionValue = $(`#SFMC-personalizationString${element.index}`).val();
-        $(`#${element.name}`).val(`%%${optionValue}%%`);
-        $(`#SFMC-personalizationString${element.index}`).css('display', 'none');
-        $(`#${element.name}`).blur();
-        fillFullUrl();
-    });
     return array;
 }
 
