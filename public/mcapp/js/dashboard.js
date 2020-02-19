@@ -48,6 +48,14 @@ $(document).ready(() => {
         $(this).addClass('slds-is-open');
     });
 
+    $('.slds-dropdown').hover(
+        function () {
+            $(this).addClass('slds-is-open');
+        },
+        function () {
+            $(this).removeClass('slds-is-open');
+        },
+    );
     $('#btn-create').on('click', (e) => {
         e.preventDefault();
         console.log($('#eid').val());

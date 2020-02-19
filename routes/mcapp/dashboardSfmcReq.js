@@ -51,7 +51,7 @@ function buildDashboard(data) {
             table += '</svg>';
             table += '<span class="slds-assistive-text">Show More</span>';
             table += '</button>';
-            table += '<div class="slds-dropdown slds-dropdown_left" >';
+            table += '<div class="slds-dropdown slds-dropdown_left" style="margin-top: -1px!important">';
             table += '<ul class="slds-dropdown__list" role="menu" aria-label="Show More">';
             table += '<li class="slds-dropdown__item" role="presentation">';
             table += `<a href="/dashboard/edit/?lid=${element.LinkID}&eid={0}&rt={1}" class="edit" id="edit${index}" role="menuitem" tabindex="0">`;
