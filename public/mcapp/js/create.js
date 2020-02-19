@@ -260,9 +260,15 @@ function deleteParameter(array, element) {
 
 function renderComponentsBase(array) {
     let strRules = '';
+    let ids = '';
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
-        strRules += createHtmlForRule(element.index, element.name, element.value, element.canDelete, element.isCustom);
+        if (ids.indexOf(`${element.name} `) === -1) {
+            ids += `${element.name} `;
+            strRules += createHtmlForRule(element.index, element.name, element.value, element.canDelete, element.isCustom);
+        } else {
+            console.log(element.name);
+        }
     }
     $('#rules').html('');
     $('#rules').html(strRules);
@@ -335,9 +341,6 @@ function addRules(array) {
     const allowEdit = getAllowEditCP(array);
     for (let index = 0; index < allowEdit.length; index++) {
         const element = allowEdit[index];
-        /* if (element.name.startsWith('custom') > 0) {
-             selectOptions.push({ Name: element.name, Value: element.value })
-         } */
         buildSelectOptions(element, selectOptions);
         addEventsForComponent(element, array);
     }
@@ -454,7 +457,7 @@ $(document).ready(() => {
         e.preventDefault();
         $('#error-baseURL').css('display', 'none');
     });
- 
+
     function parseQuerystringParameters(url) {
         const array = url.split('?');
         if (array.length > 1) {
