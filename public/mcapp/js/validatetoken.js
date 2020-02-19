@@ -48,7 +48,7 @@ $(document).ready(() => {
     }
     $('#token').val(uuidv4());
 
-    let params = getUrlParameters();
+    const params = getUrlParameters();
     const postData = {
         refresh_token: params.refresh_token,
         Token: $('#token').val(),

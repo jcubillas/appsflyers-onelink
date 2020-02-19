@@ -46,33 +46,9 @@ function buildQueryString() {
             qs += '&';
         }
     }
-
     $('#rl').val(JSON.stringify(rules));
-
     return qs;
 }
-
-function fillFullUrl() {
-    let fullUrl = $('#baseURL').val() + buildQueryString();
-    const parameters = $('#customParameters').val();
-    if (parameters !== undefined && parameters !== '') {
-        fullUrl += parameters;
-    }
-    $('#fullurl').val(fullUrl);
-}
-
-
-function parseCustomParameters(url) {
-    if (url !== '') {
-        params = url.split('&');
-        console.log(params);
-        for (let index = 0; index < params.length; index++) {
-            const queryParam = params[index].split('=');
-            overrideParamsValues(queryParam[0], queryParam[1], true);
-        }
-    }
-}
-
 function overrideParamsValues(name, value, isCustomOnblur = false) {
     let json = $('#rl').val();
     let alreadyExist = false;
@@ -89,9 +65,7 @@ function overrideParamsValues(name, value, isCustomOnblur = false) {
         }
 
         if (alreadyExist === false) {
-            console.log(name);
             const isAttributionLink = getOption(name);
-            console.log('Atr', isAttributionLink);
             if (isAttributionLink.Name !== undefined) {
                 rules.push(newRuleObj(rules.length, name, value));
             } else if (isCustomOnblur === false) {
@@ -105,47 +79,63 @@ function overrideParamsValues(name, value, isCustomOnblur = false) {
         $('#rl').val(json);
     }
 }
-
-function removeAttrParamsFromCustomParams(customparams) {
-    if (!customparams.startsWith('&')) { customparams = `&${customparams}`; }
-
-    params = customparams.split('&');
-    const json = $('#rl').val();
-    let customInputValue = '&';
-    if (json.length > 0) {
-        rules = JSON.parse(json);
-        for (let index = 1; index < params.length; index++) {
+function parseCustomParameters(url) {
+    if (url !== '') {
+        params = url.split('&');
+        console.log(params);
+        for (let index = 0; index < params.length; index++) {
             const queryParam = params[index].split('=');
-            let isCustom = true;
-
-            for (let j = 0; j < rules.length; j++) {
-                if (rules[j].name === queryParam[0]) {
-                    isCustom = false;
-                    break;
-                } else {
-                    isCustom = true;
-                }
-            }
-
-            if (isCustom === true) {
-                customInputValue += `${queryParam[0]}=${queryParam[1]}`;
-            }
-        }
-        if (customInputValue.length > 1) {
-            $('#customParameters').val(customInputValue);
-        } else {
-            $('#customParameters').val('');
+            overrideParamsValues(queryParam[0], queryParam[1], true);
         }
     }
 }
-
-
-function parseParameters() {
+function fillFullUrl() {
+    let fullUrl = $('#baseURL').val() + buildQueryString();
     const parameters = $('#customParameters').val();
-    if (parameters !== undefined) {
-        parseCustomParameters(parameters);
-        removeAttrParamsFromCustomParams(parameters);
+    if (parameters !== undefined && parameters !== '') {
+        fullUrl += parameters;
     }
+    parseCustomParameters(fullUrl);
+    $('#fullurl').val(fullUrl);
+}
+
+// eslint-disable-next-line no-unused-vars
+function onChangePersonalizationString(element) {
+    const elementIndex = element[0].id[element[0].id.length - 1];
+    let json = $('#rl').val();
+    if (json.length > 0) {
+        rules = JSON.parse(json);
+    }
+    const rule = rules[elementIndex];
+    const optionValue = element[0].value;
+    const personalization = `%%${optionValue}%%`;
+    $(`#${rule.name}`).val(personalization);
+    $(`#${element[0].id}`).css('display', 'none');
+    rules[elementIndex].value = personalization;
+    json = JSON.stringify(rules);
+    $('#rl').val(json);
+    fillFullUrl();
+}
+
+// eslint-disable-next-line no-unused-vars
+function dinamicInputsOnBlur(element) {
+    let json = $('#rl').val();
+    if (json.length > 0) {
+        rules = JSON.parse(json);
+    }
+    // eslint-disable-next-line no-unused-vars
+    let rule = '';
+    for (let index = 0; index < rules.length; index++) {
+        if (rules[index].name === element[0].id) {
+            rules[index].value = element[0].value;
+            rule = rules[index];
+            break;
+        }
+    }
+
+    json = JSON.stringify(rules);
+    $('#rl').val(json);
+    fillFullUrl();
 }
 
 function createHtmlForRule(index, name, value = null, canDelete = false, isCustom = false, customValue = null) {
@@ -159,10 +149,8 @@ function createHtmlForRule(index, name, value = null, canDelete = false, isCusto
     newRule += '</div>';
     newRule += '<div class="Select rules-select-param-name   Select--single is-searchable has-value">';
     newRule += `<div id= "select${index}-replace" class="Select-control">`;
-    newRule += '<div class="Select-value">';
-    newRule += `<span class="Select-value-label">${name}</span></div>`;
     newRule += '<div class="Select-input" style="display: inline-block;">';
-    newRule += `<input id="param-${name}" value="${name}" placeholder="${name}" style="width: 5px; box-sizing: content-box;"/>`;
+    newRule += `<input id="param-${name}" value="${name}" style="box-sizing: content-box;"/>`;
     newRule += '<div style="position: absolute; visibility: hidden; height: 0px; width: 0px; overflow: scroll; white-space: pre; font-size: 14px; font-family: museo_sans300; font-weight: 400; font-style: normal; letter-spacing: normal;">';
     newRule += '</div>';
     newRule += '</div>';
@@ -181,6 +169,7 @@ function createHtmlForRule(index, name, value = null, canDelete = false, isCusto
     newRule += '<div class="af-core form-control-wrapper af-core rules-input-param-value  input-item    vertical">';
     newRule += '<div>';
     newRule += '<div></div>';
+
     if (value) {
         newRule += '<div class="input-container has-validation form-group has-feedback">';
 
@@ -189,7 +178,7 @@ function createHtmlForRule(index, name, value = null, canDelete = false, isCusto
         } else {
             newRule += '<div class="input-inner">';
         }
-        newRule += `<input type="text" id="${name}" placeholder="${value}" value="${value}" class="form-control" />`;
+        newRule += `<input type="text" id="${name}" placeholder="${value}" value="${value}" class="form-control" onblur=\"dinamicInputsOnBlur($(this))\"/>`;
         newRule += ' </div>';
         let inputId = '';
         if (isCustom && value !== 'Enter Value') {
@@ -204,17 +193,18 @@ function createHtmlForRule(index, name, value = null, canDelete = false, isCusto
 
         newRule += ' </div>';
     }
+
     newRule += '</div>';
     newRule += '</div>';
     if (canDelete) {
-        newRule += `<button id="btn${index}"type="button" class="af-core af-button red transparent  rules-delete-param icon-only medium  ">`;
+        newRule += `<button id="btn${index}"type="button" class="af-core af-button red transparent  rules-delete-param icon-only medium  " style="margin-left:10px; margin-right:10px; " >`;
         newRule += '<i class="af-button-icon fa fa-trash-o"></i></button>';
     }
 
 
-    newRule += `<button id="btn-personalization${index}" name="btn-personalization${index}" type="button" class="af-core af-button red transparent  rules-delete-param icon-only medium  " style="margin-left:10px; margin-right:10px; " onclick="$('#SFMC-personalizationString${index}').css('display','block')\">`;
+    newRule += `<button id="btn-personalization${index}" name="btn-personalization${index}" type="button" class="af-core af-button red transparent  rules-delete-param icon-only medium  " style="margin-left:10px; margin-right:10px; " onclick=\"$('#SFMC-personalizationString${index}').css('display','block')\">`;
     newRule += '<i class="af-button-icon fa fa-user"></i></button>';
-    newRule += `<select id="SFMC-personalizationString${index}"  class="form-control" style="max-width:200px; display:none" onchange="$('#${name}').val('%%' + $('#SFMC-personalizationString${index}').val() + '%%'); $('#SFMC-personalizationString${index}').css('display','none');\ $('#${name}').blur();  fillFullUrl();">`;
+    newRule += `<select id="SFMC-personalizationString${index}"  class="form-control" style="max-width:200px; display:none" onchange=\"onChangePersonalizationString($(this))\">`;
     newRule += '<option value="" class="options-personalizationstring">Select an option</option>';
     newRule += '<option value="emailaddr" class="options-personalizationstring">Email Address</option>';
     newRule += '<option value="fullname" class="options-personalizationstring">Full Name</option>';
@@ -340,6 +330,22 @@ function buildSelectOptions(element, selectOptions) {
         removeSelectOption(element.name, selectOptions);
     }
 }
+
+function newRuleObj(index, name, value, canDelete = false, isCustom = false, customValue = null) {
+    console.log('indx', index);
+    return {
+        index,
+        selectId: `select${index}`,
+        inputValueId: name,
+        name,
+        value,
+        canDelete,
+        isCustom,
+        customValue,
+
+    };
+}
+
 function parseQuerystringParameters(url) {
     const array = url.split('?');
     if (array.length > 0) {
@@ -359,6 +365,19 @@ function parseQuerystringParameters(url) {
     $('#baseURL').val(array[0]);
 }
 
+function addRules(array) {
+    const selectOptions = setSelectOptions();
+    renderComponentsBase(array);
+    const allowEdit = getAllowEditCP(array);
+    for (let index = 0; index < allowEdit.length; index++) {
+        const element = allowEdit[index];
+        buildSelectOptions(element, selectOptions);
+        addEventsForComponent(element, array);
+    }
+
+    const json = JSON.stringify(array);
+    $('#rl').val(json);
+}
 
 function addEventsForComponent(element, array) {
     let aux = [];
@@ -366,6 +385,7 @@ function addEventsForComponent(element, array) {
         e.preventDefault();
         const selectedOption = $(`#${element.selectId} option:selected`).html();
         const selectedOptionValue = $(`#${element.selectId} option:selected`).val();
+
         element.name = $(this).val();
         element.value = 'Enter Value';
         element.canDelete = true;
@@ -377,103 +397,65 @@ function addEventsForComponent(element, array) {
         }
 
         array[element.index] = element;
+
         addRules(array);
         $(`#${element.selectId}`).val(selectedOptionValue);
         $(`#${element.name}`).attr('readonly', false);
         fillFullUrl();
     });
 
-    $(`#${element.name}`).on('click', (e) => {
-        e.preventDefault();
-        if ($(`#${element.name}`).val() === 'Enter Value') { $(`#${element.name}`).val(''); }
-    });
-
-    $(`#${element.name}`).on('blur', (e) => {
-        e.preventDefault();
-        if ($(`#${element.selectId} option:selected`).html() === 'Custom Parameter') {
-            element.isCustom = true;
-            element.customValue = $(`#${element.name}`).val();
-        }
-        array[element.index] = newRuleObj(element.index, element.name, $(`#${element.name}`).val(), true, element.isCustom, element.customValue);
-
-        console.log(array[element.index]);
-        const json = JSON.stringify(array);
-        $('#rl').val(json);
-        addRules(array);
-        fillFullUrl();
-    });
-
     let inputId = element.value;
-    if (element.value.startsWith('%%')) {
+    if (element.value.startsWith("'%%")) {
+        inputId = element.value.substring(3, element.value.length - 3);
+    } else if (element.value.startsWith('%%')) {
         inputId = element.value.substring(2, element.value.length - 2);
-    }
+    } else { inputId = element.value; }
+
 
     $(`#${inputId}`).on('click', (e) => {
         e.preventDefault();
-        if ($(`#${element.value}`).val() === '') { $(`#${element.value}`).val(''); }
+        if ($(`#${inputId}`).val() === '') { $(`#${inputId}`).val(''); }
+        //  if ($(`#${element.value}`).val() === '') { $(`#${element.value}`).val(''); }
         fillFullUrl();
     });
+
     $(`#btn${element.index}`).on('click', (e) => {
         e.preventDefault();
         // const option = $(`#${element.selectId}`).val();
         // selectOptions.push(getOption(option));
         aux = deleteParameter(array, element);
-
         $('#rules').html('');
         array = addRules(aux);
         fillFullUrl();
     });
     console.log('element name', element.name);
-
-    $(`#SFMC-personalizationString${element.index}`).on('click', (e) => {
-        e.preventDefault();
-        fillFullUrl();
-    });
-
-    $(`#SFMC-personalizationString${element.index}`).on('change', (e) => {
-        console.log(e);
-        // const optionValue = $(`#SFMC-personalizationString${element.index}`).val();
-        $(`#${element.name}`).val(`%%${$(`#SFMC-personalizationString${element.index}`).val()}%%`);
-        $(`#SFMC-personalizationString${element.index}`).css('display', 'none');
-        $(`#${element.name}`).blur();
-        fillFullUrl();
-    });
     return array;
 }
 
-function addRules(array) {
-    const selectOptions = setSelectOptions();
-    renderComponentsBase(array);
-    const allowEdit = getAllowEditCP(array);
-    for (let index = 0; index < allowEdit.length; index++) {
-        const element = allowEdit[index];
-        /* if (element.name.startsWith('custom') > 0) {
-             selectOptions.push({ Name: element.name, Value: element.value })
-         } */
-        buildSelectOptions(element, selectOptions);
-        addEventsForComponent(element, array);
+
+function initializeRules() {
+    let rules = [];
+
+    const json = $('#rl').val();
+    if (json.length > 0) {
+        rules = JSON.parse(json);
     }
 
-    const json = JSON.stringify(array);
-    $('#rl').val(json);
-}
+    const url = $('#baseURL').val() + buildQueryString();
+    parseQuerystringParameters(url);
 
-function newRuleObj(index, name, value, canDelete = false, isCustom = false, customValue = null) {
-    console.log('indx', index);
-    return {
-        index,
-        selectId: `select${index}`,
-        inputValueId: name,
-        name,
-        value,
-        canDelete,
-        isCustom,
-        customValue,
-
-    };
+    addRules(rules);
+    return rules;
 }
 
 
+function parseParameters() {
+    const parameters = $('#customParameters').val();
+    if (parameters !== undefined) {
+        parseCustomParameters(parameters);
+        removeAttrParamsFromCustomParams(parameters);
+    }
+}
 function fillUi(data) {
     $('#linkName').val(data.LinkName);
     $('#baseURL').val(data.BaseURL);
@@ -500,21 +482,6 @@ function fillUi(data) {
     json = JSON.stringify(rules);
     $('#rl').val(json);
     parseParameters();
-}
-
-function initializeRules() {
-    let rules = [];
-
-    const json = $('#rl').val();
-    if (json.length > 0) {
-        rules = JSON.parse(json);
-    }
-
-    const url = $('#baseURL').val() + buildQueryString();
-    parseQuerystringParameters(url);
-
-    addRules(rules);
-    return rules;
 }
 
 function getLinkData(postData) {
@@ -572,7 +539,8 @@ $(document).ready(() => {
 
     $('#cancel').on('click', (e) => {
         e.preventDefault();
-        if ($('#rt').val() === undefined || $('#rt').val() === '') { window.location.href = `/dashboard/home/?rt=${urlParams.refresh_token}&eid=${urlParams.enterpriseId}`; } else { window.location.href = `/dashboard/home/?rt=${$('#rt').val()}&eid=${$('#eid').val()}`; }
+        if ($('#rt').val() === undefined
+            || $('#rt').val() === '') { window.location.href = `/dashboard/home/?rt=${urlParams.refresh_token}&eid=${urlParams.enterpriseId}`; } else { window.location.href = `/dashboard/home/?rt=${$('#rt').val()}&eid=${$('#eid').val()}`; }
     });
 
     $('#linkName').on('click', (e) => {
