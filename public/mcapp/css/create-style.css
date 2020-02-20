@@ -1,13 +1,13 @@
 
 html {
-	font-family: museo_sans300;
+	font-family: sans-serif;
 	-webkit-text-size-adjust: 100%;
 	-ms-text-size-adjust: 100%
 }
 
 body {
 	margin: 0;
-	font-family: museo_sans300;
+	font-family: sans-serif;
 }
 
 article,
@@ -1353,7 +1353,7 @@ html {
 }
 
 body {
-	font-family: museo_sans300;
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	line-height: 1.42857143;
 	color: #333;
@@ -6997,7 +6997,7 @@ button.close {
 	position: absolute;
 	z-index: 1070;
 	display: block;
-	font-family: museo_sans300;
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	font-style: normal;
 	font-weight: 400;
@@ -7131,7 +7131,7 @@ button.close {
 	display: none;
 	max-width: 276px;
 	padding: 1px;
-	font-family: museo_sans300;
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	font-style: normal;
 	font-weight: 400;
@@ -17232,7 +17232,7 @@ a.af-core.link-with-arrow.left:hover i.arrow:before {
 }
 
 body {
-    font-family: museo_sans300;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
     color: #333;
@@ -17298,9 +17298,9 @@ abbr[title] {
 }
 
 .options-personalizationstring {
-	font-family: museo_sans300;
+	font-family: sans-serif;
 }
 
-.option-select{
-	font-family: museo_sans300 !important;
+option{
+	font-family: sans-serif;
 }
