@@ -44,15 +44,14 @@ function buildDashboard(data) {
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Modified}</div></td>`;
             table += '<td>';
             table += `<div id="onelink-trigger${element.LinkID}" class="slds-dropdown-trigger slds-dropdown-trigger_click">`;
-            table += '<button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true" title="Show More">';
+            table += '<button class="slds-button slds-button_icon slds-button_icon-border-filled" >';
             table += '<svg class="slds-button__icon" aria-hidden="true">';
             table += '<use xlink:href="/mcapp/images/symbols.svg#down">';
             table += '</use>';
             table += '</svg>';
-            table += '<span class="slds-assistive-text">Show More</span>';
             table += '</button>';
             table += '<div class="slds-dropdown slds-dropdown_left" style="margin-top: -1px!important">';
-            table += '<ul class="slds-dropdown__list" role="menu" aria-label="Show More">';
+            table += '<ul class="slds-dropdown__list" role="menu" >';
             table += '<li class="slds-dropdown__item" role="presentation">';
             table += `<a href="/dashboard/edit/?lid=${element.LinkID}&eid={0}&rt={1}" class="edit" id="edit${index}" role="menuitem" tabindex="0">`;
             table += '<span class="slds-truncate" title="Edit">Edit</span>';

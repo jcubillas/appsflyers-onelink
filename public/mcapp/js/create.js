@@ -82,7 +82,7 @@ function parseCustomParameters(url) {
         console.log(params);
         for (let index = 0; index < params.length; index++) {
             const queryParam = params[index].split('=');
-            overrideParamsValues(queryParam[0], queryParam[1],true);
+            overrideParamsValues(queryParam[0], queryParam[1], true);
         }
     }
 }
@@ -124,7 +124,12 @@ function dinamicInputsOnBlur(element) {
     let rule = '';
     for (let index = 0; index < rules.length; index++) {
         if (rules[index].name === element[0].id) {
-            rules[index].value = element[0].value;
+            if (element[0].value !== undefined && element[0].value !== '') {
+                rules[index].value = element[0].value;
+            } else {
+                rules[index].value = 'Enter Value';
+            }
+
             rule = rules[index];
             break;
         }
@@ -135,6 +140,12 @@ function dinamicInputsOnBlur(element) {
     fillFullUrl();
 }
 
+// eslint-disable-next-line no-unused-vars
+function dinamicInputsOnClick(element) {
+    if (element[0].value === 'Enter Value') {
+        $(`#${element[0].id}`).val('');
+    }
+}
 function createHtmlForRule(index, name, value = null, canDelete = false, isCustom = false, customValue = null) {
     let newRule = '';
     newRule += '<div class="single-rule ">';
@@ -175,7 +186,7 @@ function createHtmlForRule(index, name, value = null, canDelete = false, isCusto
         } else {
             newRule += '<div class="input-inner">';
         }
-        newRule += `<input type="text" id="${name}" placeholder="${value}" value="${value}" class="form-control" onblur=\"dinamicInputsOnBlur($(this))\"/>`;
+        newRule += `<input type="text" id="${name}" placeholder="${value}" value="${value}" class="form-control" onblur=\"dinamicInputsOnBlur($(this))\" onclick=\"dinamicInputsOnClick($(this))\"/>`;
         newRule += ' </div>';
         let inputId = '';
         if (isCustom && value !== 'Enter Value') {
@@ -371,7 +382,7 @@ function addEventsForComponent(element, array) {
             element.name = $(this).val() + element.index;
             element.isCustom = true;
             element.inputValueId = element.name;
-            element.customValue = 'enter value';
+            element.customValue = 'Enter Value';
         }
 
         array[element.index] = element;
