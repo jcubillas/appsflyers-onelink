@@ -375,7 +375,7 @@ function parseQuerystringParameters(url) {
 }
 
 function addRules(array) {
-    const selectOptions = setSelectOptions();
+    const selectOptions = setSelectOptions(true);
     renderComponentsBase(array);
     const allowEdit = getAllowEditCP(array);
     for (let index = 0; index < allowEdit.length; index++) {
