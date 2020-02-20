@@ -456,7 +456,50 @@ function initializeRules() {
     addRules(rules);
     return rules;
 }
+function removeAttrParamsFromCustomParams(customparams) {
+    if (!customparams.startsWith('&')) { customparams = `&${customparams}`; }
 
+    params = customparams.split('&');
+    let json = $('#rl').val();
+    let customInputValue = '';
+    if (json.length > 0) {
+        rules = JSON.parse(json);
+        for (let index = 1; index < params.length; index++) {
+            const queryParam = params[index].split('=');
+            let isCustom = true;
+
+            for (let j = 0; j < rules.length; j++) {
+                if (rules[j].name === queryParam[0]) {
+                    // eslint-disable-next-line prefer-destructuring
+                    rules[j].value = queryParam[1];
+                    $(`#${queryParam[0]}`).val(queryParam[1]);
+                    isCustom = false;
+                    break;
+                } else {
+                    isCustom = true;
+                }
+            }
+
+            if (isCustom === true) {
+                console.log(customInputValue.indexOf(`${queryParam[0]}=`));
+                const newParam = `${queryParam[0]}=${queryParam[1]}`;
+                if (customInputValue.indexOf(`${queryParam[0]}=`) > 0) {
+                    const oldParam = customInputValue.substring(customInputValue.indexOf(`${queryParam[0]}=`), customInputValue.length);
+                    customInputValue = customInputValue.replace(oldParam.split('&')[0], newParam);
+                } else {
+                    customInputValue += `&${newParam}`;
+                }
+            }
+        }
+        if (customInputValue.length > 1) {
+            $('#customParameters').val(customInputValue);
+        } else {
+            $('#customParameters').val('');
+        }
+        json = JSON.stringify(rules);
+        $('#rl').val(json);
+    }
+}
 
 function parseParameters() {
     const parameters = $('#customParameters').val();
@@ -562,50 +605,7 @@ $(document).ready(() => {
         $('#error-baseURL').css('display', 'none');
     });
 
-    function removeAttrParamsFromCustomParams(customparams) {
-        if (!customparams.startsWith('&')) { customparams = `&${customparams}`; }
-
-        params = customparams.split('&');
-        let json = $('#rl').val();
-        let customInputValue = '';
-        if (json.length > 0) {
-            rules = JSON.parse(json);
-            for (let index = 1; index < params.length; index++) {
-                const queryParam = params[index].split('=');
-                let isCustom = true;
-
-                for (let j = 0; j < rules.length; j++) {
-                    if (rules[j].name === queryParam[0]) {
-                        // eslint-disable-next-line prefer-destructuring
-                        rules[j].value = queryParam[1];
-                        $(`#${queryParam[0]}`).val(queryParam[1]);
-                        isCustom = false;
-                        break;
-                    } else {
-                        isCustom = true;
-                    }
-                }
-
-                if (isCustom === true) {
-                    console.log(customInputValue.indexOf(`${queryParam[0]}=`));
-                    const newParam = `${queryParam[0]}=${queryParam[1]}`;
-                    if (customInputValue.indexOf(`${queryParam[0]}=`) > 0) {
-                        const oldParam = customInputValue.substring(customInputValue.indexOf(`${queryParam[0]}=`), customInputValue.length);
-                        customInputValue = customInputValue.replace(oldParam.split('&')[0], newParam);
-                    } else {
-                        customInputValue += `&${newParam}`;
-                    }
-                }
-            }
-            if (customInputValue.length > 1) {
-                $('#customParameters').val(customInputValue);
-            } else {
-                $('#customParameters').val('');
-            }
-            json = JSON.stringify(rules);
-            $('#rl').val(json);
-        }
-    }
+   
     $('#baseURL').on('blur', function (e) {
         e.preventDefault();
         const url = $(this).val();
