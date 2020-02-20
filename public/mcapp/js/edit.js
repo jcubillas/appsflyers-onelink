@@ -360,10 +360,8 @@ function newRuleObj(index, name, value, canDelete = false, isCustom = false, cus
 function parseQuerystringParameters(url) {
     const array = url.split('?');
     if (array.length > 0) {
-        console.log(array[1].split('&').length);
         if (array[1].split('&').length > 0) {
             params = array[1].split('&');
-            console.log(params);
             for (let index = 0; index < params.length; index++) {
                 const queryParam = params[index].split('=');
                 overrideParamsValues(queryParam[0], queryParam[1]);
@@ -564,23 +562,6 @@ $(document).ready(() => {
         $('#error-baseURL').css('display', 'none');
     });
 
-    function parseQuerystringParameters(url) {
-        const array = url.split('?');
-        if (array.length > 1) {
-            if (array[1].split('&').length > 0) {
-                params = array[1].split('&');
-                console.log(params);
-                for (let index = 0; index < params.length; index++) {
-                    const queryParam = params[index].split('=');
-                    overrideParamsValues(queryParam[0], queryParam[1]);
-                }
-            } else {
-                params = array[1].split('=');
-                overrideParamsValues(params[0], params[1]);
-            }
-        }
-        $('#baseURL').val(array[0]);
-    }
     function removeAttrParamsFromCustomParams(customparams) {
         if (!customparams.startsWith('&')) { customparams = `&${customparams}`; }
 
