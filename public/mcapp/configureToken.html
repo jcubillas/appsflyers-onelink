@@ -11,10 +11,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
     <link rel="stylesheet"
-        href="/mcapp/css/salesforce-lightning-design-system/assets/styles/salesforce-lightning-design-system.min.css">
+        href="../vendor/bower_components/salesforce-lightning-design-system/assets/styles/salesforce-lightning-design-system.min.css">
 
-    <script type="text/javascript" src="/mcapp/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/mcapp/js/validatetoken.js"></script>
+    <script type="text/javascript" src="./vendor/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/validatetoken.js"></script>
     <style>
         .slds-input {
             width: 80% !important;
@@ -28,13 +28,13 @@
         <div class="slds-grid slds-grid_align-center ">
 
             <div class="slds-clearfix visual-area-positions--closer-to-top visual-area-positions--left-half slds-size_medium"
-                dropzone="grid column 1">
+                dropzone="grid column 1" style="width: 400px;">
                 <div class="visual-area-positions--left-half" closertotopclass="project-canvas-element--closer-to-top">
                     <div class="slds-form slds-clearfix slds-form_stacked slds-align_absolute-center visual-area-positions--closer-to-top visual-area-positions--left-half"
                         dropzone="formLayout">
                         <div class="visual-area-positions--left-half"
                             closertotopclass="project-canvas-element--closer-to-top">
-                            <img src="../mcapp/images/Logo.PNG" style="width: auto; height: auto;"></div>
+                            <img src="../images/Logo.PNG" style="width: auto; height: auto;"></div>
                     </div>
                 </div>
                 <div class="visual-area-positions--left-half" closertotopclass="project-canvas-element--closer-to-top">
@@ -70,23 +70,28 @@
                                         closertotopclass="project-canvas-element--closer-to-top" id="password-panel">
                                         <div class="slds-form-element slds-m-bottom_x-small ">
                                             <label class="slds-form-element__label">
-                                                <span>SFToken</span>
+                                                <span>Token</span>
                                             </label>
                                             <div class="slds-form-element__control">
                                                 <input class="slds-input" type="text" id="token" readonly> <a href="#" id="copyToken">Copy</a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="visual-area-positions--left-half"
-                                        closertotopclass="project-canvas-element--closer-to-top" id="username-panel">
-                                        <div class="slds-form-element slds-m-bottom_x-small ">
-                                            <label class="slds-form-element__label">
-                                                <span>Salesforce EID</span>
-                                            </label>
-                                            <div class="slds-form-element__control">
-                                                <input class="slds-input" type="text" id="eid" readonly> <a href="#" id="copyEid"
-                                                eid>Copy</a>
+                                    <div class="visual-area-positions--left-half" closertotopclass="project-canvas-element--closer-to-top" id="username-panel">
+                                        <label class="slds-form-element__label">
+                                            <span>Salesforce EID</span>
+                                            <button class="slds-button slds-button_icon slds-button slds-button_icon" id="help" aria-describedby="help" aria-disabled="true" title="Info">
+                                                <svg class="slds-button__icon" aria-hidden="true">
+                                                    <use xlink:href="../vendor/bower_components/salesforce-lightning-design-system/assets/icons/utility-sprite/svg/symbols.svg#info"></use>
+                                                </svg>
+                                            </button>
+                                            <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip" id="tooltip-help" style="top: 240px;position: absolute;left: 554px;display:none">
+                                                <div class="slds-popover__body">The Enterprise ID (EID) is used to make sure all apps under your Salesforce account can access the AppsFlyer app.</div>
                                             </div>
+                                        </label>
+                                        <div class="slds-form-element__control">
+                                            <input class="slds-input" type="text" id="eid" readonly> <a href="#" id="copyEid"
+                                            eid>Copy</a>
                                         </div>
                                     </div>
                                   
