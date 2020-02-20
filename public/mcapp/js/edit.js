@@ -413,20 +413,21 @@ function addEventsForComponent(element, array) {
         fillFullUrl();
     });
 
-    let inputId = element.value;
-    if (element.value.startsWith("'%%")) {
-        inputId = element.value.substring(3, element.value.length - 3);
-    } else if (element.value.startsWith('%%')) {
-        inputId = element.value.substring(2, element.value.length - 2);
-    } else { inputId = element.value; }
 
+    if (element.value !== undefined) {
+        let inputId = element.value;
+        if (element.value.startsWith("'%%")) {
+            inputId = element.value.substring(3, element.value.length - 3);
+        } else if (element.value.startsWith('%%')) {
+            inputId = element.value.substring(2, element.value.length - 2);
+        } else { inputId = element.value; }
 
-    $(`#${inputId}`).on('click', (e) => {
-        e.preventDefault();
-        if ($(`#${inputId}`).val() === '') { $(`#${inputId}`).val(''); }
-        //  if ($(`#${element.value}`).val() === '') { $(`#${element.value}`).val(''); }
-        fillFullUrl();
-    });
+        $(`#${inputId}`).on('click', (e) => {
+            e.preventDefault();
+            if ($(`#${inputId}`).val() === '') { $(`#${inputId}`).val(''); }
+            fillFullUrl();
+        });
+    }
 
     $(`#btn${element.index}`).on('click', (e) => {
         e.preventDefault();
@@ -605,7 +606,7 @@ $(document).ready(() => {
         $('#error-baseURL').css('display', 'none');
     });
 
-   
+
     $('#baseURL').on('blur', function (e) {
         e.preventDefault();
         const url = $(this).val();
