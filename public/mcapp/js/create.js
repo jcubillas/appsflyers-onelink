@@ -237,8 +237,6 @@ function setSelectOptions(restantes = false) {
         selectOptions.push({ Name: 'Re-Targeting Campaign', Value: 'is_retargeting' });
     }
     selectOptions.push({ Name: 'Campaign', Value: 'c' });
-    selectOptions.push({ Name: 'Adset', Value: 'af_adset' });
-    selectOptions.push({ Name: 'Ad Name', Value: 'af_ad' });
     selectOptions.push({ Name: 'Sub Parameter 1', Value: 'af_sub1' });
     selectOptions.push({ Name: 'Sub Parameter 2', Value: 'af_sub2' });
     selectOptions.push({ Name: 'Sub Parameter 3', Value: 'af_sub3' });
