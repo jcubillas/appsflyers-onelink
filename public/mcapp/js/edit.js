@@ -414,7 +414,7 @@ function addEventsForComponent(element, array) {
     });
 
 
-    if (element.value !== undefined && element.value !== '') {
+    if (element.value !== undefined && element.value !== '' && element.value !== null) {
         let inputId = element.value;
         if (element.value.startsWith("'%%")) {
             inputId = element.value.substring(3, element.value.length - 3);
