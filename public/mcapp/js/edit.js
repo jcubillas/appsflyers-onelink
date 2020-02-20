@@ -34,12 +34,14 @@ function buildQueryString() {
     for (let index = 0; index < rules.length; index++) {
         const element = rules[index];
         qs += `${element.name}=`;
-        if (element.value.startsWith("'%%")) {
-            qs += `${element.value}`;
-        } else if (element.value.startsWith('%%')) {
-            qs += `'${element.value}'`;
-        } else {
-            qs += element.value;
+        if (element.value !== undefined && element.value !== null && element.value !== '') {
+            if (element.value.startsWith("'%%")) {
+                qs += `${element.value}`;
+            } else if (element.value.startsWith('%%')) {
+                qs += `'${element.value}'`;
+            } else {
+                qs += element.value;
+            }
         }
 
         if (index !== rules.length - 1) {
