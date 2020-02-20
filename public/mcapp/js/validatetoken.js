@@ -113,4 +113,10 @@ $(document).ready(() => {
             },
         });
     });
+
+    $('#help').hover(() => {
+        $('#tooltip-help').css('display', 'block');
+    }, () => {
+        $('#tooltip-help').css('display', 'none');
+    });
 });
