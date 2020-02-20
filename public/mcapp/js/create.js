@@ -306,13 +306,13 @@ function removeSelectOption(value, selectOptions) {
 
 function buildSelectOptions(element, selectOptions) {
     let options = `<select id="${element.selectId}" name="${element.selectId}" class="Select-control" style="border:0!important;">`;
-    options += '<option value="select" selected>Select Parameter</option>';
+    options += '<option class="option-select" value="select" selected>Select Parameter</option>';
     for (let j = 0; j < selectOptions.length; j++) {
         const option = selectOptions[j];
         if (element.name.startsWith('custom') && element.name !== 'Custom Parameter') {
-            options += `<option value="${option.Name}">${option.Name}</option>`;
+            options += `<option class="option-select" value="${option.Name}">${option.Name}</option>`;
         } else {
-            options += `<option value="${option.Value}">${option.Name}</option>`;
+            options += `<option class="option-select" value="${option.Value}">${option.Name}</option>`;
         }
     }
     options += '</select>';
