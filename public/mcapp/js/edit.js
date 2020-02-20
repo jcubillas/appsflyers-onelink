@@ -505,7 +505,7 @@ function removeAttrParamsFromCustomParams(customparams) {
 
 function parseParameters() {
     const parameters = $('#customParameters').val();
-    if (parameters !== undefined) {
+    if (parameters !== undefined && parameters !== '') {
         parseCustomParameters(parameters);
         removeAttrParamsFromCustomParams(parameters);
     }
