@@ -11,17 +11,15 @@ function buildDashboard(data) {
     let table = '<div class="slds-lookup" data-select="multi" data-scope="single" data-typeahead="true">';
     table += '<table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" >';
 
-    table += '<tr class="slds-line-height_reset">';
+    table += '<tr>';
 
     table += '<td role="gridcell" scope="col" colspan="2"><b>OneLink Name</b></td>';
-    table += '<td role="gridcell" scope="col"><b>Full URL</b></td>';
+    table += '<td role="gridcell" scope="col" colspan="2"><b>Full URL</b></td>';
     table += '<td role="gridcell" scope="col" ><b># of Contents</b></td>';
     table += '<td role="gridcell" scope="col" ><b>Created</b></td>';
     table += '<td role="gridcell" scope="col" ><b>Modified</b></td>';
     table += '<td role="gridcell" scope="col" ></td>';
     table += '</tr>';
-    table += '<tbody>';
-
 
     if (data !== undefined) {
         data.sort((a, b) => ((new Date(a.Modified) < new Date(b.Modified)) ? 1 : ((new Date(b.Modified) < new Date(a.Modified)) ? -1 : 0)));
@@ -55,7 +53,6 @@ function buildDashboard(data) {
             table += '</tr>';
         }
     }
-    table += '</tbody>';
     table += '</table>';
     table += '</div>';
 
