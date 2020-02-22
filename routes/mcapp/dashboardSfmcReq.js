@@ -13,12 +13,12 @@ function buildDashboard(data) {
 
     table += '<tr>';
 
-    table += '<td role="gridcell" scope="col" colspan="2"><b>OneLink Name</b></td>';
-    table += '<td role="gridcell" scope="col" colspan="3"><b>Full URL</b></td>';
-    table += '<td role="gridcell" scope="col" style="text-align:center;"><b># of Contents</b></td>';
-    table += '<td role="gridcell" scope="col" ><b>Created</b></td>';
-    table += '<td role="gridcell" scope="col" ><b>Modified</b></td>';
-    table += '<td role="gridcell" scope="col" ></td>';
+    table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>OneLink Name</b></td>';
+    table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="3"><b>Full URL</b></td>';
+    table += '<td class="header-dashboard" role="gridcell" scope="col" style="text-align:center;"><b># of Contents</b></td>';
+    table += '<td class="header-dashboard" role="gridcell" scope="col" ><b>Created</b></td>';
+    table += '<td class="header-dashboard" role="gridcell" scope="col" ><b>Modified</b></td>';
+    table += '<td class="header-dashboard" role="gridcell" scope="col" ></td>';
     table += '</tr>';
 
     if (data !== undefined) {

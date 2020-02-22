@@ -732,3 +732,8 @@ html {
 .slds-editbutton {
   padding-left: 50%;
 }
+
+.header-dashboard{
+  padding-top:14px;
+  padding-bottom:15px;
+}
