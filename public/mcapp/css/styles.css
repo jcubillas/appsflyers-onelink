@@ -734,6 +734,6 @@ html {
 }
 
 .header-dashboard{
-  padding-top:14px;
-  padding-bottom:15px;
+  padding-top:14px !important;
+  padding-bottom:15px!important;
 }
