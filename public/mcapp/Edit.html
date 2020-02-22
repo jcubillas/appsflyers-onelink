@@ -144,16 +144,46 @@
         margin: 10px;"></div>
     <div class="slds-form-element">
         <label class="slds-form-element__label" for="text-input-id-1">
-            <abbr class="slds-required" title="required">* </abbr>Link Name</label>
+            <abbr class="slds-required" title="required">* </abbr>
+            Link Name
+            <button class="slds-button slds-button_icon slds-button slds-button_icon" id="linkname-help"
+            aria-describedby="help" aria-disabled="true" style="margin-bottom: 5px;">
+            <svg class="slds-button__icon" aria-hidden="true" style="width: 12px; height:12px;">
+                <use
+                    xlink:href="/mcapp/css/salesforce-lightning-design-system/assets/icons/utility-sprite/svg/symbols.svg#info">
+                </use>
+            </svg>
+        </button>
+        <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip" id="tooltip-linkname"
+            style="top: -100%;left: -4.5%;max-width: none;display: none;">
+            <div class="slds-popover__body" style="font-size: 1.10rem;">Give your link a name so you can recognize
+                it easily on content generation.</div>
+        </div>
+        </label>
         <div class="slds-form-element__control">
-            <input type="text" id="linkName" placeholder="Placeholder Text" required="" class="form-control" />
+            <input type="text" id="linkName" required="" class="form-control" />
             <div id="error-linkName" style="color:red; display:none;">Link Name is Required!</div>
         </div>
     </div>
     <div class="slds-form-element">
         <label class="slds-form-element__label" for="text-input-id-1">
-            <abbr class="slds-required" title="required">* </abbr>Base URL <b id="urlType"
-                style="color:green;"></b></label>
+            <abbr class="slds-required" title="required">* </abbr>
+            Base URL 
+            <b id="urlType"style="color:green;"></b>
+            <button class="slds-button slds-button_icon slds-button slds-button_icon" id="baseurl-help"
+                aria-describedby="help" aria-disabled="true" title="Info" style="margin-bottom: 5px;">
+                <svg class="slds-button__icon" aria-hidden="true" style="width: 12px; height:12px;">
+                    <use
+                        xlink:href="/mcapp/css/salesforce-lightning-design-system/assets/icons/utility-sprite/svg/symbols.svg#info">
+                    </use>
+                </svg>
+            </button>
+            <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip" id="tooltip-baseurl"
+                style="top: -100%;left: -4.5%;max-width: none;display: none;">
+                <div class="slds-popover__body" style="font-size: 1.10rem;"> Paste here the attribution link you copied
+                    from the AppsFlyer link management section.</div>
+            </div>
+        </label>
         <div class="slds-form-element__control">
             <input type="text" id="baseURL" placeholder="Placeholder Text" required="" class="form-control" />
             <div id="error-baseURL" style="color:red; display:none;">Base URL is Required!</div>
@@ -192,7 +222,7 @@
         <div class="slds-col">
             <span></span>
         </div>
-        <div class="slds-col" style="    text-align: center;   margin-right: 85px; margin-top:10px;">
+        <div class="slds-col" style="    text-align: center;   margin-right: 85px; margin-top:10px; margin-bottom:10px">
             <a href="#" id="cancel" style="text-decoration: none; margin-right:5px;">Cancel</a>
             <button id="btn-updateLink" class="slds-button slds-button_brand"
                 style="padding: 7px 12px; font-size:15px;display: inline-block;">Update link</button>

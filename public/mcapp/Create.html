@@ -176,7 +176,7 @@
             <abbr class="slds-required" title="required">* </abbr>
             Link Name
             <button class="slds-button slds-button_icon slds-button slds-button_icon" id="linkname-help"
-                aria-describedby="help" aria-disabled="true" title="Info" style="margin-bottom: 5px;">
+                aria-describedby="help" aria-disabled="true" style="margin-bottom: 5px;">
                 <svg class="slds-button__icon" aria-hidden="true" style="width: 12px; height:12px;">
                     <use
                         xlink:href="/mcapp/css/salesforce-lightning-design-system/assets/icons/utility-sprite/svg/symbols.svg#info">
@@ -184,7 +184,7 @@
                 </svg>
             </button>
             <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip" id="tooltip-linkname"
-                style="top: -13px;position: absolute;left: 163px;max-width: none;display:none">
+                style="top: -100%;left: -4.5%;max-width: none;display: none;">
                 <div class="slds-popover__body" style="font-size: 1.10rem;">Give your link a name so you can recognize
                     it easily on content generation.</div>
             </div>
@@ -207,7 +207,7 @@
                 </svg>
             </button>
             <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip" id="tooltip-baseurl"
-                style="top: -12px;position: absolute;left: 153px;display: block;max-width: none;display:none">
+                style="top: -100%;left: -4.5%;max-width: none;display: none;">
                 <div class="slds-popover__body" style="font-size: 1.10rem;"> Paste here the attribution link you copied
                     from the AppsFlyer link management section.</div>
             </div>
@@ -252,11 +252,10 @@
         <div class="slds-col">
             <span></span>
         </div>
-        <div class="slds-col" style="    text-align: center;   margin-right: 85px; margin-top:10px;">
+        <div class="slds-col" style="    text-align: center;   margin-right: 85px; margin-top:10px; margin-bottom:10px">
             <a href="#" id="cancel" style="text-decoration: none; margin-right:5px;">Cancel</a>
             <button id="btn-addLink" class="slds-button slds-button_brand"
                 style="padding: 7px 12px; font-size:15px;display: inline-block;">Generate link</button>
-
         </div>
     </div>
     <input type="hidden" id="rt" name="rt" value="">
