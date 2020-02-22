@@ -28,7 +28,7 @@ function buildDashboard(data) {
             table += '<tr>';
 
             table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.LinkName}</div></td>`;
-            table += `<td role="gridcell"><div class="slds-truncate" title="${element.FullURL}">${element.FullURL}</div></td>`;
+            table += `<td role="gridcell" colspan="2"><div class="slds-truncate" title="${element.FullURL}">${element.FullURL}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.ContentsCount}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Created}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Modified}</div></td>`;
