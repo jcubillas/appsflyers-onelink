@@ -14,8 +14,8 @@ function buildDashboard(data) {
     table += '<tr>';
 
     table += '<td role="gridcell" scope="col" colspan="2"><b>OneLink Name</b></td>';
-    table += '<td role="gridcell" scope="col" colspan="2"><b>Full URL</b></td>';
-    table += '<td role="gridcell" scope="col" ><b># of Contents</b></td>';
+    table += '<td role="gridcell" scope="col" colspan="3"><b>Full URL</b></td>';
+    table += '<td role="gridcell" scope="col" style="text-align:center;"><b># of Contents</b></td>';
     table += '<td role="gridcell" scope="col" ><b>Created</b></td>';
     table += '<td role="gridcell" scope="col" ><b>Modified</b></td>';
     table += '<td role="gridcell" scope="col" ></td>';
@@ -28,12 +28,12 @@ function buildDashboard(data) {
             table += '<tr>';
 
             table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.LinkName}</div></td>`;
-            table += `<td role="gridcell" colspan="2"><div class="slds-truncate" title="${element.FullURL}">${element.FullURL}</div></td>`;
-            table += `<td role="gridcell"><div class="slds-truncate" >${element.ContentsCount}</div></td>`;
+            table += `<td role="gridcell" colspan="3"><div class="slds-truncate" title="${element.FullURL}">${element.FullURL}</div></td>`;
+            table += `<td role="gridcell"><div class="slds-truncate" style="text-align:center;">${element.ContentsCount}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Created}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Modified}</div></td>`;
             table += '<td>';
-            table += `<div id="onelink-trigger${element.LinkID}" class="slds-dropdown-trigger slds-dropdown-trigger_click">`;
+            table += `<div id="onelink-trigger${element.LinkID}" class="slds-dropdown-trigger slds-dropdown-trigger_click" style="padding-left:50%;">`;
             table += '<button class="slds-button slds-button_icon slds-button_icon-border-filled" >';
             table += '<svg class="slds-button__icon" aria-hidden="true">';
             table += '<use xlink:href="/mcapp/images/symbols.svg#down">';

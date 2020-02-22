@@ -728,3 +728,7 @@ html {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   text-overflow: ellipsis;
 }
+
+.slds-editbutton {
+  padding-left: 50%;
+}
