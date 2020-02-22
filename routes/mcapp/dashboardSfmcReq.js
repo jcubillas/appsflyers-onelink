@@ -11,19 +11,15 @@ function buildDashboard(data) {
     let table = '<div class="slds-lookup" data-select="multi" data-scope="single" data-typeahead="true">';
     table += '<table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" >';
 
-    table += '<thead>';
     table += '<tr class="slds-line-height_reset">';
 
-    table += '<th scope="col" colspan="2"><b>OneLink Name</b></th>';
-    table += '<th scope="col"><b>Full URL</b></th>';
-    table += '<th scope="col" ><b># of Contents</b></th>';
-    table += '<th scope="col" ><b>Parameters</b></th>';
-    table += '<th scope="col" ><b>Custom Parameters</b></th>';
-    table += '<th scope="col" ><b>Created</b></th>';
-    table += '<th scope="col" ><b>Modified</b></th>';
-    table += '<th scope="col" ></th>';
+    table += '<td role="gridcell" scope="col" colspan="2"><b>OneLink Name</b></td>';
+    table += '<td role="gridcell" scope="col"><b>Full URL</b></td>';
+    table += '<td role="gridcell" scope="col" ><b># of Contents</b></td>';
+    table += '<td role="gridcell" scope="col" ><b>Created</b></td>';
+    table += '<td role="gridcell" scope="col" ><b>Modified</b></td>';
+    table += '<td role="gridcell" scope="col" ></td>';
     table += '</tr>';
-    table += '</thead>';
     table += '<tbody>';
 
 
@@ -36,8 +32,6 @@ function buildDashboard(data) {
             table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.LinkName}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" title="${element.FullURL}">${element.FullURL}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.ContentsCount}</div></td>`;
-            table += `<td role="gridcell"><div class="slds-truncate" >${element.Parameters}</div></td>`;
-            table += `<td role="gridcell"><div class="slds-truncate" >${element.CustomParameters}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Created}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Modified}</div></td>`;
             table += '<td>';
