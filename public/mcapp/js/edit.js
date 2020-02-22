@@ -562,15 +562,15 @@ function getLinkData(postData) {
 }
 $(document).ready(() => {
     $('#linkname-help').hover(() => {
-        $('#tooltip-linkname').css('display', '');
+        $('#tooltip-linkname').css("display", "");
     }, () => {
-        $('#tooltip-linkname').css('display', 'none');
+        $('#tooltip-linkname').css('display', "none");
     });
 
     $('#baseurl-help').hover(() => {
-        $('#tooltip-baseurl').css('display', '');
+        $('#tooltip-baseurl').css("display", "");
     }, () => {
-        $('#tooltip-baseurl').css('display', 'none');
+        $('#tooltip-baseurl').css("display", "none");
     });
 
     const urlParams = getUrlParameters();
