@@ -737,3 +737,28 @@ html {
   padding-top:14px !important;
   padding-bottom:15px!important;
 }
+
+@media only screen and (max-width: 1369px) {
+	#tooltip-help {
+		left: 578px !important;
+	}
+}
+
+@media only screen and (min-width: 1370px) and (max-width: 1383px){
+	#tooltip-help {
+		left: 587px !important;
+	}
+}
+
+@media only screen and (min-width: 1384px) and (max-width: 1410px){
+	#tooltip-help {
+		left: 594px !important;
+	}
+}
+
+@media only screen and (min-width: 1920px) {
+	#tooltip-help {
+    left:845px !important;
+    top:417px !important;
+  }
+}

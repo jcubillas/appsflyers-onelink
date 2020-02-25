@@ -40,6 +40,13 @@ function updateToken() {
 }
 
 $(document).ready(() => {
+
+    $('#help').hover(() => {
+        $('#tooltip-help').css('display', 'block');
+    }, () => {
+        $('#tooltip-help').css('display', 'none');
+    });
+    
     function uuidv4() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
             const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -112,11 +119,5 @@ $(document).ready(() => {
                 console.log(errorThrown);
             },
         });
-    });
-
-    $('#help').hover(() => {
-        $('#tooltip-help').css('display', 'block');
-    }, () => {
-        $('#tooltip-help').css('display', 'none');
     });
 });

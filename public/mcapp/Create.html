@@ -184,7 +184,7 @@
                 </svg>
             </button>
             <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip" id="tooltip-linkname"
-                style="top: -110%;left: -4.5%;max-width: none;display: none;">
+                style="max-width: none;position:absolute;top:-4px;left:212px; display:none">
                 <div class="slds-popover__body" style="font-size: 1.10rem;">Give your link a name so you can recognize
                     it easily on content generation.</div>
             </div>
@@ -207,7 +207,7 @@
                 </svg>
             </button>
             <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left slds-slide-from-left-to-right" role="tooltip" id="tooltip-baseurl"
-                style="max-width: none;position:absolute;top:-4px;left:212px">
+                style="max-width: none;position:absolute;top:-4px;left:212px; display:none">
                 <div class="slds-popover__body" style="font-size: 1.10rem;"> Paste here the attribution link you copied
                     from the AppsFlyer link management section.</div>
             </div>
@@ -236,13 +236,13 @@
     <div class="slds-form-element" style="padding-bottom: 2%;">
         <label class="slds-form-element__label" style=" padding-top: 2%;  ">Custom Parameters</label>
         <div class="slds-form-element__control">
-            <input type="text" name="customParameters" id="customParameters" class="form-control" value="">
+            <textarea name="customParameters" id="customParameters" class="slds-textarea" value=""></textarea>
         </div>
     </div>
     <div class="slds-form-element" style="padding-bottom: 2%;">
         <label class="slds-form-element__label" style=" padding-top: 2%;  ">Full URL</label>
         <div class="slds-form-element__control">
-            <input type="text" name="fullurl" id="fullurl" class="form-control" value="" disabled>
+            <textarea name="fullurl" id="fullurl" class="slds-textarea" value="" disabled></textarea>
         </div>
     </div>
     <div class="slds-grid slds-gutters">
@@ -255,7 +255,7 @@
         <div class="slds-col" style="    text-align: center;   margin-right: 85px; margin-top:10px; margin-bottom:10px">
             <a href="#" id="cancel" style="text-decoration: none; margin-right:5px;">Cancel</a>
             <button id="btn-addLink" class="slds-button slds-button_brand"
-                style="padding: 7px 12px; font-size:15px;display: inline-block;">Generate link</button>
+                style="padding: 7px 12px; font-size:15px;display:inline-block;">Generate link</button>
         </div>
     </div>
     <input type="hidden" id="rt" name="rt" value="">

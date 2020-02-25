@@ -561,16 +561,16 @@ function getLinkData(postData) {
     });
 }
 $(document).ready(() => {
-    $('#linkname-help').hover(() => {
-        $('#tooltip-linkname').css("display", "inherit");
+    $('#linkname-help-edit').hover(() => {
+        $('#tooltip-linkname-edit').css("display", "inherit");
     }, () => {
-        $('#tooltip-linkname').css('display', "none");
+        $('#tooltip-linkname-edit').css('display', "none");
     });
 
-    $('#baseurl-help').hover(() => {
-        $('#tooltip-baseurl').css("display", "inherit");
+    $('#baseurl-help-edit').hover(() => {
+        $('#tooltip-baseurl-edit').css("display", "inherit");
     }, () => {
-        $('#tooltip-baseurl').css("display", "none");
+        $('#tooltip-baseurl-edit').css("display", "none");
     });
 
     const urlParams = getUrlParameters();

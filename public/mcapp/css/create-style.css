@@ -17304,3 +17304,61 @@ abbr[title] {
 option{
 	font-family: sans-serif;
 }
+
+
+
+@media only screen and (max-width: 1366px) {
+	#tooltip-baseurl {
+		top: -10px !important;
+		left: 179px !important;
+	}
+	#tooltip-baseurl-edit {
+		top: -10px !important;
+		left: 157px !important;
+	}
+	
+	#tooltip-linkname {
+		top: -10px !important;
+		left: 165px !important;
+	}
+	#tooltip-linkname-edit {
+		top: -10px !important;
+		left: 165px !important;
+  	}
+}
+
+@media only screen and (min-width: 1367px) and (max-width: 1400px){
+	#tooltip-baseurl {
+		top: -10px !important;
+		left: 182px !important;
+	}
+	#tooltip-baseurl-edit {
+		top: -10px !important;
+		left: 160px !important;
+	}
+
+	#tooltip-linkname {
+		top: -10px !important;
+		left: 170px !important;
+	}
+	#tooltip-linkname-edit {
+		top: -10px !important;
+		left: 170px !important;
+  	}
+}
+
+@media only screen and (min-width: 1920px) {
+	#tooltip-baseurl {
+		left:212px !important;
+	  }
+	#tooltip-baseurl-edit {
+		left:190px !important;
+	}
+	  
+	#tooltip-linkname {
+		left:200px !important;
+	  }
+	#tooltip-linkname-edit {
+		left:200px !important;
+  	}
+}
