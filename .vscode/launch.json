@@ -10,13 +10,13 @@
             "name": "Local",
             "program": "${workspaceFolder}/app.js",
             "env":{
-                "sfmcClientId":"trwp5iupkzh3nl75dyayeo2l",
-                "authEndpoint":"https://mc2h-lnx9y6g8mb6fw8vdx6d5cn8.auth.marketingcloudapis.com/v2/token",
-                "userInfo": "https://mc2h-lnx9y6g8mb6fw8vdx6d5cn8.auth.marketingcloudapis.com/v2/userinfo",
+                "sfmcClientId":"09krt8enl5nsp6wy8jp8zcwo",
+                "authEndpoint":"https://mc8nghvf-gp9-nfl9jcsjjs7r214.auth.marketingcloudapis.com/v2/token",
+                "userInfo": "https://mc8nghvf-gp9-nfl9jcsjjs7r214.auth.marketingcloudapis.com/v2/userinfo",
                 "redirectURI":"https://appsflyers-poc-packages.herokuapp.com/login",
-                "baseAuth":"https://mc2h-lnx9y6g8mb6fw8vdx6d5cn8.auth.marketingcloudapis.com",
-                "restEndpoint":"https://mc2h-lnx9y6g8mb6fw8vdx6d5cn8.rest.marketingcloudapis.com",
-                "sfmcClientSecret":"Zvfh5FxWvxZ4fFJStIOYVs5U",
+                "baseAuth":"https://mc8nghvf-gp9-nfl9jcsjjs7r214.auth.marketingcloudapis.com",
+                "restEndpoint":"https://mc8nghvf-gp9-nfl9jcsjjs7r214.rest.marketingcloudapis.com",
+                "sfmcClientSecret":"GRh29UejviVni8vuYYsOzqYA",
                 "PORT":"5000",
                 "key":"^/WU?()D6TeF.*$[,2H5Le$9nYVf-"
             }
