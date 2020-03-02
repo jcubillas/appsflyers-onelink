@@ -132,7 +132,7 @@ exports.refreshToken = (refresh_token) => new Promise(((resolve, reject) => {
             grant_type: 'refresh_token',
             client_id: process.env.sfmcClientId,
             client_secret: process.env.sfmcClientSecret,
-            refresh_token,
+            refresh_token:refresh_token,
         },
     }, (err, response, body) => {
         if (err) { return reject(JSON.stringify(err)); }

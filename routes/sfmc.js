@@ -277,10 +277,10 @@ exports.UpsertLink = (req, resp) => {
                         refresh_token: response.refresh_token,
                         Status: body.StatusCode[0],
                     };
-                    return res.status(200).send(r1);
+                    return resp.status(200).send(r1);
                 }
 
                 return resp.status(200).semd(body);
-            }).catch((err) => { return res.status(500).send(err); });
+            }).catch((err) => { return resp.status(500).send(err); });
     });
 };
