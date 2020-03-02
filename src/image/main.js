@@ -219,10 +219,11 @@ function SaveDataExtensionRow() {
         sdk.setData(getInputsData());
     });
 
-    const link = {};
-    link.LinkID = data.LinkID;
-    link.contentsCount = $('#contentsCount').val();
-
+    const link = {LinkID : data.LinkID,
+        contentsCount: $('#contentsCount').val(),
+        refresh_token: ""
+    };
+   
     $.ajax({
         url: '/sfmc/UpsertImageRow',
         method: 'POST',
@@ -234,7 +235,7 @@ function SaveDataExtensionRow() {
                 url: '/sfmc/UpsertLink',
                 method: 'POST',
                 async: false,
-                data: link,
+                data: JSON.stringify(link),
                 success(upsertLinkData) {
                     console.log(upsertLinkData);
                 },
