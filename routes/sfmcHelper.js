@@ -123,6 +123,8 @@ exports.getAccessToken = (code) => new Promise(((resolve, reject) => {
 
 // eslint-disable-next-line camelcase
 exports.refreshToken = (refresh_token) => new Promise(((resolve, reject) => {
+     console.log(process.env.sfmcClientId);
+     console.log(process.env.sfmcClientSecret);
     request({
         url: process.env.authEndpoint,
         method: 'Post',
