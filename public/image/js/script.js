@@ -49,6 +49,7 @@ function listLinks(data) {
             $('#onelink-trigger').removeClass('slds-is-open');
             $('#onelink').val(element.LinkName);
             $('#linkId').val(element.LinkID);
+            $('#contentsCount').val(element.ContentsCount);
         });
     }
 }
