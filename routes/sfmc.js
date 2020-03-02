@@ -281,6 +281,6 @@ exports.UpsertLink = (req, resp) => {
                 }
 
                 return resp.status(200).semd(body);
-            }).catch((err) => res.status(500).send(err));
+            }).catch((err) => { return res.status(500).send(err); });
     });
 };

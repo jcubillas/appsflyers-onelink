@@ -50,6 +50,7 @@ function listLinks(data) {
             $('#onelink').val(element.LinkName);
             $('#linkId').val(element.LinkID);
             $('#contentsCount').val(element.ContentsCount);
+            $('#urlLink').val(element.LinkUrl)
         });
     }
 }
