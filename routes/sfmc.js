@@ -254,6 +254,7 @@ exports.UpsertButtonRow = (req, resp) => {
     });
 };
 exports.UpsertLink = (req, resp) => {
+    console.log("upsert link body request",req.body);
     sfmcHelper.createSoapClient(req.body.refresh_token, (e, response) => {
         if (e) { return resp.status(500).end(e); }
 
