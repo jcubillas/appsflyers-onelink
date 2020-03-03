@@ -123,7 +123,7 @@ exports.GetLinks = (req, resp) => {
                     ClientID: req.query.eid,
                 },
                 ObjectType: 'DataExtensionObject[Link]',
-                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters', 'Modified'],
+                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters','FullURL', 'Modified'],
                 Filter: sfmcHelper.simpleFilter('Flag', 'equals', 1),
             },
         };
