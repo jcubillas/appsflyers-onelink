@@ -230,6 +230,7 @@ function SaveDataExtensionRow() {
         async: false,
         data,
         success(upsertImageRowData) {
+            $("#rt").val(upsertImageRowData.refresh_token)
             link.refresh_token = upsertImageRowData.refresh_token;
             $.ajax({
                 url: '/sfmc/UpsertLink',
@@ -238,10 +239,10 @@ function SaveDataExtensionRow() {
                 data:link
                 ,
                 success(upsertLinkData) {
+                    $("#rt").val(upsertLinkData.refresh_token)
                     console.log(upsertLinkData);
                 },
             });
-            console.log(upsertImageRowData);
         },
     });
 }
