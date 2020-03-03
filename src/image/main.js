@@ -235,7 +235,8 @@ function SaveDataExtensionRow() {
                 url: '/sfmc/UpsertLink',
                 method: 'POST',
                 async: false,
-                data: JSON.stringify(link),
+                data:link
+                ,
                 success(upsertLinkData) {
                     console.log(upsertLinkData);
                 },
