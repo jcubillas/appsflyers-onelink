@@ -18,6 +18,7 @@ exports.auth = (req, resp) => {
         method: 'Post',
         json: postData,
     }, (err, response, body) => {
+        console.log(body);
         if (err) { return resp.send(500, err); }
 
         const cookies = setCookie.parse(response, {
@@ -25,7 +26,7 @@ exports.auth = (req, resp) => {
         });
 
         body.af_jwt = cookies[0].value;
-        console.log(body);
+       
 
         return resp.status(200).send(body);
     });
