@@ -19,14 +19,17 @@ exports.auth = (req, resp) => {
         json: postData,
     }, (err, response, body) => {
         console.log(body);
+
         if (err) { return resp.send(500, err); }
+        if (body.LoginSuccess !== undefined) {
+            const cookies = setCookie.parse(response, {
+                decodeValues: true, // default: true
+            });
 
-        const cookies = setCookie.parse(response, {
-            decodeValues: true, // default: true
-        });
+            body.af_jwt = cookies[0].value;
 
-        body.af_jwt = cookies[0].value;
-       
+        }
+
 
         return resp.status(200).send(body);
     });
