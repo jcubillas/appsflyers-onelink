@@ -90,6 +90,35 @@ exports.loadDashboards = (req, resp) => {
     });
 };
 
+exports.getLinksCount = (req, resp) => {
+    sfmcHelper.createSoapClient(req.body.refresh_token, (e, response) => {
+        if (e) { return resp.status(500).end(e); }
+
+        console.log(response);
+        const requestObject = {
+            RetrieveRequest: {
+                ClientIDs: {
+                    ClientID: req.body.enterpriseId,
+                },
+                ObjectType: 'DataExtensionObject[Link]',
+                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
+                Filter: sfmcHelper.simpleFilter('Flag', 'equals', 1),
+            },
+        };
+
+        sfmcHelper.retrieveRequest(response.client, requestObject)
+            .then((body) => {
+                console.log(body);
+                const dashboardResponse = {
+                    data: body,
+                    refresh_token: response.refresh_token,
+                    enterpriseId: req.body.enterpriseId,
+                };
+                return resp.status(200).send(dashboardResponse);
+            }).catch((err) => resp.send(400, err));
+    });
+};
+
 exports.getLinkByID = (req, resp) => {
     sfmcHelper.createSoapClient(req.body.refresh_token, (e, response) => {
         if (e) { return resp.status(500).end(e); }

@@ -8,17 +8,37 @@ function getUrlParameters() {
     return urlParams;
 }
 
-$(document).ready(() => {
+function getLinksCount() {
 
-    $('#pagination-demo').twbsPagination({
-        totalPages: 35,
-        visiblePages: 7,
-        onPageClick: function (event, page) {
-            $('#page-content').text('Page ' + page);
-        }
+    const urlParams = {
+        refresh_token: $('#rt').val(),
+        enterpriseId: $('#eid').val('eid')
+    };
+
+    $.ajax({
+        url: '/getLinksCount',
+        method: 'POST',
+        async: false,
+        data: urlParams,
+        success(element) {
+            console.log("cantidad de links");
+            console.log(element);
+        },
+        error(jqXHR, error, errorThrown) {
+            console.log(error);
+            console.log(errorThrown);
+            console.log(jqXHR);
+            $('.slds-box').css('display', 'block');
+            $('.slds-box').html(`<p>${errorThrown}</p>`);
+            setInterval((e) => {
+                e.preventDefault();
+                window.location.href = `/dashboard/home/?rt=${$('#rt').val()}eid=${$('#eid').val()}`;
+            }, 3000);
+        },
     });
+}
 
-
+$(document).ready(() => {
     const urlParams = getUrlParameters();
     const url = '/LoadDashboards';
     $('#rt').val(urlParams.refresh_token);
@@ -99,4 +119,19 @@ $(document).ready(() => {
         link = link.replace('{1}', $('#rt').val());
         window.location.href = link;
     });
+
+
+
+        //var linksCount = getLinksCount();
+    //var totalPages = parseInt(linksCount.body.length/15);
+    
+    $('#pagination-demo').twbsPagination({
+        totalPages: 2,
+        visiblePages: 5,
+        onPageClick: function (event, page) {
+            $('#page-content').text('Page ' + page);
+        }
+    });
+
+
 });

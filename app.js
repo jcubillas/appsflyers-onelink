@@ -93,9 +93,11 @@ app.get('/dashboard/edit', (_request, response) => {
     response.render('mcapp/Edit.html');
 });
 
+
 app.post('/LoadDashboards', dashboard.loadDashboards);
 app.post('/UpsertLink', dashboard.UpsertLink);
 app.post('/getLinkByID', dashboard.getLinkByID);
+app.post('/getLinksCount', dashboard.getLinksCount);
 app.post('/sfmcHelper/createDataExtension', sfmcHelper.createDataExtension);
 app.post('/sfmcHelper/retrieveFolder', sfmcHelper.retrieveFolder);
 app.post('/InstallAppExchange/createDataExtensions', InstallAppExchange.createDataExtensions);
