@@ -10,7 +10,7 @@ function getUrlParameters() {
 
 function getLinksCount() {
 
-    const urlParams = {
+    var params = {
         refresh_token: $('#rt').val(),
         enterpriseId: $('#eid').val('eid')
     };
@@ -19,7 +19,7 @@ function getLinksCount() {
         url: '/getLinksCount',
         method: 'POST',
         async: false,
-        data: urlParams,
+        data: params,
         success(element) {
             console.log("cantidad de links");
             console.log(element);

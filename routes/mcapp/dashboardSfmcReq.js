@@ -112,7 +112,7 @@ exports.getLinksCount = (req, resp) => {
                 const dashboardResponse = {
                     data: body,
                     refresh_token: response.refresh_token,
-                    enterpriseId: req.body.enterpriseId,
+                    enterpriseId: req.body.enterpriseId
                 };
                 return resp.status(200).send(dashboardResponse);
             }).catch((err) => resp.send(400, err));
