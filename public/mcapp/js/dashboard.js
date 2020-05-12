@@ -124,6 +124,8 @@ $(document).ready(() => {
 
         //var linksCount = getLinksCount();
     //var totalPages = parseInt(linksCount.body.length/15);
+
+    getLinksCount();
     
     $('#pagination-demo').twbsPagination({
         totalPages: 2,
