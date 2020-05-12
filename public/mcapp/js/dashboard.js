@@ -9,6 +9,16 @@ function getUrlParameters() {
 }
 
 $(document).ready(() => {
+
+    $('#pagination-demo').twbsPagination({
+        totalPages: 35,
+        visiblePages: 7,
+        onPageClick: function (event, page) {
+            $('#page-content').text('Page ' + page);
+        }
+    });
+
+
     const urlParams = getUrlParameters();
     const url = '/LoadDashboards';
     $('#rt').val(urlParams.refresh_token);
