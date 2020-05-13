@@ -57,7 +57,7 @@ function buildDashboard(data) {
     table += '</table>';
     table += '</div>';
 
-    return table;
+    $('#dashboard-table').html(table);
 }
 
 $(document).ready(() => {
