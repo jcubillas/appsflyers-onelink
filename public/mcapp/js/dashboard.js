@@ -60,6 +60,10 @@ function buildDashboard(data) {
     $('#dashboard-table').html(table);
 }
 
+function buildPaginator(data){
+
+}
+
 $(document).ready(() => {
     const urlParams = getUrlParameters();
     const url = '/LoadDashboards';
@@ -72,6 +76,8 @@ $(document).ready(() => {
         data: urlParams,
         success: (data) => {
             buildDashboard(data.data);
+            //buildPaginator(data.data);
+            $('#dashboard-data').val(data.data);
             $('#rt').val(data.refresh_token);
             $('#eid').val(data.enterpriseId);
             console.log(data.data);
@@ -143,14 +149,15 @@ $(document).ready(() => {
         link = link.replace('{1}', $('#rt').val());
         window.location.href = link;
     });
-    
+
     $('#pagination-demo').twbsPagination({
         totalPages: 2,
         visiblePages: 5,
         onPageClick: function (event, page) {
+            console.log(event);
+            console.log(page);
             console.log("Aca llamaria nuevamente para que se arme la tabla");
         }
     });
-
 
 });
