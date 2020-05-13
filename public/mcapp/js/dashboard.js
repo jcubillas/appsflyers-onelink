@@ -8,7 +8,7 @@ function getUrlParameters() {
     return urlParams;
 }
 
-function buildDashboard(data) {
+function buildDashboard(data, from, page) {
     let table = '<div class="slds-lookup" data-select="multi" data-scope="single" data-typeahead="true">';
     table += '<table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" >';
 
@@ -24,6 +24,12 @@ function buildDashboard(data) {
 
     if (data !== undefined) {
         data.sort((a, b) => ((new Date(a.Modified) < new Date(b.Modified)) ? 1 : ((new Date(b.Modified) < new Date(a.Modified)) ? -1 : 0)));
+        if(from == "init" || page == 1)
+            data = data.splice(0, 15);
+        else {
+            data = data.splice(page*15, 15);
+        }
+
         for (let index = 0; index < data.length; index++) {
             const element = data[index];
             table += '<tr>';
@@ -61,19 +67,24 @@ function buildDashboard(data) {
 }
 
 function buildPaginator(allLinks){
+    const params = {
+        refresh_token: $('#rt').val(),
+        enterpriseId: $('#eid').val()
+    };
     var totalPages = parseInt(allLinks.length/5);
+
     $('#pagination-demo').twbsPagination({
         totalPages: totalPages,
         visiblePages: 5,
         onPageClick: function (event, page) {
-            console.log(event);
+            loadDashboards(params, "paginator", page);
+            console.log("new page");
             console.log(page);
-            console.log("Aca llamaria nuevamente para que se arme la tabla");
         }
     });
 }
 
-function loadDashboards(urlParams){
+function loadDashboards(urlParams, from, page){
     const url = '/LoadDashboards';
 
     $.ajax({
@@ -83,9 +94,9 @@ function loadDashboards(urlParams){
         data: urlParams,
         success: (data) => {
             var allLinks = data.data;
-            buildPaginator(allLinks);
-            allLinks.splice(9, allLinks.length);
-            buildDashboard(allLinks);
+            if(from != "paginator")
+                buildPaginator(allLinks);
+            buildDashboard(allLinks, from, page);
             $('#rt').val(data.refresh_token);
             $('#eid').val(data.enterpriseId);
         },
@@ -104,7 +115,7 @@ $(document).ready(() => {
     $('#rt').val(urlParams.refresh_token);
     $('#eid').val(urlParams.enterpriseId);
 
-    loadDashboards(urlParams);
+    loadDashboards(urlParams, "init", 1);
 
     $('.slds-dropdown-trigger_click').hover(
         function () {
