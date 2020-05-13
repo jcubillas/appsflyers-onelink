@@ -85,7 +85,7 @@ function loadDashboards(urlParams){
             var allLinks = data.data;
             buildPaginator(allLinks);
             allLinks.splice(9, allLinks.length);
-            buildDashboard(links);
+            buildDashboard(allLinks);
             $('#rt').val(data.refresh_token);
             $('#eid').val(data.enterpriseId);
         },
