@@ -77,9 +77,8 @@ exports.loadDashboards = (req, resp) => {
 
         sfmcHelper.retrieveRequest(response.client, requestObject)
             .then((body) => {
-                console.log(body);
                 const dashboardResponse = {
-                    data: '',
+                    data: body,
                     table: buildDashboard(body, response.refresh_token, req.body.enterpriseId),
                     refresh_token: response.refresh_token,
                     enterpriseId: req.body.enterpriseId,
