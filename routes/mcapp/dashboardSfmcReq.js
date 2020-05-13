@@ -5,60 +5,6 @@
 const uuidv1 = require('uuid/v4');
 const sfmcHelper = require('../sfmcHelper');
 
-
-function buildDashboard(data) {
-    console.log(data);
-    let table = '<div class="slds-lookup" data-select="multi" data-scope="single" data-typeahead="true">';
-    table += '<table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" >';
-
-    table += '<tr>';
-
-    table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>OneLink Name</b></td>';
-    table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="3"><b>Full URL</b></td>';
-    table += '<td class="header-dashboard" role="gridcell" scope="col" style="text-align:center;"><b># of Contents</b></td>';
-    table += '<td class="header-dashboard" role="gridcell" scope="col" ><b>Created</b></td>';
-    table += '<td class="header-dashboard" role="gridcell" scope="col" ><b>Modified</b></td>';
-    table += '<td class="header-dashboard" role="gridcell" scope="col" ></td>';
-    table += '</tr>';
-
-    if (data !== undefined) {
-        data.sort((a, b) => ((new Date(a.Modified) < new Date(b.Modified)) ? 1 : ((new Date(b.Modified) < new Date(a.Modified)) ? -1 : 0)));
-        for (let index = 0; index < data.length; index++) {
-            const element = data[index];
-            table += '<tr>';
-
-            table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.LinkName}</div></td>`;
-            table += `<td role="gridcell" colspan="3"><div class="slds-truncate" title="${element.FullURL}">${element.FullURL}</div></td>`;
-            table += `<td role="gridcell"><div class="slds-truncate" style="text-align:center;">${element.ContentsCount}</div></td>`;
-            table += `<td role="gridcell"><div class="slds-truncate" >${element.Created}</div></td>`;
-            table += `<td role="gridcell"><div class="slds-truncate" >${element.Modified}</div></td>`;
-            table += '<td>';
-            table += `<div id="onelink-trigger${element.LinkID}" class="slds-dropdown-trigger slds-dropdown-trigger_click" style="padding-left:50%;">`;
-            table += '<button class="slds-button slds-button_icon slds-button_icon-border-filled" >';
-            table += '<svg class="slds-button__icon" aria-hidden="true">';
-            table += '<use xlink:href="/mcapp/images/symbols.svg#down">';
-            table += '</use>';
-            table += '</svg>';
-            table += '</button>';
-            table += '<div class="slds-dropdown slds-dropdown_left" style="margin-top: -1px!important">';
-            table += '<ul class="slds-dropdown__list" role="menu" >';
-            table += '<li class="slds-dropdown__item" role="presentation">';
-            table += `<a href="/dashboard/edit/?lid=${element.LinkID}&eid={0}&rt={1}" class="edit" id="edit${index}" role="menuitem" tabindex="0">`;
-            table += '<span class="slds-truncate" title="Edit">Edit</span>';
-            table += '</a></li>';
-            table += '</ul>';
-            table += '</div>';
-            table += '</div>';
-            table += '</td>';
-            table += '</tr>';
-        }
-    }
-    table += '</table>';
-    table += '</div>';
-
-    return table;
-}
-
 exports.loadDashboards = (req, resp) => {
     sfmcHelper.createSoapClient(req.body.refresh_token, (e, response) => {
         if (e) { return resp.status(500).end(e); }
@@ -79,7 +25,6 @@ exports.loadDashboards = (req, resp) => {
             .then((body) => {
                 const dashboardResponse = {
                     data: body,
-                    table: buildDashboard(body, response.refresh_token, req.body.enterpriseId),
                     refresh_token: response.refresh_token,
                     enterpriseId: req.body.enterpriseId,
                 };
