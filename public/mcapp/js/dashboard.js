@@ -63,7 +63,7 @@ function buildDashboard(data) {
 function buildPaginator(allLinks){
     var totalPages = allLinks.length;
     $('#pagination-demo').twbsPagination({
-        totalPages: 2,
+        totalPages: totalPages,
         visiblePages: 5,
         onPageClick: function (event, page) {
             console.log(event);
