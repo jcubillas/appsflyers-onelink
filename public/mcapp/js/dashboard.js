@@ -75,7 +75,7 @@ function buildPaginator(allLinks){
         refresh_token: $('#rt').val(),
         enterpriseId: $('#eid').val()
     };
-    var totalPages = parseInt(allLinks.length/5);
+    var totalPages = Math.ceil(allLinks.length/15);
 
     $('#pagination-demo').twbsPagination({
         totalPages: totalPages,
