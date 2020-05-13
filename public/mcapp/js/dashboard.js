@@ -60,8 +60,17 @@ function buildDashboard(data) {
     $('#dashboard-table').html(table);
 }
 
-function buildPaginator(data){
-
+function buildPaginator(allLinks){
+    var totalPages = allLinks.length;
+    $('#pagination-demo').twbsPagination({
+        totalPages: 2,
+        visiblePages: 5,
+        onPageClick: function (event, page) {
+            console.log(event);
+            console.log(page);
+            console.log("Aca llamaria nuevamente para que se arme la tabla");
+        }
+    });
 }
 
 function loadDashboards(urlParams){
@@ -74,9 +83,9 @@ function loadDashboards(urlParams){
         data: urlParams,
         success: (data) => {
             var allLinks = data.data;
-            var links = allLinks.splice(9, allLinks.length);
+            buildPaginator(allLinks);
+            allLinks.splice(9, allLinks.length);
             buildDashboard(links);
-            //buildPaginator(data.data);
             $('#rt').val(data.refresh_token);
             $('#eid').val(data.enterpriseId);
         },
@@ -154,15 +163,4 @@ $(document).ready(() => {
         link = link.replace('{1}', $('#rt').val());
         window.location.href = link;
     });
-
-    $('#pagination-demo').twbsPagination({
-        totalPages: 2,
-        visiblePages: 5,
-        onPageClick: function (event, page) {
-            console.log(event);
-            console.log(page);
-            console.log("Aca llamaria nuevamente para que se arme la tabla");
-        }
-    });
-
 });
