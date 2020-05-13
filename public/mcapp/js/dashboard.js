@@ -24,10 +24,14 @@ function buildDashboard(data, from, page) {
 
     if (data !== undefined) {
         data.sort((a, b) => ((new Date(a.Modified) < new Date(b.Modified)) ? 1 : ((new Date(b.Modified) < new Date(a.Modified)) ? -1 : 0)));
-        if(from == "init" || page == 1)
+        if(from == "init" || page == 1) {
             data = data.splice(0, 15);
+            $("#currentDashboard").val(15);
+        }
         else {
-            data = data.splice(page*15, 15);
+            var currentDashboard = $("#currentDashboard").val();
+            data = data.splice(currentDashboard, 15);
+            $("#currentDashboard").val(currentDashboard + 15);
         }
 
         for (let index = 0; index < data.length; index++) {
