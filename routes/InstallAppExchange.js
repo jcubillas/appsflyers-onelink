@@ -129,7 +129,7 @@ const GetAppsFlyersFolderID = (enterpriseId, client) => new Promise(((resolve, r
         return reject('Invalid Client');
     }
 
-    retrieveFolder(enterpriseId, 'AppsFlyers', client)
+    retrieveFolder(enterpriseId, process.env.Folder, client)
         .then((r) => {
             let response;
             if (r.Results !== undefined) {
@@ -142,7 +142,7 @@ const GetAppsFlyersFolderID = (enterpriseId, client) => new Promise(((resolve, r
                 .then((result) => {
                     if (result.Results !== undefined) {
                         const parentId = result.Results[0].ID;
-                        client.Create(CreateRequestFolder('AppsFlyers', parentId), (err, res) => {
+                        client.Create(CreateRequestFolder(process.env.Folder, parentId), (err, res) => {
                             if (err) {
                                 return reject(err);
                             }
@@ -170,7 +170,7 @@ exports.createDataExtensions = async (req) => new Promise(((resolve, reject) => 
             GetAppsFlyersFolderID(req.body.eid, response.client)
                 .then((r1) => {
                     console.log(r1);
-                    const CreateRequestDEObjImage = CreateRequestDE(req.body.eid, 'ImageContentBlock', r1.categoryID, false, {
+                    const CreateRequestDEObjImage = CreateRequestDE(req.body.eid, process.env.ImageContentBlockDataExtension, r1.categoryID, false, {
                         Field: [
                             {
                                 CustomerKey: 'ContentBlockID',
@@ -225,7 +225,7 @@ exports.createDataExtensions = async (req) => new Promise(((resolve, reject) => 
                             },
                         ],
                     });
-                    const CreateRequestDEObjLink = CreateRequestDE(req.body.eid, 'Link', r1.categoryID, false, {
+                    const CreateRequestDEObjLink = CreateRequestDE(req.body.eid, process.env.LinkDataExtension, r1.categoryID, false, {
                         Field: [
                             {
                                 CustomerKey: 'LinkID',
@@ -329,7 +329,7 @@ exports.createDataExtensions = async (req) => new Promise(((resolve, reject) => 
                             },
                         ],
                     });
-                    const CreateRequestDEObjButton = CreateRequestDE(req.body.eid, 'ButtonContentBlock', r1.categoryID, false, {
+                    const CreateRequestDEObjButton = CreateRequestDE(req.body.eid, process.env.ButtonContentBlockDataExtension, r1.categoryID, false, {
                         Field: [
                             {
                                 CustomerKey: 'ContentBlockID',
@@ -451,7 +451,7 @@ exports.createDataExtensions = async (req) => new Promise(((resolve, reject) => 
                         ],
                     });
 
-                    const CreateRequestDEObjToken = CreateRequestDE(req.body.eid, 'TokenAuthentication', r1.categoryID, false, {
+                    const CreateRequestDEObjToken = CreateRequestDE(req.body.eid, process.env.TokenAuthenticationDataExtension, r1.categoryID, false, {
                         Field: [
                             {
                                 CustomerKey: 'Token',
@@ -482,6 +482,7 @@ exports.createDataExtensions = async (req) => new Promise(((resolve, reject) => 
                             },
                         ],
                     });
+                    
                     sfmcHelper.createDataExtension(response.client, CreateRequestDEObjImage)
                         .then((r2) => {
                             if (r2.Results[0].StatusCode === 'OK') {

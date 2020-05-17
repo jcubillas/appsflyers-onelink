@@ -122,8 +122,8 @@ exports.GetLinks = (req, resp) => {
                 ClientIDs: {
                     ClientID: req.query.eid,
                 },
-                ObjectType: 'DataExtensionObject[Link]',
-                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters','FullURL', 'Modified'],
+                ObjectType: `DataExtensionObject[${process.env.LinkDataExtension}]`,
+                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status','JSONParameters' ,'Parameters', 'CustomParameters','FullURL', 'Modified'],
                 Filter: sfmcHelper.simpleFilter('Flag', 'equals', 1),
             },
         };
@@ -162,7 +162,7 @@ exports.UpsertImageRow = (req, resp) => {
             Name: 'Height',
             Value: req.body.Height,
         }];
-        const UpdateRequest = sfmcHelper.UpdateRequestObject('ImageContentBlock', [{
+        const UpdateRequest = sfmcHelper.UpdateRequestObject(process.env.ImageContentBlockDataExtension, [{
             Name: 'ContentBlockID',
             Value: req.body.ContentBlockID === undefined ? uuidv1() : req.body.ContentBlockID,
         }], Properties);
@@ -233,7 +233,7 @@ exports.UpsertButtonRow = (req, resp) => {
             Name: 'MarginLeft',
             Value: req.body.marginLeft,
         }];
-        const UpdateRequest = sfmcHelper.UpdateRequestObject('ButtonContentBlock', [{
+        const UpdateRequest = sfmcHelper.UpdateRequestObject(process.env.ButtonContentBlockDataExtension, [{
             Name: 'ContentBlockID',
             Value: req.body.contentBlockID === undefined ? uuidv1() : req.body.contentBlockID,
         }], Properties);
@@ -264,7 +264,7 @@ exports.UpsertLink = (req, resp) => {
             Value: parseInt(req.body.contentsCount) + 1,
         }];
 
-        const UpdateRequest = sfmcHelper.UpdateRequestObject('Link', [{
+        const UpdateRequest = sfmcHelper.UpdateRequestObject(process.env.LinkDataExtension, [{
             Name: 'LinkID',
             Value: req.body.LinkID === undefined ? uuidv1() : req.body.LinkID,
         }], Properties);

@@ -15,7 +15,7 @@ exports.loadDashboards = (req, resp) => {
                 ClientIDs: {
                     ClientID: req.body.enterpriseId,
                 },
-                ObjectType: 'DataExtensionObject[Link]',
+                ObjectType: `DataExtensionObject[${process.env.LinkDataExtension}]`,
                 Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
                 Filter: sfmcHelper.simpleFilter('Flag', 'equals', 1),
             },
@@ -44,7 +44,7 @@ exports.getLinksCount = (req, resp) => {
                 ClientIDs: {
                     ClientID: req.body.enterpriseId,
                 },
-                ObjectType: 'DataExtensionObject[Link]',
+                ObjectType: `DataExtensionObject[${process.env.LinkDataExtension}]`,
                 Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
                 Filter: sfmcHelper.simpleFilter('Flag', 'equals', 1),
             },
@@ -72,7 +72,7 @@ exports.getLinkByID = (req, resp) => {
                 ClientIDs: {
                     ClientID: req.body.enterpriseId,
                 },
-                ObjectType: 'DataExtensionObject[Link]',
+                ObjectType: `DataExtensionObject[${process.env.LinkDataExtension}]`,
                 Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
                 Filter: sfmcHelper.simpleFilter('LinkID', 'equals', req.body.LinkID),
             },
@@ -132,7 +132,7 @@ exports.UpsertLink = (req, resp) => {
             Value: req.body.Modified,
         },
         ];
-        const UpdateRequest = sfmcHelper.UpdateRequestObject('Link', [{
+        const UpdateRequest = sfmcHelper.UpdateRequestObject(process.env.LinkDataExtension, [{
             Name: 'LinkID',
             Value: req.body.LinkID === undefined ? uuidv1() : req.body.LinkID,
         }], Properties);

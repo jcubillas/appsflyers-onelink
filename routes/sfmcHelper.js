@@ -30,6 +30,7 @@ function xmlToArray(rawResponse) {
                         BaseURL: '',
                         ContentsCount: '',
                         Status: '',
+                        JSONParameters: '',
                         Parameters: '',
                         CustomParameters: '',
                         FullURL: '',
@@ -63,9 +64,15 @@ function xmlToArray(rawResponse) {
                         if (row.Name[0] === 'Parameters') {
                             obj.Parameters = row.Value[0];
                         }
+
+                        if (row.Name[0] === 'JSONParameters') {
+                            obj.JSONParameters = row.Value[0];
+                        }
+
                         if (row.Name[0] === 'CustomParameters') {
                             obj.CustomParameters = row.Value[0];
                         }
+
                         if (row.Name[0] === 'FullURL') {
                             obj.FullURL = row.Value[0];
                         }
@@ -387,7 +394,7 @@ exports.getTokenRows = (req, resp) => {
                 ClientIDs: {
                     ClientID: req.body.eid,
                 },
-                ObjectType: 'DataExtensionObject[TokenAuthentication]',
+                ObjectType: `DataExtensionObject[${process.env.TokenAuthenticationDataExtension}]`,
                 Properties: ['Token', 'Authorized'],
                 Filter: {
                     attributes: {
