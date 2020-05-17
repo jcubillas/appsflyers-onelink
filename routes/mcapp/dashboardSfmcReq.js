@@ -94,7 +94,8 @@ exports.getLinkByID = (req, resp) => {
 exports.UpsertLink = (req, resp) => {
     sfmcHelper.createSoapClient(req.body.refresh_token, (e, response) => {
         if (e) { return resp.status(500).end(e); }
-
+        console.log("UpsertLink <br>");
+        console.log(req.body);
         const Properties = [{
             Name: 'LinkName',
             Value: req.body.linkName,
