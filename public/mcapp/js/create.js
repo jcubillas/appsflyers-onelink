@@ -615,6 +615,7 @@ $(document).ready(() => {
             linkName: $('#linkName').val(),
             baseUrl: $('#baseURL').val(),
             status: 'Active',
+            JSONParameter: JSON.stringify(JSONParameter),
             Parameters: buildQueryString(),
             CustomParameters: customParameters,
         };
