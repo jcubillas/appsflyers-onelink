@@ -114,7 +114,7 @@ exports.UpsertLink = (req, resp) => {
         },
         {
             Name: 'JSONParameters',
-            Value: req.body.JSONParameters,
+            Value: JSON.stringify(req.body.JSONParameters),
         },
         {
             Name: 'Parameters',
