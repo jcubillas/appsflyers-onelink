@@ -8,6 +8,20 @@ function getUrlParameters() {
     return urlParams;
 }
 
+
+function getCampaign(element) {
+    var AttributtionLinks = element.JSONParameters.AttributtionLinks;
+    var Campaign = "";
+    for (let index = 0; index < AttributtionLinks.length; index++) {
+        const attrLink = AttributtionLinks[index];
+        if (attrLink.name == "c") {
+            Campaign = attrLink.vakueM
+            break;
+        }
+
+    }
+    return Campaign;
+}
 function buildDashboard(data, from, page) {
     let table = '<div class="slds-lookup" data-select="multi" data-scope="single" data-typeahead="true">';
     table += '<table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" >';
@@ -25,7 +39,7 @@ function buildDashboard(data, from, page) {
 
     if (data !== undefined) {
         data.sort((a, b) => ((new Date(a.Modified) < new Date(b.Modified)) ? 1 : ((new Date(b.Modified) < new Date(a.Modified)) ? -1 : 0)));
-        if(from == "init" || page == 1) {
+        if (from == "init" || page == 1) {
             data = data.splice(0, 15);
             $("#currentDashboard").val(15);
         }
@@ -37,10 +51,12 @@ function buildDashboard(data, from, page) {
 
         for (let index = 0; index < data.length; index++) {
             const element = data[index];
+            var Campaign = getCampaign(element);
+
             table += '<tr>';
 
             table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.LinkName}</div></td>`;
-            table += `<td role="gridcell" colspan="2"><div class="slds-truncate" ></div></td>`;
+            table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${Campaign}</div></td>`;
             table += `<td role="gridcell" colspan="3"><div class="slds-truncate" title="${element.FullURL}">${element.FullURL}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" style="text-align:center;">${element.ContentsCount}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Created}</div></td>`;
@@ -72,12 +88,12 @@ function buildDashboard(data, from, page) {
     $('#dashboard-table').html(table);
 }
 
-function buildPaginator(allLinks){
+function buildPaginator(allLinks) {
     const params = {
         refresh_token: $('#rt').val(),
         enterpriseId: $('#eid').val()
     };
-    var totalPages = Math.ceil(allLinks.length/15);
+    var totalPages = Math.ceil(allLinks.length / 15);
 
     $('#pagination-demo').twbsPagination({
         totalPages: totalPages,
@@ -90,7 +106,7 @@ function buildPaginator(allLinks){
     });
 }
 
-function loadDashboards(urlParams, from, page){
+function loadDashboards(urlParams, from, page) {
     const url = '/LoadDashboards';
 
     $.ajax({
@@ -104,7 +120,7 @@ function loadDashboards(urlParams, from, page){
             $('#eid').val(data.enterpriseId);
 
             buildDashboard(allLinks, from, page);
-            if(from != "paginator")
+            if (from != "paginator")
                 buildPaginator(allLinks);
         },
         error(jqXHR, error, errorThrown) {
