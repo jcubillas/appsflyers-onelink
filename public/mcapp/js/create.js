@@ -5,8 +5,8 @@
 /* eslint-disable max-len */
 /* eslint-disable no-undef */
 var JSONParameter = {
-    AttributtionLinks:[],
-    CustomParameters:[]
+    AttributtionLinks: [],
+    CustomParameters: []
 }
 function getUrlParameters() {
     // eslint-disable-next-line no-undef
@@ -69,11 +69,11 @@ function overrideParamsValues(name, value, isCustomOnblur = false) {
             const isAttributionLink = getOption(name);
             if (isAttributionLink.Name !== undefined) {
                 rules.push(newRuleObj(rules.length, name, value));
-                JSONParameter.AttributtionLinks.push({index:rules.length,name:name, value: value, canDelete:true, selectId:  `select${rules.length}`, inputValueId: name, isCustom: false,customValue: null})
+                JSONParameter.AttributtionLinks.push({ index: rules.length, name: name, value: value, canDelete: true, selectId: `select${rules.length}`, inputValueId: name, isCustom: false, customValue: null })
             } else if (isCustomOnblur === false) {
                 const customParams = `${$('#customParameters').val()}&${name}=${value}`;
                 var cpLength = JSONParameter.CustomParameters.length;
-                JSONParameter.CustomParameters.push({index:cpLength,name:name, value: value});
+                JSONParameter.CustomParameters.push({ index: cpLength, name: name, value: value });
                 $('#customParameters').val(customParams);
             }
         }
@@ -133,8 +133,10 @@ function dinamicInputsOnBlur(element) {
         if (rules[index].name === element[0].id) {
             if (element[0].value !== undefined && element[0].value !== '') {
                 rules[index].value = element[0].value;
+                JSONParameter.AttributtionLinks[index].value = element[0].value;
             } else {
                 rules[index].value = 'Enter Value';
+                JSONParameter.AttributtionLinks[index].value = 'Enter Value';
             }
 
             rule = rules[index];
@@ -244,7 +246,7 @@ function setSelectOptions(restantes = false) {
     }
     selectOptions.push({ Name: 'Campaign', Value: 'c' });
     selectOptions.push({ Name: 'Adset', Value: 'af_adset' });
-    selectOptions.push({ Name: 'Ad Name', Value: 'af_ad' });    
+    selectOptions.push({ Name: 'Ad Name', Value: 'af_ad' });
     selectOptions.push({ Name: 'Sub Parameter 1', Value: 'af_sub1' });
     selectOptions.push({ Name: 'Sub Parameter 2', Value: 'af_sub2' });
     selectOptions.push({ Name: 'Sub Parameter 3', Value: 'af_sub3' });
@@ -402,11 +404,14 @@ function addEventsForComponent(element, array) {
     });
 
     let inputId = element.value;
-    if (element.value.startsWith("'%%")) {
-        inputId = element.value.substring(3, element.value.length - 3);
-    } else if (element.value.startsWith('%%')) {
-        inputId = element.value.substring(2, element.value.length - 2);
-    } else { inputId = element.value; }
+    if (element.value != undefined) {
+        if (element.value.startsWith("'%%")) {
+            inputId = element.value.substring(3, element.value.length - 3);
+        } else if (element.value.startsWith('%%')) {
+            inputId = element.value.substring(2, element.value.length - 2);
+        } else { inputId = element.value; }
+
+    }
 
 
     $(`#${inputId}`).on('click', (e) => {
@@ -432,10 +437,10 @@ function addEventsForComponent(element, array) {
 
 function initializeRules() {
     const rules = [];
-    JSONParameter.AttributtionLinks.push({index:0,name:'pid', value: 'Email-SFMC', canDelete:false, selectId: 'select0', inputValueId: 'pid', isCustom: false,customValue: null});
-    JSONParameter.AttributtionLinks.push({index:1,name:'af_channel', value: 'Salesforce Marketing Cloud', canDelete:false, selectId: 'select1', inputValueId: 'af_channel', isCustom: false,customValue: null});
-    JSONParameter.AttributtionLinks.push({index:2,name:'is_retargeting', value: 'false', canDelete:false, selectId: 'select2', inputValueId: 'is_retargeting', isCustom: false,customValue: null});
-    JSONParameter.AttributtionLinks.push({index:3,name:'c', value: 'Enter Value', canDelete:true, selectId: 'select3', inputValueId: 'c', isCustom: false,customValue: null});
+    JSONParameter.AttributtionLinks.push({ index: 0, name: 'pid', value: 'Email-SFMC', canDelete: false, selectId: 'select0', inputValueId: 'pid', isCustom: false, customValue: null });
+    JSONParameter.AttributtionLinks.push({ index: 1, name: 'af_channel', value: 'Salesforce Marketing Cloud', canDelete: false, selectId: 'select1', inputValueId: 'af_channel', isCustom: false, customValue: null });
+    JSONParameter.AttributtionLinks.push({ index: 2, name: 'is_retargeting', value: 'false', canDelete: false, selectId: 'select2', inputValueId: 'is_retargeting', isCustom: false, customValue: null });
+    JSONParameter.AttributtionLinks.push({ index: 3, name: 'c', value: 'Enter Value', canDelete: true, selectId: 'select3', inputValueId: 'c', isCustom: false, customValue: null });
     rules.push(newRuleObj(0, 'pid', 'Email-SFMC'));
     rules.push(newRuleObj(1, 'af_channel', 'Salesforce Marketing Cloud'));
     rules.push(newRuleObj(2, 'is_retargeting', 'false'));
@@ -471,7 +476,7 @@ $(document).ready(() => {
         }
         let { index } = rules[rules.length - 1];
         rules.push(newRuleObj(++index, 'Select parameter', null, true));
-        JSONParameter.AttributtionLinks.push({index:index,name:'Select parameter', value: null, canDelete:true, selectId:  `select${index}`, inputValueId: 'Select', isCustom: false,customValue: null});
+        JSONParameter.AttributtionLinks.push({ index: index, name: 'Select parameter', value: null, canDelete: true, selectId: `select${index}`, inputValueId: 'Select', isCustom: false, customValue: null });
         addRules(rules);
         json = JSON.stringify(rules);
         $('#rl').val(json);
