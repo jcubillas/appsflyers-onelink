@@ -16,7 +16,7 @@ exports.loadDashboards = (req, resp) => {
                     ClientID: req.body.enterpriseId,
                 },
                 ObjectType: `DataExtensionObject[${process.env.LinkDataExtension}]`,
-                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
+                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status','JSONParameters', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
                 Filter: sfmcHelper.simpleFilter('Flag', 'equals', 1),
             },
         };
@@ -45,7 +45,7 @@ exports.getLinksCount = (req, resp) => {
                     ClientID: req.body.enterpriseId,
                 },
                 ObjectType: `DataExtensionObject[${process.env.LinkDataExtension}]`,
-                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
+                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'JSONParameters', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
                 Filter: sfmcHelper.simpleFilter('Flag', 'equals', 1),
             },
         };
@@ -73,7 +73,7 @@ exports.getLinkByID = (req, resp) => {
                     ClientID: req.body.enterpriseId,
                 },
                 ObjectType: `DataExtensionObject[${process.env.LinkDataExtension}]`,
-                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
+                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'JSONParameters', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
                 Filter: sfmcHelper.simpleFilter('LinkID', 'equals', req.body.LinkID),
             },
         };
@@ -110,6 +110,10 @@ exports.UpsertLink = (req, resp) => {
         }, {
             Name: 'Flag',
             Value: 1,
+        },
+        {
+            Name: 'JSONParameters',
+            Value: req.body.JSONParameters,
         },
         {
             Name: 'Parameters',

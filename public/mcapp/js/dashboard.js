@@ -15,6 +15,7 @@ function buildDashboard(data, from, page) {
     table += '<tr>';
 
     table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>OneLink Name</b></td>';
+    table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>Campaña</b></td>';
     table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="3"><b>Full URL</b></td>';
     table += '<td class="header-dashboard" role="gridcell" scope="col" style="text-align:center;"><b># of Contents</b></td>';
     table += '<td class="header-dashboard" role="gridcell" scope="col" ><b>Created</b></td>';
@@ -39,6 +40,7 @@ function buildDashboard(data, from, page) {
             table += '<tr>';
 
             table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.LinkName}</div></td>`;
+            table += `<td role="gridcell" colspan="2"><div class="slds-truncate" ></div></td>`;
             table += `<td role="gridcell" colspan="3"><div class="slds-truncate" title="${element.FullURL}">${element.FullURL}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" style="text-align:center;">${element.ContentsCount}</div></td>`;
             table += `<td role="gridcell"><div class="slds-truncate" >${element.Created}</div></td>`;
