@@ -4,6 +4,10 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable max-len */
 /* eslint-disable no-undef */
+var JSONParameter = {
+    AttributtionLinks:[],
+    CustomParameters:[]
+}
 function getUrlParameters() {
     // eslint-disable-next-line no-undef
     const url = new URL(window.location.href);
@@ -65,8 +69,11 @@ function overrideParamsValues(name, value, isCustomOnblur = false) {
             const isAttributionLink = getOption(name);
             if (isAttributionLink.Name !== undefined) {
                 rules.push(newRuleObj(rules.length, name, value));
+                JSONParameter.AttributtionLinks.push({index:rules.length,name:name, value: value, canDelete:true, selectId:  `select${rules.length}`, inputValueId: name, isCustom: false,customValue: null})
             } else if (isCustomOnblur === false) {
                 const customParams = `${$('#customParameters').val()}&${name}=${value}`;
+                var cpLength = JSONParameter.CustomParameters.length;
+                JSONParameter.CustomParameters.push({index:cpLength,name:name, value: value});
                 $('#customParameters').val(customParams);
             }
         }
@@ -387,7 +394,7 @@ function addEventsForComponent(element, array) {
         }
 
         array[element.index] = element;
-
+        JSONParameter.AttributtionLinks[element.index] = element;
         addRules(array);
         $(`#${element.selectId}`).val(selectedOptionValue);
         $(`#${element.name}`).attr('readonly', false);
@@ -425,6 +432,10 @@ function addEventsForComponent(element, array) {
 
 function initializeRules() {
     const rules = [];
+    JSONParameter.AttributtionLinks.push({index:0,name:'pid', value: 'Email-SFMC', canDelete:false, selectId: 'select0', inputValueId: 'pid', isCustom: false,customValue: null});
+    JSONParameter.AttributtionLinks.push({index:1,name:'af_channel', value: 'Salesforce Marketing Cloud', canDelete:false, selectId: 'select1', inputValueId: 'af_channel', isCustom: false,customValue: null});
+    JSONParameter.AttributtionLinks.push({index:2,name:'is_retargeting', value: 'false', canDelete:false, selectId: 'select2', inputValueId: 'is_retargeting', isCustom: false,customValue: null});
+    JSONParameter.AttributtionLinks.push({index:3,name:'c', value: 'Enter Value', canDelete:true, selectId: 'select3', inputValueId: 'c', isCustom: false,customValue: null});
     rules.push(newRuleObj(0, 'pid', 'Email-SFMC'));
     rules.push(newRuleObj(1, 'af_channel', 'Salesforce Marketing Cloud'));
     rules.push(newRuleObj(2, 'is_retargeting', 'false'));
@@ -460,6 +471,7 @@ $(document).ready(() => {
         }
         let { index } = rules[rules.length - 1];
         rules.push(newRuleObj(++index, 'Select parameter', null, true));
+        JSONParameter.AttributtionLinks.push({index:index,name:'Select parameter', value: null, canDelete:true, selectId:  `select${index}`, inputValueId: 'Select', isCustom: false,customValue: null});
         addRules(rules);
         json = JSON.stringify(rules);
         $('#rl').val(json);
