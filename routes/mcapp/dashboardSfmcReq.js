@@ -137,6 +137,8 @@ exports.UpsertLink = (req, resp) => {
             Value: req.body.Modified,
         },
         ];
+
+        console.log(Properties);
         const UpdateRequest = sfmcHelper.UpdateRequestObject(process.env.LinkDataExtension, [{
             Name: 'LinkID',
             Value: req.body.LinkID === undefined ? uuidv1() : req.body.LinkID,
