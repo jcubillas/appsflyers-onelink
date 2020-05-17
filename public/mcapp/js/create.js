@@ -6,7 +6,8 @@
 /* eslint-disable no-undef */
 var JSONParameter = {
     AttributtionLinks: [],
-    CustomParameters: []
+    CustomParameters: [],
+    AllParameters:[]
 }
 function getUrlParameters() {
     // eslint-disable-next-line no-undef
@@ -34,6 +35,7 @@ function buildQueryString() {
     // eslint-disable-next-line no-plusplus
     for (let index = 0; index < rules.length; index++) {
         const element = rules[index];
+        JSONParameter.AllParameters.push({name:element.name,value:element.value});
         qs += `${element.name}=`;
         if (element.value.startsWith("'%%")) {
             qs += `${element.value}`;
