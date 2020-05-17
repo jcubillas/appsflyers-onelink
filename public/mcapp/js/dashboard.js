@@ -10,7 +10,8 @@ function getUrlParameters() {
 
 
 function getCampaign(element) {
-    var AttributtionLinks = JSON.parse(element.JSONParameters.AttributtionLinks);
+    var JSONParameters = JSON.parse(element.JSONParameters);
+    var AttributtionLinks = JSONParameters.AttributtionLinks;
     var Campaign = "";
     for (let index = 0; index < AttributtionLinks.length; index++) {
         const attrLink = AttributtionLinks[index];
