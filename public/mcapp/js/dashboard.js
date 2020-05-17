@@ -16,7 +16,7 @@ function getCampaign(element) {
     for (let index = 0; index < AttributtionLinks.length; index++) {
         const attrLink = AttributtionLinks[index];
         if (attrLink.name == "c") {
-            Campaign = attrLink.vakueM
+            Campaign = attrLink.value
             break;
         }
 
