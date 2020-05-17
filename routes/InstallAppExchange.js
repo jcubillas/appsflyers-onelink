@@ -285,6 +285,14 @@ exports.createDataExtensions = async (req) => new Promise(((resolve, reject) => 
                                 IsPrimaryKey: false,
                                 FieldType: 'Text',
                                 IsRequired: true,
+                            },                            
+                            {
+                                CustomerKey: 'JSONParameters',
+                                Name: 'JSONParameters',
+                                Description: 'Parameters',
+                                IsPrimaryKey: false,
+                                FieldType: 'Text',
+                                IsRequired: true,
                             },
                             {
                                 CustomerKey: 'CustomParameters',
