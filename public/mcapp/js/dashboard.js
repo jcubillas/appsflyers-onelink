@@ -95,8 +95,8 @@ function buildDashboard(data, from, page) {
 
     $('#dashboard-table').html(table);
 }
-function Duplicate(Link){
-    console.log(Link);
+function Duplicate(element){
+    console.log(element);
     
     const postData = {
         refresh_token: $('#rt').val(),
