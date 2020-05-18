@@ -528,7 +528,7 @@ function fillUi(data) {
     $('#linkName').val(data.LinkName);
     $('#baseURL').val(data.BaseURL);
     $('#JSONParameter').val(data.JSONParameter);
-    JSONParameter = data.JSONParameter;
+    JSONParameter = data.JSONParameters;
     if (data.CustomParameters !== undefined || data.CustomParameters !== '') {
         $('#customParameters').val(data.CustomParameters);
     }
