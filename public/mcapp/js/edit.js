@@ -40,6 +40,7 @@ function buildQueryString() {
     // eslint-disable-next-line no-plusplus
     for (let index = 0; index < rules.length; index++) {
         const element = rules[index];
+        console.log(JSONParameter);
         JSONParameter.AllParameters.push({ name: element.name, value: element.value });
         qs += `${element.name}=`;
         if (element.value !== undefined && element.value !== null && element.value !== '') {
