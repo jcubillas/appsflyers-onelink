@@ -25,6 +25,21 @@ function getUrlParameters() {
     return urlParams;
 }
 
+function checkJSONParameters(rule){
+let isNew = true;
+    for (let index = 0; index < JSONParameter.AllParameters.length; index++) {
+        const element = JSONParameter.AllParameters[index];
+        if(element.name == rule.name){
+            JSONParameter.AllParameters[index] = rule;
+            isNew = false;
+            break;
+        }
+    }
+
+    if(!isNew){
+        JSONParameter.AllParameters.push(rule);
+    }
+}
 
 function buildQueryString() {
     let rules = [];
@@ -41,7 +56,7 @@ function buildQueryString() {
     for (let index = 0; index < rules.length; index++) {
         const element = rules[index];
         console.log(JSONParameter);
-        JSONParameter.AllParameters.push({ name: element.name, value: element.value });
+        checkJSONParameters(element);
         qs += `${element.name}=`;
         if (element.value !== undefined && element.value !== null && element.value !== '') {
             if (element.value.startsWith("'%%")) {
@@ -79,7 +94,7 @@ function overrideParamsValues(name, value, isCustomOnblur = false) {
             const isAttributionLink = getOption(name);
             if (isAttributionLink.Name !== undefined) {
                 JSONParameter.AttributtionLinks.push({ index: rules.length, name: name, value: value, canDelete: true, selectId: `select${rules.length}`, inputValueId: name, isCustom: false, customValue: null })
-           
+
                 rules.push(newRuleObj(rules.length, name, value));
             } else if (isCustomOnblur === false) {
                 const customParams = `${$('#customParameters').val()}&${name}=${value}`;
@@ -255,7 +270,7 @@ function setSelectOptions(restantes = false) {
         selectOptions.push({ Name: 'Campaign', Value: 'c' });
     }
     selectOptions.push({ Name: 'Adset', Value: 'af_adset' });
-    selectOptions.push({ Name: 'Ad Name', Value: 'af_ad' });    
+    selectOptions.push({ Name: 'Ad Name', Value: 'af_ad' });
     selectOptions.push({ Name: 'Sub Parameter 1', Value: 'af_sub1' });
     selectOptions.push({ Name: 'Sub Parameter 2', Value: 'af_sub2' });
     selectOptions.push({ Name: 'Sub Parameter 3', Value: 'af_sub3' });
@@ -546,7 +561,11 @@ function fillUi(data) {
 
     for (let index = 0; index < arrayParams.length; index++) {
         const element = arrayParams[index].split('=');
-        if (element[0] !== 'pid' && element[0] !== 'af_channel' && element[0] !== 'c' && element[0] !== 'is_retargeting' && element[0] !== 'Select parameter') { rules.push(newRuleObj(index, element[0], element[1], true)); } else { rules.push(newRuleObj(index, element[0], element[1], false)); }
+        if (element[0] !== 'pid' && element[0] !== 'af_channel' && element[0] !== 'c' && element[0] !== 'is_retargeting' && element[0] !== 'Select parameter') {
+            rules.push(newRuleObj(index, element[0], element[1], true));
+        } else {
+            rules.push(newRuleObj(index, element[0], element[1], false));
+        }
     }
 
     addRules(rules);

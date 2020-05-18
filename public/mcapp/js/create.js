@@ -21,6 +21,23 @@ function getUrlParameters() {
     return urlParams;
 }
 
+function checkJSONParameters(rule){
+    let isNew = true;
+        for (let index = 0; index < JSONParameter.AllParameters.length; index++) {
+            const element = JSONParameter.AllParameters[index];
+            if(element.name == rule.name){
+                JSONParameter.AllParameters[index] = rule;
+                isNew = false;
+                break;
+            }
+        }
+    
+        if(!isNew){
+            JSONParameter.AllParameters.push(rule);
+        }
+    }
+
+
 function buildQueryString() {
     let rules = [];
     const json = $('#rl').val();
@@ -35,7 +52,7 @@ function buildQueryString() {
     // eslint-disable-next-line no-plusplus
     for (let index = 0; index < rules.length; index++) {
         const element = rules[index];
-        JSONParameter.AllParameters.push({ name: element.name, value: element.value });
+      checkJSONParameters(element);
         qs += `${element.name}=`;
         if (element.value.startsWith("'%%")) {
             qs += `${element.value}`;
