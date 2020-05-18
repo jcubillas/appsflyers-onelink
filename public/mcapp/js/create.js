@@ -7,7 +7,7 @@
 var JSONParameter = {
     AttributtionLinks: [],
     CustomParameters: [],
-    AllParameters:[]
+    AllParameters: []
 }
 function getUrlParameters() {
     // eslint-disable-next-line no-undef
@@ -35,7 +35,7 @@ function buildQueryString() {
     // eslint-disable-next-line no-plusplus
     for (let index = 0; index < rules.length; index++) {
         const element = rules[index];
-        JSONParameter.AllParameters.push({name:element.name,value:element.value});
+        JSONParameter.AllParameters.push({ name: element.name, value: element.value });
         qs += `${element.name}=`;
         if (element.value.startsWith("'%%")) {
             qs += `${element.value}`;
@@ -610,8 +610,8 @@ $(document).ready(() => {
         if (customParameters.length > 0) {
             customParameters = customParameters.startsWith('&') === true ? customParameters : `&${customParameters}`;
         }
-var date = new Date();
-console.log(date);
+        var date = new Date().toISOString();
+        console.log(date);
         const postData = {
             refresh_token: $('#rt').val(),
             enterpriseId: $('#eid').val(),
@@ -621,7 +621,7 @@ console.log(date);
             JSONParameter: JSONParameter,
             Parameters: buildQueryString(),
             CustomParameters: customParameters,
-            Created:date
+            Created: date
         };
 
         $.ajax({
