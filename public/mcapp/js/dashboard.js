@@ -86,13 +86,8 @@ function buildDashboard(data, from, page) {
             table += '</td>';
             table += '</tr>';
 
-
-
-            $(`#duplicate${index}`).on('click', (e) => {
-                e.preventDefault();
-               console.log($(this));
-               console.log(element);
-            });
+            var link = document.getElementById(`duplicate${index}`);
+            link.addEventListener('click', Duplicate(element), false);          
         }
     }
     table += '</table>';
