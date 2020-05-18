@@ -77,7 +77,7 @@ function buildDashboard(data, from, page) {
             table += '<span class="slds-truncate" title="Edit">Edit</span>';
             table += '</a></li>';
             table += '<li class="slds-dropdown__item" role="presentation">';
-            table += `<a href="#"  data-id= class="duplicate" id="duplicate${index}" role="menuitem" tabindex="0">`;
+            table += `<a href="#"  data-id=${element.LinkID} class="duplicate" id="duplicate${index}" role="menuitem" tabindex="0">`;
             table += `<span class="slds-truncate" title="Duplicate">Duplicate</span>`;
             table += '</a></li>';
             table += '</ul>';
@@ -86,8 +86,7 @@ function buildDashboard(data, from, page) {
             table += '</td>';
             table += '</tr>';
 
-            var link = document.getElementById(`duplicate${index}`);
-            link.addEventListener('click', Duplicate(element), false);          
+                  
         }
     }
     table += '</table>';
