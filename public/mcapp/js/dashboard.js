@@ -77,14 +77,22 @@ function buildDashboard(data, from, page) {
             table += '<span class="slds-truncate" title="Edit">Edit</span>';
             table += '</a></li>';
             table += '<li class="slds-dropdown__item" role="presentation">';
-            table += `<a href="#" onClick="Duplicate(${element})" class="duplicate" id="duplicate${index}" role="menuitem" tabindex="0">`;
-            table += `<span onClick="Duplicate(${element}) class="slds-truncate" title="Duplicate">Duplicate</span>`;
+            table += `<a href="#"  data-id= class="duplicate" id="duplicate${index}" role="menuitem" tabindex="0">`;
+            table += `<span class="slds-truncate" title="Duplicate">Duplicate</span>`;
             table += '</a></li>';
             table += '</ul>';
             table += '</div>';
             table += '</div>';
             table += '</td>';
             table += '</tr>';
+
+
+
+            $(`#duplicate${index}`).on('click', (e) => {
+                e.preventDefault();
+               console.log($(this));
+               console.log(element);
+            });
         }
     }
     table += '</table>';
