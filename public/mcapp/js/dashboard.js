@@ -76,15 +76,12 @@ function buildDashboard(data, from, page) {
             table += `<a href="/dashboard/edit/?lid=${element.LinkID}&eid={0}&rt={1}" class="edit" id="edit${index}" role="menuitem" tabindex="0">`;
             table += '<span class="slds-truncate" title="Edit">Edit</span>';
             table += '</a></li>';
-            table += '</ul>';
-            table += '</div>';
-            table += '<div class="slds-dropdown slds-dropdown_left" style="margin-top: -1px!important">';
-            table += '<ul class="slds-dropdown__list" role="menu" >';
             table += '<li class="slds-dropdown__item" role="presentation">';
-            table += `<a href="javascript:Duplicate(${element})" class="Duplicate" id="Duplicate${index}" role="menuitem" tabindex="0">`;
+            table += `<a href="#" onClick="e.preventDefault(); Duplicate(${element})" class="Duplicate" id="Duplicate${index}" role="menuitem" tabindex="0">`;
             table += '<span class="slds-truncate" title="Duplicate">Duplicate</span>';
             table += '</a></li>';
             table += '</ul>';
+            table += '</div>';
             table += '</div>';
             table += '</div>';
             table += '</td>';
