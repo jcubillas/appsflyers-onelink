@@ -527,6 +527,8 @@ function parseParameters() {
 function fillUi(data) {
     $('#linkName').val(data.LinkName);
     $('#baseURL').val(data.BaseURL);
+    $('#JSONParameter').val(data.JSONParameter);
+    JSONParameter = data.JSONParameter;
     if (data.CustomParameters !== undefined || data.CustomParameters !== '') {
         $('#customParameters').val(data.CustomParameters);
     }
@@ -681,6 +683,7 @@ $(document).ready(() => {
             baseUrl: $('#baseURL').val(),
             status: 'Active',
             Parameters: buildQueryString(),
+            JSONParameter: JSONParameter,
             CustomParameters: customParameters,
             Modified: new Date().toISOString(),
         };
