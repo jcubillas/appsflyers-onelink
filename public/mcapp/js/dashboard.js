@@ -78,7 +78,7 @@ function buildDashboard(data, from, page) {
             table += '</a></li>';
             table += '<li class="slds-dropdown__item" role="presentation">';
             table += `<a href="#" onClick="Duplicate(${element.LinkID})" class="duplicate" id="duplicate${index}" role="menuitem" tabindex="0">`;
-            table += '<span class="slds-truncate" title="Edit">Edit</span>';
+            table += '<span class="slds-truncate" title="Duplicate">Duplicate</span>';
             table += '</a></li>';
             table += '</ul>';
             table += '</div>';
@@ -94,8 +94,56 @@ function buildDashboard(data, from, page) {
 }
 function Duplicate(id){
     console.log(id);
+    var postData = {
+        refresh_token: $('#rt').val(),
+        enterpriseId: $('eid').val(),
+        LinkID: id,
+    }
+    getLinkData(postData);
     //TODO: GetLinkByID
     //TODO: Change Link Name and create a newone
+}
+
+
+
+function getLinkData(postData) {
+    $.ajax({
+        url: '/getLinkByID',
+        method: 'POST',
+        async: false,
+        data: postData,
+        success(element) {
+            console.log(element);
+            duplicateLink(element);
+        },
+    });
+}
+
+function duplicateLink(linkData){
+/*
+    const postData = {
+        refresh_token: $('#rt').val(),
+        enterpriseId: $('#eid').val(),
+        linkName: $('#linkName').val(),
+        baseUrl: $('#baseURL').val(),
+        status: 'Active',
+        JSONParameter: JSONParameter,
+        Parameters: buildQueryString(),
+        CustomParameters: customParameters,
+        Created: date
+    };
+
+    $.ajax({
+        url: '/UpsertLink',
+        method: 'POST',
+        async: false,
+        data: postData,
+        success(data) {
+            if (data.Status === 'OK') {
+                window.location.href = `/dashboard/home/?rt=${data.refresh_token}&eid=${$('#eid').val()}`;
+            }
+        }
+    });*/
 }
 
 function buildPaginator(allLinks) {

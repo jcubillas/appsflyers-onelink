@@ -4,6 +4,13 @@
 /* eslint-disable max-len */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-undef */
+
+var JSONParameter = {
+    AttributtionLinks: [],
+    CustomParameters: [],
+    AllParameters: []
+}
+
 function getUrlParameters() {
     const url = new URL(window.location.href);
     const urlParams = {
@@ -33,6 +40,7 @@ function buildQueryString() {
     // eslint-disable-next-line no-plusplus
     for (let index = 0; index < rules.length; index++) {
         const element = rules[index];
+        JSONParameter.AllParameters.push({ name: element.name, value: element.value });
         qs += `${element.name}=`;
         if (element.value !== undefined && element.value !== null && element.value !== '') {
             if (element.value.startsWith("'%%")) {
@@ -69,9 +77,13 @@ function overrideParamsValues(name, value, isCustomOnblur = false) {
         if (alreadyExist === false) {
             const isAttributionLink = getOption(name);
             if (isAttributionLink.Name !== undefined) {
+                JSONParameter.AttributtionLinks.push({ index: rules.length, name: name, value: value, canDelete: true, selectId: `select${rules.length}`, inputValueId: name, isCustom: false, customValue: null })
+           
                 rules.push(newRuleObj(rules.length, name, value));
             } else if (isCustomOnblur === false) {
                 const customParams = `${$('#customParameters').val()}&${name}=${value}`;
+                var cpLength = JSONParameter.CustomParameters.length;
+                JSONParameter.CustomParameters.push({ index: cpLength, name: name, value: value });
                 $('#customParameters').val(customParams);
             }
         }
@@ -131,8 +143,10 @@ function dinamicInputsOnBlur(element) {
         if (rules[index].name === element[0].id) {
             if (element[0].value !== undefined && element[0].value !== '') {
                 rules[index].value = element[0].value;
+                JSONParameter.AttributtionLinks[index].value = element[0].value;
             } else {
                 rules[index].value = 'Enter Value';
+                JSONParameter.AttributtionLinks[index].value = 'Enter Value';
             }
             rule = rules[index];
             break;
@@ -407,7 +421,7 @@ function addEventsForComponent(element, array) {
         }
 
         array[element.index] = element;
-
+        JSONParameter.AttributtionLinks[element.index] = element;
         addRules(array);
         $(`#${element.selectId}`).val(selectedOptionValue);
         $(`#${element.name}`).attr('readonly', false);
