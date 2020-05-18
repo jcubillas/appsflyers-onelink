@@ -610,7 +610,8 @@ $(document).ready(() => {
         if (customParameters.length > 0) {
             customParameters = customParameters.startsWith('&') === true ? customParameters : `&${customParameters}`;
         }
-
+var date = new Date();
+console.log(date);
         const postData = {
             refresh_token: $('#rt').val(),
             enterpriseId: $('#eid').val(),
@@ -620,7 +621,7 @@ $(document).ready(() => {
             JSONParameter: JSONParameter,
             Parameters: buildQueryString(),
             CustomParameters: customParameters,
-            Created:new Date()
+            Created:date
         };
 
         $.ajax({
