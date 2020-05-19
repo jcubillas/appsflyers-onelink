@@ -7,8 +7,7 @@
 
 var JSONParameter = {
     AttributtionLinks: [],
-    CustomParameters: [],
-    AllParameters: []
+    CustomParameters: []
 }
 
 function getUrlParameters() {
@@ -25,22 +24,6 @@ function getUrlParameters() {
     return urlParams;
 }
 
-function checkJSONParameters(rule){
-let isNew = true;
-    for (let index = 0; index < JSONParameter.AllParameters.length; index++) {
-        const element = JSONParameter.AllParameters[index];
-        if(element.name == rule.name){
-            JSONParameter.AllParameters[index].value = rule.value;
-            overrideJSONCustomParameters(rule);
-            isNew = false;
-            break;
-        }
-    }
-
-    if(isNew){
-        JSONParameter.AllParameters.push(rule);
-    }
-}
 
 
 function overrideJSONCustomParameters(rule){
@@ -51,6 +34,10 @@ function overrideJSONCustomParameters(rule){
             isNew = false;
             break;
         }
+    }
+
+    if(isNew){
+        JSONParameter.CustomParameters.push({name: name, value: value})
     }
 }
 
@@ -68,8 +55,7 @@ function buildQueryString() {
     // eslint-disable-next-line no-plusplus
     for (let index = 0; index < rules.length; index++) {
         const element = rules[index];
-        console.log(JSONParameter);
-        checkJSONParameters(element);
+    
         qs += `${element.name}=`;
         if (element.value !== undefined && element.value !== null && element.value !== '') {
             if (element.value.startsWith("'%%")) {
@@ -113,7 +99,7 @@ function overrideParamsValues(name, value, isCustomOnblur = false) {
 
                 const customParams = `${$('#customParameters').val()}&${name}=${value}`;
                 var cpLength = JSONParameter.CustomParameters.length;
-                JSONParameter.CustomParameters.push({ index: cpLength, name: name, value: value });
+               // JSONParameter.CustomParameters.push({ name: name, value: value });
                 
                 overrideJSONCustomParameters({name:name, value:value });
                 $('#customParameters').val(customParams);
