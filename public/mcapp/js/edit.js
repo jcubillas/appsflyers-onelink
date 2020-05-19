@@ -30,7 +30,7 @@ let isNew = true;
     for (let index = 0; index < JSONParameter.AllParameters.length; index++) {
         const element = JSONParameter.AllParameters[index];
         if(element.name == rule.name){
-            JSONParameter.AllParameters[index] = rule;
+            JSONParameter.AllParameters[index].value = rule.value;
             isNew = false;
             break;
         }
