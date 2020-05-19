@@ -32,7 +32,7 @@ function checkJSONParameters(rule){
             }
         }
     
-        if(!isNew){
+        if(isNew){
             JSONParameter.AllParameters.push(rule);
         }
     }

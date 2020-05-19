@@ -36,7 +36,7 @@ let isNew = true;
         }
     }
 
-    if(!isNew){
+    if(isNew){
         JSONParameter.AllParameters.push(rule);
     }
 }
