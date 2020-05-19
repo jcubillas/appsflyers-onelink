@@ -21,22 +21,20 @@ function getUrlParameters() {
     return urlParams;
 }
 
-function checkJSONParameters(rule){
-    let isNew = true;
-        for (let index = 0; index < JSONParameter.AllParameters.length; index++) {
-            const element = JSONParameter.AllParameters[index];
-            if(element.name == rule.name){
-                JSONParameter.AllParameters[index].value = rule.value;
-                overrideJSONCustomParameters(rule);
-                isNew = false;
-                break;
-            }
-        }
-    
-        if(isNew){
-            JSONParameter.AllParameters.push(rule);
+function upsertJSONCustomParameters(rule){
+    for (let index = 0; index < JSONParameter.CustomParameters.length; index++) {
+        const element = JSONParameter.CustomParameters[index];
+        if(element.name == rule.name){
+            JSONParameter.CustomParameters[index].value = rule.value;
+            isNew = false;
+            break;
         }
     }
+
+    if(isNew){
+        JSONParameter.CustomParameters.push({name: name, value: value})
+    }
+}
 
 function overrideJSONCustomParameters(rule){
     for (let index = 0; index < JSONParameter.CustomParameters.length; index++) {
@@ -64,7 +62,7 @@ function buildQueryString() {
     // eslint-disable-next-line no-plusplus
     for (let index = 0; index < rules.length; index++) {
         const element = rules[index];
-      checkJSONParameters(element);
+      
         qs += `${element.name}=`;
         if (element.value.startsWith("'%%")) {
             qs += `${element.value}`;
@@ -105,8 +103,7 @@ function overrideParamsValues(name, value, isCustomOnblur = false) {
                 JSONParameter.AttributtionLinks.push({ index: rules.length, name: name, value: value, canDelete: true, selectId: `select${rules.length}`, inputValueId: name, isCustom: false, customValue: null })
             } else if (isCustomOnblur === false) {
                 const customParams = `${$('#customParameters').val()}&${name}=${value}`;
-                var cpLength = JSONParameter.CustomParameters.length;
-                JSONParameter.CustomParameters.push({ index: cpLength, name: name, value: value });
+                upsertJSONCustomParameters({name:name, value:value });
                 $('#customParameters').val(customParams);
             }
         }

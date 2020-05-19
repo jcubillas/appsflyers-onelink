@@ -26,7 +26,7 @@ function getUrlParameters() {
 
 
 
-function overrideJSONCustomParameters(rule){
+function upsertJSONCustomParameters(rule){
     for (let index = 0; index < JSONParameter.CustomParameters.length; index++) {
         const element = JSONParameter.CustomParameters[index];
         if(element.name == rule.name){
@@ -98,10 +98,7 @@ function overrideParamsValues(name, value, isCustomOnblur = false) {
             } else if (isCustomOnblur === false) {
 
                 const customParams = `${$('#customParameters').val()}&${name}=${value}`;
-                var cpLength = JSONParameter.CustomParameters.length;
-               // JSONParameter.CustomParameters.push({ name: name, value: value });
-                
-                overrideJSONCustomParameters({name:name, value:value });
+              upsertJSONCustomParameters({name:name, value:value });
                 $('#customParameters').val(customParams);
             }
         }
@@ -515,7 +512,7 @@ function removeAttrParamsFromCustomParams(customparams) {
             }
 
             if (isCustom === true) {
-                overrideJSONCustomParameters({name:queryParam[0], value:queryParam[1] });
+                upsertJSONCustomParameters({name:queryParam[0], value:queryParam[1] });
                 const newParam = `${queryParam[0]}=${queryParam[1]}`;
                 if (customInputValue.indexOf(`${queryParam[0]}=`) > 0) {
                     const oldParam = customInputValue.substring(customInputValue.indexOf(`${queryParam[0]}=`), customInputValue.length);
