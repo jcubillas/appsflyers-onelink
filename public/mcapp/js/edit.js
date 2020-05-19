@@ -96,7 +96,6 @@ function overrideParamsValues(name, value, isCustomOnblur = false) {
         for (let index = 0; index < rules.length; index++) {
             if (rules[index].name === name) {
                 rules[index].value = value;
-                overrideJSONCustomParameters(rules[index]);
                 alreadyExist = true;
                 break;
             } else {
@@ -111,6 +110,8 @@ function overrideParamsValues(name, value, isCustomOnblur = false) {
 
                 rules.push(newRuleObj(rules.length, name, value));
             } else if (isCustomOnblur === false) {
+
+                overrideJSONCustomParameters({name:name, value:value });
                 const customParams = `${$('#customParameters').val()}&${name}=${value}`;
                 var cpLength = JSONParameter.CustomParameters.length;
                 JSONParameter.CustomParameters.push({ index: cpLength, name: name, value: value });
