@@ -27,6 +27,7 @@ function checkJSONParameters(rule){
             const element = JSONParameter.AllParameters[index];
             if(element.name == rule.name){
                 JSONParameter.AllParameters[index].value = rule.value;
+                overrideJSONCustomParameters(rule);
                 isNew = false;
                 break;
             }
@@ -36,6 +37,17 @@ function checkJSONParameters(rule){
             JSONParameter.AllParameters.push(rule);
         }
     }
+
+function overrideJSONCustomParameters(rule){
+    for (let index = 0; index < JSONParameter.CustomParameters.length; index++) {
+        const element = JSONParameter.CustomParameters[index];
+        if(element.name == rule.name){
+            JSONParameter.CustomParameters[index].value = rule.value;
+            isNew = false;
+            break;
+        }
+    }
+}
 
 
 function buildQueryString() {
@@ -69,6 +81,8 @@ function buildQueryString() {
     $('#rl').val(JSON.stringify(rules));
     return qs;
 }
+
+
 function overrideParamsValues(name, value, isCustomOnblur = false) {
     let json = $('#rl').val();
     let alreadyExist = false;

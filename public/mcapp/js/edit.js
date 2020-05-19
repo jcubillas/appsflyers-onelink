@@ -31,6 +31,7 @@ let isNew = true;
         const element = JSONParameter.AllParameters[index];
         if(element.name == rule.name){
             JSONParameter.AllParameters[index].value = rule.value;
+            overrideJSONCustomParameters(rule);
             isNew = false;
             break;
         }
@@ -38,6 +39,18 @@ let isNew = true;
 
     if(isNew){
         JSONParameter.AllParameters.push(rule);
+    }
+}
+
+
+function overrideJSONCustomParameters(rule){
+    for (let index = 0; index < JSONParameter.CustomParameters.length; index++) {
+        const element = JSONParameter.CustomParameters[index];
+        if(element.name == rule.name){
+            JSONParameter.CustomParameters[index].value = rule.value;
+            isNew = false;
+            break;
+        }
     }
 }
 
