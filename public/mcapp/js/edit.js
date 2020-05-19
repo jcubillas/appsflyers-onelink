@@ -96,6 +96,7 @@ function overrideParamsValues(name, value, isCustomOnblur = false) {
         for (let index = 0; index < rules.length; index++) {
             if (rules[index].name === name) {
                 rules[index].value = value;
+                overrideJSONCustomParameters(rules[index]);
                 alreadyExist = true;
                 break;
             } else {
