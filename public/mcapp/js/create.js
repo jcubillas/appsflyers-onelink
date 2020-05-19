@@ -20,8 +20,6 @@ function getUrlParameters() {
     return urlParams;
 }
 
-
-
 function buildQueryString() {
     let rules = [];
     const json = $('#rl').val();
@@ -290,6 +288,25 @@ function deleteParameter(array, element) {
     return aux;
 }
 
+function removeDynamicParameters(element) {
+    
+    let counter = 0;
+    var array = JSONParameter.AttributtionLinks;
+    JSON.AttributtionLinks = [];
+    for (let i = 0; i < array.length; i++) {
+        const e = array[i];
+        if (e.index !== element.index) {
+            e.index = counter;
+            e.selectId = `select${counter}`;
+            JSON.AttributtionLinks.push(e);
+            counter++;
+        }
+    }
+    const json = JSON.stringify(aux);
+    $('#rl').val(json);
+    return aux;
+}
+
 function renderComponentsBase(array) {
     let strRules = '';
     let ids = '';
@@ -429,6 +446,7 @@ function addEventsForComponent(element, array) {
         // const option = $(`#${element.selectId}`).val();
         // selectOptions.push(getOption(option));
         aux = deleteParameter(array, element);
+        removeDynamicParameters(element);
         $('#rules').html('');
         array = addRules(aux);
         fillFullUrl();
@@ -564,7 +582,7 @@ $(document).ready(() => {
             $('#rl').val(json);
         }
     }
-    
+
     $('#baseURL').on('blur', function (e) {
         e.preventDefault();
         const url = $(this).val();
