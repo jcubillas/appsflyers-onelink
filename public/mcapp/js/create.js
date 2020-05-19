@@ -521,9 +521,8 @@ $(document).ready(() => {
     }
     function removeAttrParamsFromCustomParams(customparams) {
         if (!customparams.startsWith('&')) { customparams = `&${customparams}`; }
-        
         JSONParameter.CustomParameters = [];
-        }
+        
         params = customparams.split('&');
         let json = $('#rl').val();
         let customInputValue = '';
@@ -546,8 +545,7 @@ $(document).ready(() => {
                 }
 
                 if (isCustom === true) {
-                    console.log(customInputValue.indexOf(`${queryParam[0]}=`));
-                    JSONParameter.CustomParameters.push({name:queryParam[0],value:queryParam[1]})
+                    JSONParameter.CustomParameters.push({ name:queryParam[0], value:queryParam[1] })
                     const newParam = `${queryParam[0]}=${queryParam[1]}`;
                     if (customInputValue.indexOf(`${queryParam[0]}=`) > 0) {
                         const oldParam = customInputValue.substring(customInputValue.indexOf(`${queryParam[0]}=`), customInputValue.length);
@@ -566,6 +564,7 @@ $(document).ready(() => {
             $('#rl').val(json);
         }
     }
+    
     $('#baseURL').on('blur', function (e) {
         e.preventDefault();
         const url = $(this).val();
