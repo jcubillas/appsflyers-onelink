@@ -401,10 +401,7 @@ function removeDynamicParameters(element) {
             JSON.AttributtionLinks.push(e);
             counter++;
         }
-    }
-    const json = JSON.stringify(aux);
-    $('#rl').val(json);
-    return aux;
+    }   
 }
 
 function parseQuerystringParameters(url) {

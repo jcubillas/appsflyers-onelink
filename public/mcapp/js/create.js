@@ -302,9 +302,7 @@ function removeDynamicParameters(element) {
             counter++;
         }
     }
-    const json = JSON.stringify(aux);
-    $('#rl').val(json);
-    return aux;
+ 
 }
 
 function renderComponentsBase(array) {
