@@ -127,6 +127,8 @@ function buildPaginator(allLinks) {
         enterpriseId: $('#eid').val()
     };
     var totalPages = Math.ceil(allLinks.length / 15);
+    if (totalPages == 0)
+        totalPages = 1;
 
     $('#pagination-demo').twbsPagination({
         totalPages: totalPages,
