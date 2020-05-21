@@ -158,7 +158,7 @@ function loadDashboards(urlParams, from, page) {
 
             if (from != "paginator")
                 buildPaginator(links);
-                
+
             buildDashboard(data.data, from, page);
 
         },

@@ -81,21 +81,32 @@
     <input type="hidden" id="eid" name="eid" value="">
     <input type="hidden" id="currentDashboard" name="currentDashboard" value="">
     <script>
-
         function filter() {
-            inp = $('#lookup').val()
-            console.log(inp)
-            // This should ignore first row with th inside
-            $("tr:not(:has(>th))").each(function () {
-                if (~$(this).text().toLowerCase().indexOf(inp.toLowerCase())) {
-                    // Show the row (in case it was previously hidden)
-                    $(this).show();
-                } else {
-                    $(this).hide();
+            inp = $('#lookup').val();
+            console.log(inp);
+
+            const url = '/LoadDashboards';
+            const urlParams = {
+                refresh_token: $('#rt').val(),
+                enterpriseId: $('#eid').val()
+            };
+
+            $.ajax({
+                url,
+                method: 'POST',
+                async: false,
+                data: urlParams,
+                success: (data) => {
+                    var links = data.data;
+                    var linksFiltered = [];
+                    linksFiltered.push(links.filter(x => x.LinkName.toLowerCase().includes(inp)));
+                    linksFiltered.push(links.filter(x => x.FullURL.toLowerCase().includes(inp)));
+                    buildDashboard(linksFiltered, "init", 1);
+                    $('#rt').val(data.refresh_token);
+                    $('#eid').val(data.enterpriseId);
                 }
             });
-        }</script>
-
+        }
+    </script>
 </body>
-
 </html>
