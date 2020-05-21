@@ -54,13 +54,8 @@
                                                     <input id="lookup" onkeyup="filter()" class="slds-input" type="text"
                                                         aria-haspopup="true" aria-autocomplete="listbox" role="combobox"
                                                         aria-activedescendant="" />
-                                                    <span
-                                                        class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right">
-                                                        <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default"
-                                                            aria-hidden="true">
-                                                            <use xlink:href="/mcapp/images/symbols.svg#search">
-                                                            </use>
-                                                        </svg>
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-default" type="button" onclick="filter()"><span class="glyphicon glyphicon-search"></span></button>
                                                     </span>
                                                 </div>
                                             </div>                                          
@@ -89,21 +84,7 @@
     <input type="hidden" id="rt" name="rt" value="">
     <input type="hidden" id="eid" name="eid" value="">
     <input type="hidden" id="currentDashboard" name="currentDashboard" value="">
-    <script>
 
-        function filter() {
-            inp = $('#lookup').val()
-            console.log(inp)
-            // This should ignore first row with th inside
-            $("tr:not(:has(>th))").each(function () {
-                if (~$(this).text().toLowerCase().indexOf(inp.toLowerCase())) {
-                    // Show the row (in case it was previously hidden)
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        }</script>
 
 </body>
 
