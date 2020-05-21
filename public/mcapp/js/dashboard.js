@@ -23,7 +23,7 @@ function getCampaign(element) {
     }
     return Campaign;
 }
-function buildDashboard(data, from, page) {
+function buildDashboard(links, from, page) {
     let table = '<div class="slds-lookup" data-select="multi" data-scope="single" data-typeahead="true">';
     table += '<table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" >';
 
@@ -38,20 +38,20 @@ function buildDashboard(data, from, page) {
     table += '<td class="header-dashboard" role="gridcell" scope="col" ></td>';
     table += '</tr>';
 
-    if (data !== undefined) {
-        data.sort((a, b) => ((new Date(a.Modified) < new Date(b.Modified)) ? 1 : ((new Date(b.Modified) < new Date(a.Modified)) ? -1 : 0)));
+    if (links !== undefined) {
+        links.sort((a, b) => ((new Date(a.Modified) < new Date(b.Modified)) ? 1 : ((new Date(b.Modified) < new Date(a.Modified)) ? -1 : 0)));
         if (from == "init" || page == 1) {
-            data = data.splice(0, 15);
+            links = links.splice(0, 15);
             $("#currentDashboard").val(15);
         }
         else {
             var currentDashboard = $("#currentDashboard").val();
-            data = data.splice(currentDashboard, 15);
+            links = links.splice(currentDashboard, 15);
             $("#currentDashboard").val(currentDashboard + 15);
         }
 
-        for (let index = 0; index < data.length; index++) {
-            const element = data[index];
+        for (let index = 0; index < links.length; index++) {
+            const element = links[index];
             var Campaign = getCampaign(element);
 
             table += '<tr>';
