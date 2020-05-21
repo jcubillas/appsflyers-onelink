@@ -99,8 +99,7 @@
                 success: (data) => {
                     var links = data.data;
                     var linksFiltered = [];
-                    linksFiltered.push(links.filter(x => x.LinkName.toLowerCase().includes(inp)));
-                    linksFiltered.push(links.filter(x => x.FullURL.toLowerCase().includes(inp)));
+                    links = links.filter(x => x.LinkName.toLowerCase().includes(inp));
                     buildDashboard(linksFiltered, "init", 1);
                     $('#rt').val(data.refresh_token);
                     $('#eid').val(data.enterpriseId);
