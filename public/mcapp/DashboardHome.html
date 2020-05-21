@@ -46,7 +46,7 @@
                                                     <input id="lookup" class="slds-input" type="text"
                                                         aria-haspopup="true" aria-autocomplete="listbox" role="combobox"
                                                         aria-activedescendant="" />                                                          
-                                                    <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" onclick="filter()" title="Search">
+                                                    <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" onclick="loadDashboards(false, filtered, 1)" title="Search">
                                                         <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default"
                                                             aria-hidden="true">
                                                             <use xlink:href="/mcapp/images/symbols.svg#search">
@@ -99,6 +99,7 @@
                 success: (data) => {
                     var links = data.data;
                     links = links.filter(x => x.LinkName.toLowerCase().includes(inp));
+                    
                     buildDashboard(links, "init", 1);
                     $('#rt').val(data.refresh_token);
                     $('#eid').val(data.enterpriseId);
