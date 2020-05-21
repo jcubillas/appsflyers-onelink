@@ -43,20 +43,17 @@
                                             aria-expanded="false" aria-haspopup="listbox" role="combobox">
                                             <div
                                                 class="slds-form-element slds-p-top--medium slds-p-horizontal--medium slds-m-bottom--small">
-                                                <div
-                                                    class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
-                                                    <svg aria-hidden="true"
-                                                        class="slds-input__icon slds-icon-text-default">
-                                                        <use
-                                                            xlink:href="/mcapp/css/salesforce-lightning-design-system/assets/icons/utility-sprite/svg/symbols.svg#search">
-                                                        </use>
-                                                    </svg>
-                                                    <input id="lookup" onkeyup="filter()" class="slds-input" type="text"
+                                                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                                                        <input id="lookup" class="slds-input" type="text"
                                                         aria-haspopup="true" aria-autocomplete="listbox" role="combobox"
-                                                        aria-activedescendant="" />
-                                                        <span class="input-group-btn">
-                                                            <button class="btn btn-default" type="button" onclick="filter()"><span class="glyphicon glyphicon-search"></span></button>
-                                                    </span>
+                                                        aria-activedescendant="" />                                                          
+                                                        <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" onclick="filter()" title="Clear">
+                                                          <svg class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default" aria-hidden="true">
+                                                              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+                                                          </svg>
+                                                          <span class="slds-assistive-text">Clear</span>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>                                          
                                         </div>
@@ -84,7 +81,21 @@
     <input type="hidden" id="rt" name="rt" value="">
     <input type="hidden" id="eid" name="eid" value="">
     <input type="hidden" id="currentDashboard" name="currentDashboard" value="">
+    <script>
 
+        function filter() {
+            inp = $('#lookup').val()
+            console.log(inp)
+            // This should ignore first row with th inside
+            $("tr:not(:has(>th))").each(function () {
+                if (~$(this).text().toLowerCase().indexOf(inp.toLowerCase())) {
+                    // Show the row (in case it was previously hidden)
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }</script>
 
 </body>
 
