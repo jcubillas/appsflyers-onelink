@@ -131,8 +131,12 @@ function buildPaginator(allLinks) {
         totalPages++;
     }
 
-    $('#pagination-demo').twbsPagination('destroy');
-    
+    $('#pagination-demo').empty();
+
+    $('#pagination-demo').removeData("twbs-pagination");
+
+    $('#pagination-demo').unbind("page")
+
     $('#pagination-demo').twbsPagination({
         totalPages: totalPages,
         visiblePages: 5,
