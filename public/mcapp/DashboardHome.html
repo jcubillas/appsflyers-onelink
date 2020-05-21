@@ -98,9 +98,8 @@
                 data: urlParams,
                 success: (data) => {
                     var links = data.data;
-                    var linksFiltered = [];
                     links = links.filter(x => x.LinkName.toLowerCase().includes(inp));
-                    buildDashboard(linksFiltered, "init", 1);
+                    buildDashboard(links, "init", 1);
                     $('#rt').val(data.refresh_token);
                     $('#eid').val(data.enterpriseId);
                 }
