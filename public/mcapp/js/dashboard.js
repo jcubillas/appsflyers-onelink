@@ -126,7 +126,7 @@ function buildPaginator(allLinks) {
         refresh_token: $('#rt').val(),
         enterpriseId: $('#eid').val()
     };
-    var totalPages = Math.ceil(allLinks.length / 10);
+    var totalPages = Math.ceil(allLinks.length / 15);
     if (totalPages == 0){
         totalPages++;
     }
