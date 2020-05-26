@@ -77,7 +77,7 @@ function buildDashboard(links, from, page) {
             table += '<span class="slds-truncate" title="Edit">Edit</span>';
             table += '</a></li>';
             table += '<li class="slds-dropdown__item" role="presentation">';
-            table += `<a href="#" onclick="Duplicate(element)" class="Duplicate" id="Duplicate${index}" role="menuitem" tabindex="0">`;
+            table += `<a href="#" onclick="Duplicate(${element})" class="Duplicate" id="Duplicate${index}" role="menuitem" tabindex="0">`;
             table += '<span class="slds-truncate" title="Duplicate">Duplicate</span>';
             table += '</a></li>';
             table += '</ul>';
