@@ -92,6 +92,15 @@ function buildDashboard(links, from, page) {
     table += '</div>';
 
     $('#dashboard-table').html(table);
+
+
+    for (let index = 0; index < links.length; index++) {
+        const element = links[index];
+        document.getElementById(`Duplicate${index}`).addEventListener("click", function(e){
+            e.preventDefault();
+            Duplicate(element);
+        });
+    }
 }
 function Duplicate(element){
     console.log(element);
