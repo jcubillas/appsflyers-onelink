@@ -108,12 +108,12 @@ function Duplicate(element){
     const postData = {
         refresh_token: $('#rt').val(),
         enterpriseId: $('#eid').val(),
-        linkName: `${element.LinkName}-${new Date().toISOString()}`,
-        baseUrl: element.baseURL,
+        linkName: `${element.LinkName}_${new Date().toISOString()}`,
+        baseUrl: element.BaseURL,
         status: 'Active',
-        JSONParameter:element.JSONParameter,
+        JSONParameter:element.JSONParameters,
         Parameters: element.Parameters,
-        CustomParameters: element.customParameters,
+        CustomParameters: element.CustomParameters,
         Created: new Date().toISOString()
     };
     console.log(postData);
