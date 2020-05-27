@@ -56,14 +56,14 @@ function buildDashboard(links, from, page) {
 
             table += '<tr>';
 
-            table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.LinkName}</div></td>`;
-            table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${Campaign}</div></td>`;
-            table += `<td role="gridcell" colspan="3"><div class="slds-truncate" title="${element.FullURL}">${element.FullURL}</div></td>`;
-            table += `<td role="gridcell"><div class="slds-truncate" style="text-align:center;">${element.ContentsCount}</div></td>`;
-            table += `<td role="gridcell"><div class="slds-truncate" >${element.Created}</div></td>`;
-            table += `<td role="gridcell"><div class="slds-truncate" >${element.Modified}</div></td>`;
+            table += '<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.LinkName}</div></td>';
+            table += '<td role="gridcell" colspan="2"><div class="slds-truncate" >${Campaign}</div></td>';
+            table += '<td role="gridcell" colspan="3"><div class="slds-truncate" title="${element.FullURL}">${element.FullURL}</div></td>';
+            table += '<td role="gridcell"><div class="slds-truncate" style="text-align:center;">${element.ContentsCount}</div></td>';
+            table += '<td role="gridcell"><div class="slds-truncate" >${element.Created}</div></td>';
+            table += '<td role="gridcell"><div class="slds-truncate" >${element.Modified}</div></td>';
             table += '<td>';
-            table += `<div id="onelink-trigger${element.LinkID}" class="slds-dropdown-trigger slds-dropdown-trigger_click" style="padding-left:50%;">`;
+            table += '<div id="onelink-trigger${element.LinkID}" class="slds-dropdown-trigger slds-dropdown-trigger_click" style="padding-left:50%;">';
             table += '<button class="slds-button slds-button_icon slds-button_icon-border-filled" >';
             table += '<svg class="slds-button__icon" aria-hidden="true">';
             table += '<use xlink:href="/mcapp/images/symbols.svg#down">';
@@ -73,11 +73,11 @@ function buildDashboard(links, from, page) {
             table += '<div class="slds-dropdown slds-dropdown_left" style="margin-top: -1px!important">';
             table += '<ul class="slds-dropdown__list" role="menu" >';
             table += '<li class="slds-dropdown__item" role="presentation">';
-            table += `<a href="/dashboard/edit/?lid=${element.LinkID}&eid={0}&rt={1}" class="edit" id="edit${index}" role="menuitem" tabindex="0">`;
+            table += '<a href="/dashboard/edit/?lid=${element.LinkID}&eid={0}&rt={1}" class="edit" id="edit${index}" role="menuitem" tabindex="0">';
             table += '<span class="slds-truncate" title="Edit">Edit</span>';
             table += '</a></li>';
             table += '<li class="slds-dropdown__item" role="presentation">';
-            table += `<a href="#" onclick="Duplicate(${element})" class="Duplicate" id="Duplicate${index}" role="menuitem" tabindex="0">`;
+            table += '<a href="#" onclick="Duplicate(${element})" class="Duplicate" id="Duplicate${index}" role="menuitem" tabindex="0">';
             table += '<span class="slds-truncate" title="Duplicate">Duplicate</span>';
             table += '</a></li>';
             table += '</ul>';
