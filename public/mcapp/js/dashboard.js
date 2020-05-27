@@ -94,6 +94,7 @@ function buildDashboard(links, from, page) {
     $('#dashboard-table').empty();
     $('#dashboard-table').html(table);
 
+    ready();
 
     for (let index = 0; index < links.length; index++) {
         const element = links[index];
@@ -195,15 +196,9 @@ function loadDashboards(urlParams, from, page) {
             console.log(jqXHR);
         },
     });
-}
+}}
 
-$(document).ready(() => {
-    const urlParams = getUrlParameters();
-    $('#rt').val(urlParams.refresh_token);
-    $('#eid').val(urlParams.enterpriseId);
-
-    loadDashboards(urlParams, "init", 1);
-
+functions ready(){
     $('.slds-dropdown-trigger_click').hover(
         function () {
             $(this).addClass('slds-is-open');
@@ -261,4 +256,14 @@ $(document).ready(() => {
         link = link.replace('{1}', $('#rt').val());
         window.location.href = link;
     });
+}
+
+$(document).ready(() => {
+    const urlParams = getUrlParameters();
+    $('#rt').val(urlParams.refresh_token);
+    $('#eid').val(urlParams.enterpriseId);
+
+    loadDashboards(urlParams, "init", 1);
+
+    ready();
 });
