@@ -198,7 +198,7 @@ function loadDashboards(urlParams, from, page) {
     });
 }}
 
-functions ready(){
+function ready(){
     $('.slds-dropdown-trigger_click').hover(
         function () {
             $(this).addClass('slds-is-open');
