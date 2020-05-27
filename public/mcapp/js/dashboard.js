@@ -91,6 +91,7 @@ function buildDashboard(links, from, page) {
     table += '</table>';
     table += '</div>';
 
+    $('#dashboard-table').empty();
     $('#dashboard-table').html(table);
 
 
