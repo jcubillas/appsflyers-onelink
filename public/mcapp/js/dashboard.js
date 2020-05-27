@@ -111,7 +111,7 @@ function Duplicate(element){
         linkName: `${element.LinkName}_${new Date().toISOString()}`,
         baseUrl: element.BaseURL,
         status: 'Active',
-        JSONParameter:element.JSONParameters,
+        JSONParameter:JSON.parse(element.JSONParameters),
         Parameters: element.Parameters,
         CustomParameters: element.CustomParameters,
         Created: new Date().toISOString()
