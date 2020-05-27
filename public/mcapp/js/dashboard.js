@@ -196,7 +196,7 @@ function loadDashboards(urlParams, from, page) {
             console.log(jqXHR);
         },
     });
-}}
+}
 
 function ready(){
     $('.slds-dropdown-trigger_click').hover(
