@@ -215,7 +215,7 @@ $(document).ready(() => {
             // eslint-disable-next-line no-plusplus
             for (let index = 0; index < elements.length; index++) {
                 const elementid = elements[index].id;
-                $(`#${elementid}`).removeClass('slds-is-open');
+                $('#' + elementid).removeClass('slds-is-open');
             }
         },
     );
