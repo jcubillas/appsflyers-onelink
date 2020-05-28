@@ -76,6 +76,12 @@ app.get('/sfmc/GetLinks', sfmc.GetLinks);
 app.post('/sfmc/UpsertLink', sfmc.UpsertLink);
 app.post('/sfmc/SaveImage', upload.single('file'), sfmc.SaveImage);
 app.post('/sfmc/GetImageStatus', sfmc.GetImageStatus);
+app.post('/sfmc/GetContentBuilderEmails', sfmc.GetContentBuilderEmails);
+app.post('/sfmc/UpdateEmail', sfmc.UpdateEmail);
+app.post('/sfmc/GetEmailByID', sfmc.GetEmailByID);
+app.post('/sfmc/GetAllContentBuilderAssets', sfmc.GetAllContentBuilderAssets);
+
+
 
 app.get('/dashboard/home', (_request, response) => {
     response.render('mcapp/DashboardHome.html');
@@ -92,7 +98,6 @@ app.get('/dashboard/create', (_request, response) => {
 app.get('/dashboard/edit', (_request, response) => {
     response.render('mcapp/Edit.html');
 });
-
 
 app.post('/LoadDashboards', dashboard.loadDashboards);
 app.post('/UpsertLink', dashboard.UpsertLink);

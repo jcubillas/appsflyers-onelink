@@ -284,3 +284,96 @@ exports.UpsertLink = (req, resp) => {
             }).catch((err) => { return resp.status(500).send(err); });
     });
 };
+function getHtmlOnlyFilter(){
+    return {
+        "page": {
+            "page": 1,
+            "pageSize": 50
+        },
+        "query": {
+            "leftOperand": {
+                "property": "assetType.id",
+                "simpleOperator": "equal",
+                "value": 208
+            },
+            "logicalOperator": "AND",
+            "rightOperand": {
+                "property": "assetType.name",
+                "simpleOperator": "equal",
+                "value": "htmlemail"
+            }
+        },
+        "sort": [
+            {
+                "property": "id",
+                "direction": "ASC"
+            }
+        ]
+    }
+}
+exports.GetContentBuilderEmails = (req, resp) => {
+    const filter = getHtmlOnlyFilter();
+    console.log(filter)
+       request({
+            url: `${process.env.restEndpoint}asset/v1/content/assets/query`,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${req.body.accessToken}`,
+            },
+            body: JSON.stringify(filter)
+        }, (err, _response, body) => {
+            if (err) { return   resp.status(401).send(err); }
+            console.log(JSON.parse(body));
+            // eslint-disable-next-line prefer-const
+            return resp.status(200).send(body);
+        });
+   
+};
+
+exports.UpdateEmail = (req, resp) => {
+    
+        request({
+            url: `${process.env.restEndpoint}asset/v1/content/assets/${req.body.id}`,
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${req.body.accessToken}`,
+            },
+            body:JSON.stringify(req.body.email)
+        }, (err, _response, body) => {
+            if (err) { return resp.status(401).send(err);  }
+            // eslint-disable-next-line prefer-const
+            return resp.status(200).send(body);
+        });
+    
+};
+exports.GetEmailByID = (req, resp) => {
+    request({
+        url: `${process.env.restEndpoint}asset/v1/content/assets/${req.body.id}`,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${req.body.accessToken}`,
+        },
+    }, (err, _response, body) => {
+        if (err) { return resp.status(401).send(err); }
+        // eslint-disable-next-line prefer-const
+        return resp.status(200).send(body);
+    }); 
+};
+exports.GetAllContentBuilderAssets = (req, resp) => {
+
+    request({
+        url: `${process.env.restEndpoint}asset/v1/content/assets/`,
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${req.body.accessToken}`,
+        },
+    }, (err, _response, body) => {
+        if (err) { return resp.status(401).send(err); }
+        // eslint-disable-next-line prefer-const
+        return resp.status(200).send(body);
+    });    
+};
