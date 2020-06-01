@@ -314,6 +314,7 @@ function getHtmlOnlyFilter() {
 exports.GetContentBuilderEmails = (req, resp) => {
     sfmcHelper.refreshToken(req.body.accessToken).then((refreshTokenbody) => {
         const filter = getHtmlOnlyFilter();
+        console.clear();
         console.log(refreshTokenbody);
 
         request({
@@ -325,8 +326,9 @@ exports.GetContentBuilderEmails = (req, resp) => {
             },
             body: JSON.stringify(filter)
         }, (err, _response, body) => {
+            console.log(JSON.parse(body))
             if (err) { return resp.status(401).send(err); }
-            console.log(JSON.parse(body));
+          ;
             var response = {
                 refresh_token: refreshTokenbody.refresh_token,
                 body: JSON.parse(body)
