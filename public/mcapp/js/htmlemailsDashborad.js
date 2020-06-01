@@ -231,7 +231,7 @@ function loadHtmlEmails(urlParams, from, page) {
           enterpriseId: $('#eid').val()
       };
   }*/
-  var postData = JSON.stringify({ "accessToken": accessToken })
+  var postData = JSON.stringify({ "accessToken": $("#rt").val() })
   $.ajax({
     "url": "/sfmc/GetContentBuilderEmails",
     "method": "POST",
