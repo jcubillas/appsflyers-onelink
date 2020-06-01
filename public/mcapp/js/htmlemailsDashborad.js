@@ -83,7 +83,11 @@ function getLinks(rawHTML) {
 
   for (var i = 0; i < links.length; i++) {
     console.log(links[i].outerHTML);
-    urls.push(links[i].getAttribute("href"));
+    var linkData= {
+      htmlLink: links[i].outerHTML,
+      link: links[i].getAttribute("href")
+    }
+    urls.push(linkData);
   }
   return urls;
 }
@@ -98,9 +102,10 @@ function replaceLinks(rawHTML, object) {
   
 
   for (var i = 0; i < object.length; i++) {
-    var oldString = 'href="'+object[i].oldLink+'"'
-    var newString = 'href="'+object[i].newLink+'"'
-    rawHTML.replace(oldString,newString)
+    console.log(object[i]);
+    var oldString = object[i].oldLink.htmlLink;
+    var newString = htmlLink.replace(object[i].oldLink.link,object[i].newLink);
+    rawHTML.replace(oldString,newString);
   }
  return rawHTML;
 }
@@ -166,6 +171,7 @@ function buildDashboard(emails, from, page) {
        console.log(links);
        var arrObj=[]
         for (let index = 0; index < links.length; index++) {
+          
           arrObj.push({
             oldLink: links[index],
             newLink: "www.devsutd.com"
