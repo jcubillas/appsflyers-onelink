@@ -326,7 +326,7 @@ exports.GetContentBuilderEmails = (req, resp) => {
             },
             body: JSON.stringify(filter)
         }, (err, _response, body) => {
-            console.log(JSON.parse(body))
+            console.log(body)
             if (err) { return resp.status(401).send(err); }
           ;
             var response = {
