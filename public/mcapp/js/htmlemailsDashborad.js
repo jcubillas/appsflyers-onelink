@@ -239,6 +239,17 @@ function loadHtmlEmails(urlParams, from, page) {
       "Content-Type": "application/json"
     },
     "data": postData,
+  }).done(function (response) {
+    // para acceder al codigo html tenes que hacer object.views.html.content         
+    console.log(response);
+  });
+ /* $.ajax({
+    "url": "/sfmc/GetContentBuilderEmails",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": postData,
     success: (data) => {
       console.log(data);
       var links = data.data;
@@ -262,7 +273,7 @@ function loadHtmlEmails(urlParams, from, page) {
       console.log(errorThrown);
       console.log(jqXHR);
     },
-  })
+  }) */
 
 }
 
