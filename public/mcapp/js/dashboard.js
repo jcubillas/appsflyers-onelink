@@ -85,7 +85,7 @@ function buildDashboard(links, from, page) {
             table += '</div>';
             table += '</div>';
             table += '</td>';
-            table += '</tr>'; 
+            table += '</tr>';
         }
     }
     table += '</table>';
@@ -98,22 +98,22 @@ function buildDashboard(links, from, page) {
 
     for (let index = 0; index < links.length; index++) {
         const element = links[index];
-        document.getElementById(`Duplicate${index}`).addEventListener("click", function(e){
+        document.getElementById(`Duplicate${index}`).addEventListener("click", function (e) {
             e.preventDefault();
             Duplicate(element);
         });
     }
 }
-function Duplicate(element){
+function Duplicate(element) {
     console.log(element);
-    
+
     const postData = {
         refresh_token: $('#rt').val(),
         enterpriseId: $('#eid').val(),
         linkName: `${element.LinkName}_Copy`,
         baseUrl: element.BaseURL,
         status: 'Active',
-        JSONParameter:JSON.parse(element.JSONParameters),
+        JSONParameter: JSON.parse(element.JSONParameters),
         Parameters: element.Parameters,
         CustomParameters: element.CustomParameters,
         Created: new Date().toISOString()
@@ -138,7 +138,7 @@ function buildPaginator(allLinks) {
         enterpriseId: $('#eid').val()
     };
     var totalPages = Math.ceil(allLinks.length / 15);
-    if (totalPages == 0){
+    if (totalPages == 0) {
         totalPages++;
     }
 
@@ -161,7 +161,7 @@ function loadDashboards(urlParams, from, page) {
     const url = '/LoadDashboards';
 
     var inp = $('#lookup').val();
-    if(from == "filtered"){
+    if (from == "filtered") {
         urlParams = {
             refresh_token: $('#rt').val(),
             enterpriseId: $('#eid').val()
@@ -178,14 +178,14 @@ function loadDashboards(urlParams, from, page) {
             $('#rt').val(data.refresh_token);
             $('#eid').val(data.enterpriseId);
 
-            if(inp != undefined) {
+            if (inp != undefined) {
                 links = links.filter(x => x.LinkName.toLowerCase().includes(inp));
-            
-            if (from != "paginator")
-                buildPaginator(links);
 
-            buildDashboard(links, from, page);
-            
+                if (from != "paginator")
+                    buildPaginator(links);
+
+                buildDashboard(links, from, page);
+
             }
         },
         error(jqXHR, error, errorThrown) {
@@ -198,7 +198,7 @@ function loadDashboards(urlParams, from, page) {
     });
 }
 
-function ready(){
+function ready() {
     $('.slds-dropdown-trigger_click').hover(
         function () {
             $(this).addClass('slds-is-open');
@@ -262,7 +262,7 @@ $(document).ready(() => {
     const urlParams = getUrlParameters();
     $('#rt').val(urlParams.refresh_token);
     $('#eid').val(urlParams.enterpriseId);
-
+    $('#htmlemailsLink').href = '/htmlemails/home?rt=' + urlParams.refresh_token + '&eid=' + urlParams.enterpriseId;
     loadDashboards(urlParams, "init", 1);
 
     ready();
