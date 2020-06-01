@@ -328,7 +328,7 @@ exports.GetContentBuilderEmails = (req, resp) => {
             console.log(JSON.parse(body));
             var response = {
                 refresh_token: refreshTokenbody.refresh_token,
-                body: body
+                body: JSON.parse(body)
             }
             // eslint-disable-next-line prefer-const
             return resp.status(200).send(response);

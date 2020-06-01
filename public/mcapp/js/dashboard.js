@@ -106,7 +106,7 @@ function buildDashboard(links, from, page) {
 }
 function Duplicate(element) {
     console.log(element);
-var date = new Date().toISOString()
+    var date = new Date().toISOString()
     const postData = {
         refresh_token: $('#rt').val(),
         enterpriseId: $('#eid').val(),
@@ -117,7 +117,7 @@ var date = new Date().toISOString()
         Parameters: element.Parameters,
         CustomParameters: element.CustomParameters,
         Created: date,
-        Modified:date
+        Modified: date
     };
     console.log(postData);
     $.ajax({
@@ -208,10 +208,12 @@ function ready() {
         () => {
             console.log($(this));
             const elements = document.getElementsByClassName('slds-is-open');
-            // eslint-disable-next-line no-plusplus
-            for (let index = 0; index < elements.length; index++) {
-                const elementid = elements[index].id;
-                $('#' + elementid).removeClass('slds-is-open');
+            if (elements != undefined && elements.length > 0) {
+                // eslint-disable-next-line no-plusplus
+                for (let index = 0; index < elements.length; index++) {
+                    const elementid = elements[index].id;
+                    $('#' + elementid).removeClass('slds-is-open');
+                }
             }
         },
     );
@@ -259,10 +261,10 @@ function ready() {
     });
 }
 
-function replaceUrlTOkens(token){
+function replaceUrlTOkens(token) {
     $('#htmlemailsLink')[0].href = '/htmlemails/home?rt=' + token + '&eid=' + $('#eid').val();
-    $('#DashboardLink')[0].href = '/Dashboard/home?rt=' + token + '&eid=' + $('#eid').val();    
-    console.log($('#htmlemailsLink')[0].href );
+    $('#DashboardLink')[0].href = '/Dashboard/home?rt=' + token + '&eid=' + $('#eid').val();
+    console.log($('#htmlemailsLink')[0].href);
 }
 $(document).ready(() => {
     const urlParams = getUrlParameters();
