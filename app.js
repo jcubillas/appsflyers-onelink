@@ -87,6 +87,9 @@ app.get('/dashboard/home', (_request, response) => {
     response.render('mcapp/DashboardHome.html');
 });
 
+app.get('/htmlemails/home', (_request, response) => {
+    response.render('mcapp/htmlEmailsDashboard.html');
+});
 app.get('/validate', (_request, response) => {
     response.render('mcapp/configureToken.html');
 });
