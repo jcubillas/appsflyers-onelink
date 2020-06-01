@@ -106,7 +106,7 @@ function buildDashboard(links, from, page) {
 }
 function Duplicate(element) {
     console.log(element);
-var date = new Date;().toISOString()
+var date = new Date().toISOString()
     const postData = {
         refresh_token: $('#rt').val(),
         enterpriseId: $('#eid').val(),
