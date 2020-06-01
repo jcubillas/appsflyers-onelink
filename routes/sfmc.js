@@ -314,7 +314,8 @@ function getHtmlOnlyFilter() {
 exports.GetContentBuilderEmails = (req, resp) => {
     sfmcHelper.refreshToken(req.body.accessToken).then((refreshTokenbody) => {
         const filter = getHtmlOnlyFilter();
-        console.log(`Bearer ${refreshTokenbody.access_token}`);
+        console.log(refreshTokenbody);
+
         request({
             url: `${process.env.restEndpoint}asset/v1/content/assets/query`,
             method: 'POST',
