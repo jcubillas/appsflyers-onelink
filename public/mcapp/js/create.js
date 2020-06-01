@@ -640,7 +640,8 @@ $(document).ready(() => {
             JSONParameter: JSONParameter,
             Parameters: buildQueryString(),
             CustomParameters: customParameters,
-            Created: date
+            Created: date,
+            Modified:date
         };
 
         $.ajax({
