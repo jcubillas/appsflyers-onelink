@@ -262,6 +262,7 @@ function ready() {
 function replaceUrlTOkens(token){
     $('#htmlemailsLink')[0].href = '/htmlemails/home?rt=' + token + '&eid=' + $('#eid').val();
     $('#DashboardLink')[0].href = '/Dashboard/home?rt=' + token + '&eid=' + $('#eid').val();    
+    console.log($('#htmlemailsLink')[0].href );
 }
 $(document).ready(() => {
     const urlParams = getUrlParameters();
