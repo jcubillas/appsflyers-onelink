@@ -145,7 +145,7 @@ function buildDashboard(emails, from, page) {
       const element = emails[index];
        table += '<tr>';
 
-      table += `<td role="gridcell" colspan="2"><div class="slds-truncate" ><a href="#" id="link${index}" "${element.name}</div></td>`;
+      table += `<td role="gridcell" colspan="2"><div class="slds-truncate" ><a href="#" id="link${index}">${element.name}</a> </div></td>`;
       table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.assetType.name}</div></td>`;
       table += `<td role="gridcell" colspan="3"><div class="slds-truncate" title="${element.owner.name}">${element.owner.name}</div></td>`;
       table += '</tr>';
