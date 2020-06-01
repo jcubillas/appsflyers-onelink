@@ -106,7 +106,7 @@ function buildDashboard(links, from, page) {
 }
 function Duplicate(element) {
     console.log(element);
-
+var date = new Date;().toISOString()
     const postData = {
         refresh_token: $('#rt').val(),
         enterpriseId: $('#eid').val(),
@@ -116,7 +116,8 @@ function Duplicate(element) {
         JSONParameter: JSON.parse(element.JSONParameters),
         Parameters: element.Parameters,
         CustomParameters: element.CustomParameters,
-        Created: new Date().toISOString()
+        Created: date,
+        Modified:date
     };
     console.log(postData);
     $.ajax({
@@ -258,11 +259,14 @@ function ready() {
     });
 }
 
+function replaceUrlTOkens(token){
+    $('#htmlemailsLink').href = '/htmlemails/home?rt=' + token + '&eid=' + $('#eid').val();
+}
 $(document).ready(() => {
     const urlParams = getUrlParameters();
     $('#rt').val(urlParams.refresh_token);
     $('#eid').val(urlParams.enterpriseId);
-    $('#htmlemailsLink').href = '/htmlemails/home?rt=' + urlParams.refresh_token + '&eid=' + urlParams.enterpriseId;
+    replaceUrlTOkens(urlParams.refresh_token)
     loadDashboards(urlParams, "init", 1);
 
     ready();
