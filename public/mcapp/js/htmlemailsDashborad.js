@@ -226,16 +226,7 @@ function buildPaginator(allLinks) {
 }
 
 function loadHtmlEmails(urlParams, from, page) {
- 
-/*
-  var inp = $('#lookup').val();
-  if(from == "filtered"){
-      urlParams = {
-          refresh_token: $('#rt').val(),
-          enterpriseId: $('#eid').val()
-      };
-  }*/
-  var postData = JSON.stringify({ "accessToken": $("#rt").val() })
+var postData = JSON.stringify({ "accessToken": $("#rt").val() })
   console.log(postData);
   $.ajax({
     "url": "/sfmc/GetContentBuilderEmails",

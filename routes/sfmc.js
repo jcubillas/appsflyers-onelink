@@ -312,22 +312,26 @@ function getHtmlOnlyFilter(){
     }
 }
 exports.GetContentBuilderEmails = (req, resp) => {
-    const filter = getHtmlOnlyFilter();
-    console.log(filter)
-       request({
-            url: `${process.env.restEndpoint}asset/v1/content/assets/query`,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${req.body.accessToken}`,
-            },
-            body: JSON.stringify(filter)
-        }, (err, _response, body) => {
-            if (err) { return   resp.status(401).send(err); }
-            console.log(JSON.parse(body));
-            // eslint-disable-next-line prefer-const
-            return resp.status(200).send(body);
-        });
+    sfmcHelper.refreshToken(req.body.accessToken).then((refreshTokenbody) => {
+        const filter = getHtmlOnlyFilter();
+        console.log(refreshTokenbody);
+           request({
+                url: `${process.env.restEndpoint}asset/v1/content/assets/query`,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${refreshTokenbody.access_token}`,
+                },
+                body: JSON.stringify(filter)
+            }, (err, _response, body) => {
+                if (err) { return   resp.status(401).send(err); }
+                console.log(JSON.parse(body));
+                // eslint-disable-next-line prefer-const
+                return resp.status(200).send(body);
+            });
+
+    })
+   
    
 };
 
