@@ -178,7 +178,7 @@ function loadDashboards(urlParams, from, page) {
             var links = data.data;
             $('#rt').val(data.refresh_token);
             $('#eid').val(data.enterpriseId);
-
+            replaceUrlTOkens($('#rt').val())
             if (inp != undefined) {
                 links = links.filter(x => x.LinkName.toLowerCase().includes(inp));
 
@@ -260,7 +260,8 @@ function ready() {
 }
 
 function replaceUrlTOkens(token){
-    $('#htmlemailsLink').href = '/htmlemails/home?rt=' + token + '&eid=' + $('#eid').val();
+    $('#htmlemailsLink')[0].href = '/htmlemails/home?rt=' + token + '&eid=' + $('#eid').val();
+    $('#DashboardLink')[0].href = '/Dashboard/home?rt=' + token + '&eid=' + $('#eid').val();    
 }
 $(document).ready(() => {
     const urlParams = getUrlParameters();
