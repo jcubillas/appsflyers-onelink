@@ -98,13 +98,14 @@ function replaceUrlTOkens(token) {
   $('#DashboardLink')[0].href = '/Dashboard/home?rt=' + token + '&eid=' + $('#eid').val();
 }
 
-function replaceLinks(rawHTML, object) {
-  
+function replaceLinks(rawHTML, object) {  
 
   for (var i = 0; i < object.length; i++) {
     console.log(object[i]);
     var oldString = object[i].oldLink.htmlLink;
-    var newString = htmlLink.replace(object[i].oldLink.link,object[i].newLink);
+    var newString = oldString.replace(object[i].oldLink.link,object[i].newLink);
+    console.log("oldString " + oldString);
+    console.log("newString " + newString);
     rawHTML.replace(oldString,newString);
   }
  return rawHTML;
