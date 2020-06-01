@@ -82,6 +82,7 @@ function getLinks(rawHTML) {
   var urls = [];
 
   for (var i = 0; i < links.length; i++) {
+    console.log(links[i].outerHTML);
     urls.push(links[i].getAttribute("href"));
   }
   return urls;
