@@ -127,7 +127,7 @@ function getUrlParameters() {
 }
 
 
-function href(emails, from, page) {
+function buildDashboard(emails, from, page) {
   let table = '<div class="slds-lookup" data-select="multi" data-scope="single" data-typeahead="true">';
   table += '<table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" >';
 
