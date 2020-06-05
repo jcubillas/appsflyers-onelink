@@ -102,17 +102,15 @@ function replaceUrlTOkens(token) {
 
 function replaceLinks(rawHTML, object,OneLink) {
 
-  for (var i = 0; i < object.length; i++) {
+  var htmlEmail = rawHTML;
+  for (var i = 0; i < object.Links.length; i++) {
     console.log(object[i]);
-    var oldString = object[i].oldLink.htmlLink;
-    var linkText = oldString.split('>')[1].split('<')[0].trim();
-    var newString = oldString.replace(object[i].oldLink.link, object[i].newLink);
-    console.log("oldString " + oldString);
-    console.log("newString " + newString);
-    //   rawHTML.replace(oldString.substring(oldString.indexOf('<'),oldString.indexOf('>') + 1), newString.substring(newString.indexOf('<'),newString.indexOf('>') + 1));
-    rawHTML.replace
+    var oldString = object[i].Links.htmlLink;
+    var newString = oldString.replace(object.Links[i].href, OneLink);
+    htmlEmail.replace(oldString.substring(oldString.indexOf('<'),oldString.indexOf('>') + 1), newString.substring(newString.indexOf('<'),newString.indexOf('>') + 1));
+   
   }
-  return rawHTML;
+  return htmlEmail;
 }
 
 /* eslint-disable no-undef */
