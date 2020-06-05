@@ -100,7 +100,7 @@ function replaceUrlTOkens(token) {
   $('#DashboardLink')[0].href = '/Dashboard/home?rt=' + token + '&eid=' + $('#eid').val();
 }
 
-function replaceLinks(rawHTML, object) {
+function replaceLinks(rawHTML, object,OneLink) {
 
   for (var i = 0; i < object.length; i++) {
     console.log(object[i]);
@@ -163,16 +163,7 @@ function buildDashboard(emails, from, page) {
       var rawHTML = element.views.html.content;
       var links = getLinks(element.id, rawHTML);
       console.log(links);
-      var arrObj = []
-      for (let index = 0; index < links.length; index++) {
-
-        arrObj.push({
-          oldLink: links[index],
-          newLink: "www.devsutd.com"
-        });
-
-      }
-      console.log(replaceLinks(element, arrObj));
+      console.log(replaceLinks(element.views.html.content, links, "www.onelink.com"));
     });
   }
 }
