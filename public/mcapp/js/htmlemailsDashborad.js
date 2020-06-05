@@ -107,8 +107,7 @@ function replaceLinks(rawHTML, object,OneLink) {
     console.log(object[i]);
     var oldString = object[i].Links.htmlLink;
     var newString = oldString.replace(object.Links[i].href, OneLink);
-    htmlEmail.replace(oldString.substring(oldString.indexOf('<'),oldString.indexOf('>') + 1), newString.substring(newString.indexOf('<'),newString.indexOf('>') + 1));
-   
+    htmlEmail.replace(oldString.substring(oldString.indexOf('<'),oldString.indexOf('>') + 1), newString.substring(newString.indexOf('<'),newString.indexOf('>') + 1));  
   }
   return htmlEmail;
 }
