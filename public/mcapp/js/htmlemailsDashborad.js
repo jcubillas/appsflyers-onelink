@@ -104,7 +104,7 @@ function replaceLinks(rawHTML, object,OneLink) {
 
   var htmlEmail = rawHTML;
   for (var i = 0; i < object.Links.length; i++) {
-    var oldString = objectLinks[i].htmlLink;
+    var oldString = object.Links[i].htmlLink;
     var newString = oldString.replace(object.Links[i].href, OneLink);
     htmlEmail.replace(oldString.substring(oldString.indexOf('<'),oldString.indexOf('>') + 1), newString.substring(newString.indexOf('<'),newString.indexOf('>') + 1));  
   }
