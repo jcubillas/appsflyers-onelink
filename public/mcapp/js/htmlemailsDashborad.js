@@ -129,8 +129,11 @@ function buildDashboard(emails, from, page) {
   table += '<tr>';
 
   table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>Email Name</b></td>';
+  table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>Subject</b></td>';
+  table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>Preheader</b></td>';
   table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>Email type</b></td>';
-  table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="3"><b>Owner</b></td>';
+  table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>Owner</b></td>';
+  table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>Created</b></td>';
   table += '</tr>';
 
   if (emails !== undefined) {
@@ -138,9 +141,13 @@ function buildDashboard(emails, from, page) {
       const element = emails[index];
       table += '<tr>';
 
-      table += `<td role="gridcell" colspan="2"><div class="slds-truncate" ><a href="#" id="link${index}">${element.name}</a> </div></td>`;
-      table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.assetType.name}</div></td>`;
-      table += `<td role="gridcell" colspan="3"><div class="slds-truncate" title="${element.owner.name}">${element.owner.name}</div></td>`;
+      table += `<td role="gridcell" colspan="2"><div class="slds-truncate" ><a href="#" id="email${index}">${element.name}</a> </div></td>`;
+      table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.views.subjectline.content}</div></td>`;
+      table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.views.preheader.content}</div></td>`;
+      table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.assetType.displayName}</div></td>`;
+      table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.owner.name}</div></td>`;
+      table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.status.name}</div></td>`;
+      table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.createdDate}</div></td>`;
       table += '</tr>';
     }
   }
