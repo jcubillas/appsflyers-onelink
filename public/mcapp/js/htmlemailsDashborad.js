@@ -199,7 +199,8 @@ function buildPaginator(allEmails) {
 
 function loadHtmlEmails(urlParams, from, page) {
   var postData = JSON.stringify({ "accessToken": $("#rt").val() })
-  console.log(postData);
+  var inp = $('#lookup').val();
+
   $.ajax({
     url: "/sfmc/GetContentBuilderEmails",
     method: "POST",
