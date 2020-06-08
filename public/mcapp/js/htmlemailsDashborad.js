@@ -158,8 +158,6 @@ function buildDashboard(emails, from, page) {
   $('#dashboard-table').empty();
   $('#dashboard-table').html(table);
 
-  ready();
-
   for (let index = 0; index < emails.length; index++) {
     const element = emails[index];
     document.getElementById(`email${index}`).addEventListener("click", function (e) {
