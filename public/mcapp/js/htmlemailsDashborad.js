@@ -123,6 +123,7 @@ function getUrlParameters() {
 
 
 function buildDashboard(emails, from, page) {
+  console.log(emails);
   let table = '<div class="slds-lookup" data-select="multi" data-scope="single" data-typeahead="true">';
   table += '<table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid" >';
 
@@ -142,7 +143,7 @@ function buildDashboard(emails, from, page) {
       const element = emails[index];
       table += '<tr>';
 
-      table += `<td role="gridcell" colspan="2"><div class="slds-truncate" ><a href="#" id="email${index}">${element.name}</a> </div></td>`;
+      table += `<td role="gridcell" colspan="2"><div class="slds-truncate" ><a href="#" onclick="openAssignLinks();" id="email${index}">${element.name}</a> </div></td>`;
       table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.views.subjectline.content}</div></td>`;
       table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.views.preheader.content}</div></td>`;
       table += `<td role="gridcell" colspan="2"><div class="slds-truncate" >${element.assetType.displayName}</div></td>`;
