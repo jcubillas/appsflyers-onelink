@@ -133,6 +133,7 @@ function buildDashboard(emails, from, page) {
   table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>Preheader</b></td>';
   table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>Email type</b></td>';
   table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>Owner</b></td>';
+  table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>Status</b></td>';
   table += '<td class="header-dashboard" role="gridcell" scope="col" colspan="2"><b>Created</b></td>';
   table += '</tr>';
 
@@ -161,22 +162,22 @@ function buildDashboard(emails, from, page) {
 
   for (let index = 0; index < emails.length; index++) {
     const element = emails[index];
-    document.getElementById(`link${index}`).addEventListener("click", function (e) {
+    document.getElementById(`email${index}`).addEventListener("click", function (e) {
       e.preventDefault();
       var rawHTML = element.views.html.content;
       var links = getLinks(element.id, rawHTML);
       console.log(links);
-      console.log(replaceLinks(element.views.html.content, links, "www.onelink.com"));
+      //console.log(replaceLinks(element.views.html.content, links, "www.onelink.com"));
     });
   }
 }
 
-function buildPaginator(allLinks) {
+function buildPaginator(allEmails) {
   const params = {
     refresh_token: $('#rt').val(),
     enterpriseId: $('#eid').val()
   };
-  var totalPages = Math.ceil(allLinks.length / 15);
+  var totalPages = Math.ceil(allEmails.length / 15);
   if (totalPages == 0) {
     totalPages++;
   }
@@ -223,49 +224,6 @@ function loadHtmlEmails(urlParams, from, page) {
 
 }
 
-function ready() {
-  $('.slds-dropdown-trigger_click').hover(
-    function () {
-      $(this).addClass('slds-is-open');
-      console.log($(this));
-    },
-    () => {
-      console.log($(this));
-      const elements = document.getElementsByClassName('slds-is-open');
-      // eslint-disable-next-line no-plusplus
-      for (let index = 0; index < elements.length; index++) {
-        const elementid = elements[index].id;
-        $('#' + elementid).removeClass('slds-is-open');
-      }
-    },
-  );
-
-  $('.slds-dropdown-trigger_click').on('click', function (e) {
-    console.log($(this));
-    $(this).addClass('slds-is-open');
-  });
-  $('.edit').hover(
-    () => {
-      console.log('.edit');
-      // $(this).addClass('slds-is-open');
-    },
-    function () {
-      $(this).parent().removeClass('slds-is-open');
-    },
-  );
-
-
-
-  $('.edit').on('click', function (e) {
-    e.preventDefault();
-
-    const href = $(this).attr('href');
-    let link = href.replace('{0}', $('#eid').val());
-    link = link.replace('{1}', $('#rt').val());
-    window.location.href = link;
-  });
-}
-
 $(document).ready(() => {
   const urlParams = getUrlParameters();
   $('#rt').val(urlParams.refresh_token);
@@ -273,6 +231,4 @@ $(document).ready(() => {
 
   replaceUrlTOkens($('#rt').val());
   loadHtmlEmails(urlParams, "init", 1);
-
-  ready();
 });
