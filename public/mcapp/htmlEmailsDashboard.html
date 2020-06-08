@@ -166,6 +166,7 @@
            </footer>
         </div>
      </section>
+     <div id="background-modals" class="slds-backdrop"></div>
      <section id="section-confirmationAlert" role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-modal="true" aria-describedby="confirmationAlert" class="slds-modal">
       <div class="slds-modal__container">
         <header class="slds-modal__header">
@@ -193,6 +194,7 @@
 
         function openAssignLinks(){ 
             $("#section-assignLinks").addClass("slds-fade-in-open");
+            $("#background-modals").addClass("slds-backdrop_open");
         }
         function confirmationAlert(){
             $("#section-assignLinks").removeClass("slds-fade-in-open");
@@ -201,11 +203,13 @@
     
         function confirmLinkUpdates() {
             $("#section-confirmationAlert").removeClass("slds-fade-in-open");
+            $("#background-modals").removeClass("slds-backdrop_open");
         }
     
         function cancelUpdates(){
             $("#section-assignLinks").removeClass("slds-fade-in-open");
             $("#section-confirmationAlert").removeClass("slds-fade-in-open");
+            $("#background-modals").removeClass("slds-backdrop_open");
         }
     </script>
 </body>
