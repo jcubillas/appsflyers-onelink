@@ -114,8 +114,14 @@ function replaceLinks(rawHTML, object,OneLink) {
   var htmlEmail = rawHTML;
   for (var i = 0; i < object.Links.length; i++) {
     var oldString = object.Links[i].htmlLink;
+    var oldStringLength = oldString.length;
+    var htmlBeforeLink = htmlEmail.substring(0,htmlEmail.indexOf(oldString));
+    console.log(htmlBeforeLink);
+    var htmlafterLink = htmlEmail.substring(htmlBeforeLink.length +  oldStringLength ,htmlEmail.length);
     var newString = oldString.replace(object.Links[i].href, OneLink);
-    htmlEmail.replace(oldString, newString);  
+
+    htmlEmail = htmlBeforeLink + newString + htmlafterLink;
+   // htmlEmail.replace(oldString, newString);  
   }
   return htmlEmail;
 }
