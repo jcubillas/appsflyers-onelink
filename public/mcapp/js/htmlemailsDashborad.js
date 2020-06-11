@@ -84,10 +84,19 @@ function getLinks(id, rawHTML) {
   for (var i = 0; i < links.length; i++) {
     var LinkHtml = links[i].outerHTML;
     var HtmlLinkText = LinkHtml.split('>')[1].split('<')[0].trim();
+    if(LinkHtml.indexOf('<img') > 0){
+      HtmlLinkText = 'Link of Image'
+    }
+    var href = links[i].getAttribute("href");
+
+    if(href == ""){
+      href="#"      
+    }
+    
     var linkData = {
       htmlLink: LinkHtml,
       LinkText: HtmlLinkText,
-      href: links[i].getAttribute("href")
+      href: href
     }
     urls.Links.push(linkData);
   }
