@@ -92,7 +92,7 @@ function getLinks(id, rawHTML) {
     if(href == ""){
       href="#"      
     }
-    
+
     var linkData = {
       htmlLink: LinkHtml,
       LinkText: HtmlLinkText,
@@ -174,8 +174,10 @@ function buildDashboard(emails, from, page) {
       e.preventDefault();
       var rawHTML = element.views.html.content;
       var links = getLinks(element.id, rawHTML);
+
+      
       console.log(links);
-      //console.log(replaceLinks(element.views.html.content, links, "www.onelink.com"));
+      console.log(replaceLinks(element.views.html.content, links, "www.onelink.com"));
     });
   }
 }
