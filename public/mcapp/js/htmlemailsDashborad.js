@@ -20,7 +20,7 @@ $(document).ready(() => {
     },
     "data": postData,
   }).done(function (response) {
-    campaigns = response.body;
+    campaigns = response.body.items;
   });
 
   
@@ -194,11 +194,10 @@ function buildDashboard(emails, from, page) {
   if (emails !== undefined) {
     for (let index = 0; index < emails.length; index++) {
       const element = emails[index];
-      let campaigns = [];
-      if (element.data !== undefined) {
-        campaigns = element.data.campaigns;
-        if (campaigns.campaigns[0] != undefined) {
-          var campaign = getCampaignById(campaigns.campaigns[0].campaignId);
+       if (element.data !== undefined) {
+        emailCampaign = element.data.campaigns;
+        if (emailCampaign.campaigns[0] != undefined) {
+          var campaign = getCampaignById(emailCampaign.campaigns[0].campaignId);
           /*
                     $.ajax({
                       "url": "/sfmc/GetCampaignID",
