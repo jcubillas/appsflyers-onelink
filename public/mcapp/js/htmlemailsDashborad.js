@@ -84,13 +84,13 @@ function getLinks(id, rawHTML) {
   for (var i = 0; i < links.length; i++) {
     var LinkHtml = links[i].outerHTML;
     var HtmlLinkText = LinkHtml.split('>')[1].split('<')[0].trim();
-    if(LinkHtml.indexOf('<img') > 0){
+    if (LinkHtml.indexOf('<img') > 0) {
       HtmlLinkText = 'Link of Image'
     }
     var href = links[i].getAttribute("href");
 
-    if(href == ""){
-      href="#"      
+    if (href == "") {
+      href = "#"
     }
 
     var linkData = {
@@ -109,19 +109,19 @@ function replaceUrlTOkens(token) {
   $('#DashboardLink')[0].href = '/Dashboard/home?rt=' + token + '&eid=' + $('#eid').val();
 }
 
-function replaceLinks(rawHTML, object,OneLink) {
+function replaceLinks(rawHTML, object, OneLink) {
 
   var htmlEmail = rawHTML;
   for (var i = 0; i < object.Links.length; i++) {
     var oldString = object.Links[i].htmlLink;
     var oldStringLength = oldString.length;
-    var htmlBeforeLink = htmlEmail.substring(0,htmlEmail.indexOf(oldString));
+    var htmlBeforeLink = htmlEmail.substring(0, htmlEmail.indexOf(oldString));
     console.log(htmlBeforeLink);
-    var htmlafterLink = htmlEmail.substring(htmlBeforeLink.length +  oldStringLength ,htmlEmail.length);
+    var htmlafterLink = htmlEmail.substring(htmlBeforeLink.length + oldStringLength, htmlEmail.length);
     var newString = oldString.replace(object.Links[i].href, OneLink);
 
     htmlEmail = htmlBeforeLink + newString + htmlafterLink;
-   // htmlEmail.replace(oldString, newString);  
+    // htmlEmail.replace(oldString, newString);  
   }
   return htmlEmail;
 }
@@ -135,7 +135,25 @@ function getUrlParameters() {
   };
   return urlParams;
 }
+function GetCampaignByID(id) {
+ 
+  var postData = JSON.stringify({
+    "accessToken": $("#rt").val(),
+    "id":id
+  });
 
+  $.ajax({
+    "url": "/sfmc/GetCampaignID",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": postData,
+  }).done(function (response) {
+    console.log(response);
+    return response;
+  });
+}
 
 function buildDashboard(emails, from, page) {
   console.log(emails);
@@ -156,6 +174,13 @@ function buildDashboard(emails, from, page) {
   if (emails !== undefined) {
     for (let index = 0; index < emails.length; index++) {
       const element = emails[index];
+      let campaigns = [];
+      if (element.data !== undefined) {
+        campaigns = element.data.campaigns;
+        if (campaigns.campaigns[0] != undefined) {
+          var campaign = GetCampaignByID(campaigns.campaigns[0].campaignId);
+        }
+      }
       table += '<tr>';
 
       table += `<td role="gridcell" colspan="2"><div class="slds-truncate" ><a href="#" onclick="openAssignLinks();" id="email${index}">${element.name}</a> </div></td>`;
@@ -181,7 +206,7 @@ function buildDashboard(emails, from, page) {
       var rawHTML = element.views.html.content;
       var links = getLinks(element.id, rawHTML);
 
-      
+
       console.log(links);
       console.log(replaceLinks(element.views.html.content, links, "www.onelink.com"));
     });
@@ -232,7 +257,7 @@ function loadHtmlEmails(urlParams, from, page) {
         emails = emails.items.filter(x => x.name.toLowerCase().includes(inp));
 
         if (from != "paginator")
-            buildPaginator(emails);
+          buildPaginator(emails);
 
         buildDashboard(emails, from, page);
       }

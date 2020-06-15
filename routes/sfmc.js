@@ -389,6 +389,30 @@ exports.GetEmailByID = (req, resp) => {
     })
 };
 
+exports.GetCampaignID = (req, resp) => {
+
+    sfmcHelper.refreshToken(req.body.accessToken).then((refreshTokenbody) => {
+         request({
+            url: `${process.env.restEndpoint}hub/v1/campaigns/${req.body.id}`,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${refreshTokenbody.access_token}`,
+            },
+            body: JSON.stringify(filter)
+        }, (err, _response, body) => {
+            if (err) { return resp.status(401).send(err); }
+            console.log(JSON.parse(body));
+            var response = {
+                refresh_token: refreshTokenbody.refresh_token,
+                body: body
+            }
+            // eslint-disable-next-line prefer-const
+            return resp.status(200).send(response);
+        });
+    })
+};
+
 exports.GetAllContentBuilderAssets = (req, resp) => {
     sfmcHelper.refreshToken(req.body.accessToken).then((refreshTokenbody) => {
         request({
