@@ -389,14 +389,14 @@ exports.GetEmailByID = (req, resp) => {
     })
 };
 
-exports.GetCampaignID = (req, resp) => {
+exports.GetCampaigns = (req, resp) => {
 
     console.log(req);
     sfmcHelper.refreshToken(req.body.accessToken)
         .then((refreshTokenbody) => {
             console.log(refreshTokenbody);
             request({
-                url: `${process.env.restEndpoint}hub/v1/campaigns/${req.body.id}`,
+                url: `${process.env.restEndpoint}hub/v1/campaigns`,
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

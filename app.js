@@ -79,7 +79,7 @@ app.post('/sfmc/GetImageStatus', sfmc.GetImageStatus);
 app.post('/sfmc/GetContentBuilderEmails', sfmc.GetContentBuilderEmails);
 app.post('/sfmc/UpdateEmail', sfmc.UpdateEmail);
 app.post('/sfmc/GetEmailByID', sfmc.GetEmailByID);
-app.post('/sfmc/GetCampaignID', sfmc.GetCampaignID);
+app.post('/sfmc/GetCampaigns', sfmc.GetCampaigns);
 app.post('/sfmc/GetAllContentBuilderAssets', sfmc.GetAllContentBuilderAssets);
 
 

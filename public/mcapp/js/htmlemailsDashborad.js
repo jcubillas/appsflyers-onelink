@@ -135,6 +135,17 @@ function getUrlParameters() {
   };
   return urlParams;
 }
+function getCampaignById(id) {
+  var c;
+  for (let index = 0; index < campaigns.length; index++) {
+    const element = campaigns[index];
+    if (element.id = id) {
+      c = id;
+      break;
+    }
+  }
+  return c;
+}
 
 function buildDashboard(emails, from, page) {
   console.log(emails);
@@ -160,23 +171,19 @@ function buildDashboard(emails, from, page) {
       if (element.data !== undefined) {
         campaigns = element.data.campaigns;
         if (campaigns.campaigns[0] != undefined) {
-          var campaign;
-          var postData = JSON.stringify({
-            "accessToken": $("#rt").val(),
-            "id":campaigns.campaigns[0].campaignId
-          });
-        
-          $.ajax({
-            "url": "/sfmc/GetCampaignID",
-            "method": "POST",
-            "async":false,
-            "headers": {
-              "Content-Type": "application/json"
-            },
-            "data": postData,
-          }).done(function (response) {
-            campaign = response.body;
-          });
+          var campaign = getCampaignById(campaigns.campaigns[0].campaignId);
+          /*
+                    $.ajax({
+                      "url": "/sfmc/GetCampaignID",
+                      "method": "POST",
+                      "async": false,
+                      "headers": {
+                        "Content-Type": "application/json"
+                      },
+                      "data": postData,
+                    }).done(function (response) {
+                      campaign = response.body;
+                    });*/
         }
       }
       table += '<tr>';
@@ -278,5 +285,25 @@ $(document).ready(() => {
   $('#eid').val(urlParams.enterpriseId);
 
   replaceUrlTOkens($('#rt').val());
+
+  var campaigns;
+  var postData = JSON.stringify({
+    "accessToken": $("#rt").val()
+  });
+
+  $.ajax({
+    "url": "/sfmc/GetCampaigns",
+    "method": "POST",
+    "async": false,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": postData,
+  }).done(function (response) {
+    campaigns = response.body;
+  });
+
+
+
   loadHtmlEmails(urlParams, "init", 1);
 });
