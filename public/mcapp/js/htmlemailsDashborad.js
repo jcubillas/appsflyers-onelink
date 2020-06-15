@@ -244,6 +244,19 @@ $(document).ready(() => {
     "accessToken": $("#rt").val()
   });
 
+  $.ajax({
+    "url": "/sfmc/GetCampaigns",
+    "method": "POST",
+    "async": false,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": postData,
+  }).done(function (response) {
+    campaigns = response.body;
+  });
+
+  
   
 function getCampaignById(id) {
   var c;
@@ -293,18 +306,6 @@ function loadHtmlEmails(urlParams, from, page) {
   })
 
 }
-  $.ajax({
-    "url": "/sfmc/GetCampaigns",
-    "method": "POST",
-    "async": false,
-    "headers": {
-      "Content-Type": "application/json"
-    },
-    "data": postData,
-  }).done(function (response) {
-    campaigns = response.body;
-  });
-
 
 
   loadHtmlEmails(urlParams, "init", 1);
