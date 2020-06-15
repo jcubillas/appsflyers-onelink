@@ -145,6 +145,7 @@ function GetCampaignByID(id) {
   $.ajax({
     "url": "/sfmc/GetCampaignID",
     "method": "POST",
+    "async":false,
     "headers": {
       "Content-Type": "application/json"
     },
