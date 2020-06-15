@@ -329,7 +329,7 @@ exports.GetContentBuilderEmails = (req, resp) => {
             console.log(err);
             console.log(body);
             if (err) { return resp.status(401).send(err); }
-          
+
             var response = {
                 refresh_token: refreshTokenbody.refresh_token,
                 body: JSON.parse(body)
@@ -342,33 +342,33 @@ exports.GetContentBuilderEmails = (req, resp) => {
 
 exports.UpdateEmail = (req, resp) => {
 
-    
+
     sfmcHelper.refreshToken(req.body.accessToken).then((refreshTokenbody) => {
         request({
-           url: `${process.env.restEndpoint}asset/v1/content/assets/${req.body.id}`,
-           method: 'PUT',
-           headers: {
-               'Content-Type': 'application/json',
-               Authorization: `Bearer ${refreshTokenbody.access_token}`,
-           },
-           body: JSON.stringify(req.body.email)
-       }, (err, _response, body) => {
-           if (err) { return resp.status(401).send(err); }
-           console.log(JSON.parse(body));
-           var response = {
-               refresh_token: refreshTokenbody.refresh_token,
-               body: body
-           }
-           // eslint-disable-next-line prefer-const
-           return resp.status(200).send(response);
-       });
-   })  
+            url: `${process.env.restEndpoint}asset/v1/content/assets/${req.body.id}`,
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${refreshTokenbody.access_token}`,
+            },
+            body: JSON.stringify(req.body.email)
+        }, (err, _response, body) => {
+            if (err) { return resp.status(401).send(err); }
+            console.log(JSON.parse(body));
+            var response = {
+                refresh_token: refreshTokenbody.refresh_token,
+                body: body
+            }
+            // eslint-disable-next-line prefer-const
+            return resp.status(200).send(response);
+        });
+    })
 
 };
 exports.GetEmailByID = (req, resp) => {
 
     sfmcHelper.refreshToken(req.body.accessToken).then((refreshTokenbody) => {
-         request({
+        request({
             url: `${process.env.restEndpoint}asset/v1/content/assets/${req.body.id}`,
             method: 'GET',
             headers: {
@@ -391,18 +391,42 @@ exports.GetEmailByID = (req, resp) => {
 
 exports.GetCampaignID = (req, resp) => {
 
+    console.log(req);
+    sfmcHelper.refreshToken(req.body.accessToken)
+        .then((refreshTokenbody) => {
+            console.log(refreshTokenbody);
+            request({
+                url: `${process.env.restEndpoint}hub/v1/campaigns/${req.body.id}`,
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${refreshTokenbody.access_token}`,
+                }
+            }, (err, _response, body) => {
+                console.log(err)
+                if (err) { return resp.status(401).send(err); }
+                console.log(JSON.parse(body));
+                var response = {
+                    refresh_token: refreshTokenbody.refresh_token,
+                    body: JSON.parse(body)
+                }
+                // eslint-disable-next-line prefer-const
+                return resp.status(200).send(response);
+            });
+        })
+};
+
+exports.GetAllContentBuilderAssets = (req, resp) => {
     sfmcHelper.refreshToken(req.body.accessToken).then((refreshTokenbody) => {
-         request({
-            url: `${process.env.restEndpoint}hub/v1/campaigns/${req.body.id}`,
+        request({
+            url: `${process.env.restEndpoint}asset/v1/content/assets/`,
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${refreshTokenbody.access_token}`,
-            },
-            body: JSON.stringify(filter)
+            }
         }, (err, _response, body) => {
             if (err) { return resp.status(401).send(err); }
-            console.log(JSON.parse(body));
             var response = {
                 refresh_token: refreshTokenbody.refresh_token,
                 body: body
@@ -411,26 +435,4 @@ exports.GetCampaignID = (req, resp) => {
             return resp.status(200).send(response);
         });
     })
-};
-
-exports.GetAllContentBuilderAssets = (req, resp) => {
-    sfmcHelper.refreshToken(req.body.accessToken).then((refreshTokenbody) => {
-        request({
-           url: `${process.env.restEndpoint}asset/v1/content/assets/`,
-           method: 'GET',
-           headers: {
-               'Content-Type': 'application/json',
-               Authorization: `Bearer ${refreshTokenbody.access_token}`,
-           },
-           body: JSON.stringify(filter)
-       }, (err, _response, body) => {
-           if (err) { return resp.status(401).send(err); }
-           var response = {
-               refresh_token: refreshTokenbody.refresh_token,
-               body: body
-           }
-           // eslint-disable-next-line prefer-const
-           return resp.status(200).send(response);
-       });
-   })
 };
