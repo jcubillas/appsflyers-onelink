@@ -135,18 +135,6 @@ function getUrlParameters() {
   };
   return urlParams;
 }
-function getCampaignById(id) {
-  var c;
-  for (let index = 0; index < campaigns.length; index++) {
-    const element = campaigns[index];
-    if (element.id = id) {
-      c = id;
-      break;
-    }
-  }
-  return c;
-}
-
 function buildDashboard(emails, from, page) {
   console.log(emails);
   let table = '<div class="slds-lookup" data-select="multi" data-scope="single" data-typeahead="true">';
@@ -290,6 +278,20 @@ $(document).ready(() => {
   var postData = JSON.stringify({
     "accessToken": $("#rt").val()
   });
+
+  
+function getCampaignById(id) {
+  var c;
+  for (let index = 0; index < campaigns.length; index++) {
+    const element = campaigns[index];
+    if (element.id = id) {
+      c = id;
+      break;
+    }
+  }
+  return c;
+}
+
 
   $.ajax({
     "url": "/sfmc/GetCampaigns",
