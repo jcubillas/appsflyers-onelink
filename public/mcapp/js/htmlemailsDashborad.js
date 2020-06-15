@@ -135,26 +135,6 @@ function getUrlParameters() {
   };
   return urlParams;
 }
-function GetCampaignByID(id) {
- 
-  var postData = JSON.stringify({
-    "accessToken": $("#rt").val(),
-    "id":id
-  });
-
-  $.ajax({
-    "url": "/sfmc/GetCampaignID",
-    "method": "POST",
-    "async":false,
-    "headers": {
-      "Content-Type": "application/json"
-    },
-    "data": postData,
-  }).done(function (response) {
-    console.log(response);
-    return response;
-  });
-}
 
 function buildDashboard(emails, from, page) {
   console.log(emails);
@@ -179,7 +159,23 @@ function buildDashboard(emails, from, page) {
       if (element.data !== undefined) {
         campaigns = element.data.campaigns;
         if (campaigns.campaigns[0] != undefined) {
-          var campaign = GetCampaignByID(campaigns.campaigns[0].campaignId);
+          var campaign;
+          var postData = JSON.stringify({
+            "accessToken": $("#rt").val(),
+            "id":campaigns.campaigns[0].campaignId
+          });
+        
+          $.ajax({
+            "url": "/sfmc/GetCampaignID",
+            "method": "POST",
+            "async":false,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "data": postData,
+          }).done(function (response) {
+            campaign = response.body;
+          });
         }
       }
       table += '<tr>';
