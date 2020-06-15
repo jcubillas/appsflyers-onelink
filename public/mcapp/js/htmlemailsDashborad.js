@@ -1,3 +1,42 @@
+
+$(document).ready(() => {
+  const urlParams = getUrlParameters();
+  $('#rt').val(urlParams.refresh_token);
+  $('#eid').val(urlParams.enterpriseId);
+
+  replaceUrlTOkens($('#rt').val());
+
+  var campaigns;
+  var postData = JSON.stringify({
+    "accessToken": $("#rt").val()
+  });
+
+  $.ajax({
+    "url": "/sfmc/GetCampaigns",
+    "method": "POST",
+    "async": false,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": postData,
+  }).done(function (response) {
+    campaigns = response.body;
+  });
+
+  
+  
+function getCampaignById(id) {
+  var c;
+  for (let index = 0; index < campaigns.length; index++) {
+    const element = campaigns[index];
+    if (element.id = id) {
+      c = id;
+      break;
+    }
+  }
+  return c;
+}
+
 function GetHtmlEmails(accessToken) {
   // este metodo devuelve todos los emails html paste
   var postData = JSON.stringify({ "accessToken": accessToken })
@@ -231,45 +270,6 @@ function buildPaginator(allEmails) {
     }
   });
 }
-
-$(document).ready(() => {
-  const urlParams = getUrlParameters();
-  $('#rt').val(urlParams.refresh_token);
-  $('#eid').val(urlParams.enterpriseId);
-
-  replaceUrlTOkens($('#rt').val());
-
-  var campaigns;
-  var postData = JSON.stringify({
-    "accessToken": $("#rt").val()
-  });
-
-  $.ajax({
-    "url": "/sfmc/GetCampaigns",
-    "method": "POST",
-    "async": false,
-    "headers": {
-      "Content-Type": "application/json"
-    },
-    "data": postData,
-  }).done(function (response) {
-    campaigns = response.body;
-  });
-
-  
-  
-function getCampaignById(id) {
-  var c;
-  for (let index = 0; index < campaigns.length; index++) {
-    const element = campaigns[index];
-    if (element.id = id) {
-      c = id;
-      break;
-    }
-  }
-  return c;
-}
-
 
 
 function loadHtmlEmails(urlParams, from, page) {
