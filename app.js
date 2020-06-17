@@ -15,6 +15,7 @@ const dashboard = require('./routes/mcapp/dashboardSfmcReq');
 const appsflyers = require('./routes/mcapp/appsflyers');
 const InstallAppExchange = require('./routes/InstallAppExchange');
 const tokenConfiguration = require('./routes/mcapp/TokenConfiguration');
+const helmet = require("helmet");
 
 const app = express();
 // SET STORAGE
@@ -45,6 +46,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 if (app.get('env') === 'development') {
     app.use(errorhandler());
 }
+
+//Helmet js
+app.use(helmet());
 
 // HubExchange Routes
 
