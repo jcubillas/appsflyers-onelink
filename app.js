@@ -48,7 +48,7 @@ if (app.get('env') === 'development') {
 }
 
 //Helmet js
-//app.use(helmet());
+app.use(helmet.xssFilter());
 
 // HubExchange Routes
 
