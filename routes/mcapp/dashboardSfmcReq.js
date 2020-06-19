@@ -4,7 +4,14 @@
 /* eslint-disable consistent-return */
 const uuidv1 = require('uuid/v4');
 const sfmcHelper = require('../sfmcHelper');
-var xssEscape = require('xss-escape');
+
+function xssEscape(stringToEscape){
+    return stringToEscape
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, "&#x27;");
+}
 
 exports.loadDashboards = (req, resp) => {
     sfmcHelper.createSoapClient(req.body.refresh_token, (e, response) => {
@@ -123,7 +130,7 @@ exports.UpsertLink = (req, resp) => {
         },
         {
             Name: 'CustomParameters',
-            Value: req.body.CustomParameters,
+            Value: xssEscape(req.body.CustomParameters),
         },
         {
             Name: 'FullURL',
