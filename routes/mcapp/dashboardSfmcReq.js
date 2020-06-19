@@ -4,6 +4,7 @@
 /* eslint-disable consistent-return */
 const uuidv1 = require('uuid/v4');
 const sfmcHelper = require('../sfmcHelper');
+var xssEscape = require('xss-escape');
 
 exports.loadDashboards = (req, resp) => {
     sfmcHelper.createSoapClient(req.body.refresh_token, (e, response) => {
@@ -98,10 +99,10 @@ exports.UpsertLink = (req, resp) => {
         console.log(req.body);
         const Properties = [{
             Name: 'LinkName',
-            Value: req.body.linkName,
+            Value: xssEscape(req.body.linkName),
         }, {
             Name: 'BaseURL',
-            Value: req.body.baseUrl,
+            Value: UrlxssEscape(req.body.base),
         }, {
             Name: 'ContentsCount',
             Value: req.body.contentsCount === undefined ? 0 : req.body.contentsCount,
