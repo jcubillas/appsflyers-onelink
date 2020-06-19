@@ -102,7 +102,7 @@ exports.UpsertLink = (req, resp) => {
             Value: xssEscape(req.body.linkName),
         }, {
             Name: 'BaseURL',
-            Value: UrlxssEscape(req.body.base),
+            Value: xssEscape(req.body.baseUrl),
         }, {
             Name: 'ContentsCount',
             Value: req.body.contentsCount === undefined ? 0 : req.body.contentsCount,
