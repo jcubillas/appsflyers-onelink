@@ -5,6 +5,14 @@
 const uuidv1 = require('uuid/v4');
 const sfmcHelper = require('../sfmcHelper');
 
+function xssEscape(stringToEscape){
+    return stringToEscape
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, "&#x27;");
+}
+
 exports.loadDashboards = (req, resp) => {
     sfmcHelper.createSoapClient(req.body.refresh_token, (e, response) => {
         if (e) { return resp.status(500).end(e); }
@@ -15,8 +23,8 @@ exports.loadDashboards = (req, resp) => {
                 ClientIDs: {
                     ClientID: req.body.enterpriseId,
                 },
-                ObjectType: 'DataExtensionObject[Link]',
-                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
+                ObjectType: `DataExtensionObject[${process.env.LinkDataExtension}]`,
+                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status','JSONParameters', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
                 Filter: sfmcHelper.simpleFilter('Flag', 'equals', 1),
             },
         };
@@ -44,8 +52,8 @@ exports.getLinksCount = (req, resp) => {
                 ClientIDs: {
                     ClientID: req.body.enterpriseId,
                 },
-                ObjectType: 'DataExtensionObject[Link]',
-                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
+                ObjectType: `DataExtensionObject[${process.env.LinkDataExtension}]`,
+                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'JSONParameters', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
                 Filter: sfmcHelper.simpleFilter('Flag', 'equals', 1),
             },
         };
@@ -72,8 +80,8 @@ exports.getLinkByID = (req, resp) => {
                 ClientIDs: {
                     ClientID: req.body.enterpriseId,
                 },
-                ObjectType: 'DataExtensionObject[Link]',
-                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
+                ObjectType: `DataExtensionObject[${process.env.LinkDataExtension}]`,
+                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'JSONParameters', 'Parameters', 'CustomParameters', 'FullURL', 'Created', 'Modified'],
                 Filter: sfmcHelper.simpleFilter('LinkID', 'equals', req.body.LinkID),
             },
         };
@@ -94,13 +102,14 @@ exports.getLinkByID = (req, resp) => {
 exports.UpsertLink = (req, resp) => {
     sfmcHelper.createSoapClient(req.body.refresh_token, (e, response) => {
         if (e) { return resp.status(500).end(e); }
-
+        console.log("UpsertLink <br>");
+        console.log(req.body);
         const Properties = [{
             Name: 'LinkName',
-            Value: req.body.linkName,
+            Value: xssEscape(req.body.linkName),
         }, {
             Name: 'BaseURL',
-            Value: req.body.baseUrl,
+            Value: xssEscape(req.body.baseUrl),
         }, {
             Name: 'ContentsCount',
             Value: req.body.contentsCount === undefined ? 0 : req.body.contentsCount,
@@ -112,12 +121,16 @@ exports.UpsertLink = (req, resp) => {
             Value: 1,
         },
         {
+            Name: 'JSONParameters',
+            Value: JSON.stringify(req.body.JSONParameter),
+        },
+        {
             Name: 'Parameters',
             Value: req.body.Parameters,
         },
         {
             Name: 'CustomParameters',
-            Value: req.body.CustomParameters,
+            Value: xssEscape(req.body.CustomParameters),
         },
         {
             Name: 'FullURL',
@@ -132,7 +145,9 @@ exports.UpsertLink = (req, resp) => {
             Value: req.body.Modified,
         },
         ];
-        const UpdateRequest = sfmcHelper.UpdateRequestObject('Link', [{
+
+        console.log(Properties);
+        const UpdateRequest = sfmcHelper.UpdateRequestObject(process.env.LinkDataExtension, [{
             Name: 'LinkID',
             Value: req.body.LinkID === undefined ? uuidv1() : req.body.LinkID,
         }], Properties);

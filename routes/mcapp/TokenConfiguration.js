@@ -56,7 +56,7 @@ exports.UpsertAuthenticationSetting = (req, resp) => {
                 ClientIDs: {
                     ClientID: req.body.enterpriseId,
                 },
-                ObjectType: 'DataExtensionObject[TokenAuthentication]',
+                ObjectType:  `DataExtensionObject[${process.env.TokenAuthenticationDataExtension}]`,
                 Properties: ['Token', 'Authorized'],
                 Filter: sfmcHelper.simpleFilter('Flag', 'equals', 1),
             },
@@ -74,7 +74,7 @@ exports.UpsertAuthenticationSetting = (req, resp) => {
                     Value: req.body.Authorized === undefined ? false : req.body.Authorized,
                 },
                 ];
-                const UpdateRequest = sfmcHelper.UpdateRequestObject('TokenAuthentication', [{
+                const UpdateRequest = sfmcHelper.UpdateRequestObject(process.env.TokenAuthenticationDataExtension, [{
                     Name: 'Token',
                     Value: req.body.Token,
                 }], Properties);
@@ -112,7 +112,7 @@ exports.UpdateSetting = (req, resp) => {
             Value: true,
         },
         ];
-        const UpdateRequest = sfmcHelper.UpdateRequestObject('TokenAuthentication', [{
+        const UpdateRequest = sfmcHelper.UpdateRequestObject(process.env.TokenAuthenticationDataExtension, [{
             Name: 'Token',
             Value: req.body.Token,
         }], Properties);
@@ -143,7 +143,7 @@ exports.ReadSettings = (req, resp) => {
                 ClientIDs: {
                     ClientID: req.body.enterpriseId,
                 },
-                ObjectType: 'DataExtensionObject[TokenAuthentication]',
+                ObjectType:  `DataExtensionObject[${process.env.TokenAuthenticationDataExtension}]`,
                 Properties: ['Token', 'Authorized'],
                 Filter: sfmcHelper.simpleFilter('Flag', 'equals', 1),
             },

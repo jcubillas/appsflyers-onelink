@@ -122,8 +122,8 @@ exports.GetLinks = (req, resp) => {
                 ClientIDs: {
                     ClientID: req.query.eid,
                 },
-                ObjectType: 'DataExtensionObject[Link]',
-                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'Parameters', 'CustomParameters','FullURL', 'Modified'],
+                ObjectType: `DataExtensionObject[${process.env.LinkDataExtension}]`,
+                Properties: ['LinkID', 'LinkName', 'BaseURL', 'ContentsCount', 'Status', 'JSONParameters', 'Parameters', 'CustomParameters', 'FullURL', 'Modified'],
                 Filter: sfmcHelper.simpleFilter('Flag', 'equals', 1),
             },
         };
@@ -162,7 +162,7 @@ exports.UpsertImageRow = (req, resp) => {
             Name: 'Height',
             Value: req.body.Height,
         }];
-        const UpdateRequest = sfmcHelper.UpdateRequestObject('ImageContentBlock', [{
+        const UpdateRequest = sfmcHelper.UpdateRequestObject(process.env.ImageContentBlockDataExtension, [{
             Name: 'ContentBlockID',
             Value: req.body.ContentBlockID === undefined ? uuidv1() : req.body.ContentBlockID,
         }], Properties);
@@ -233,7 +233,7 @@ exports.UpsertButtonRow = (req, resp) => {
             Name: 'MarginLeft',
             Value: req.body.marginLeft,
         }];
-        const UpdateRequest = sfmcHelper.UpdateRequestObject('ButtonContentBlock', [{
+        const UpdateRequest = sfmcHelper.UpdateRequestObject(process.env.ButtonContentBlockDataExtension, [{
             Name: 'ContentBlockID',
             Value: req.body.contentBlockID === undefined ? uuidv1() : req.body.contentBlockID,
         }], Properties);
@@ -255,7 +255,7 @@ exports.UpsertButtonRow = (req, resp) => {
 };
 exports.UpsertLink = (req, resp) => {
 
-    console.log("upsert link body request",req.body);
+    console.log("upsert link body request", req.body);
     sfmcHelper.createSoapClient(req.body.refresh_token, (e, response) => {
         if (e) { return resp.status(500).end(e); }
 
@@ -264,7 +264,7 @@ exports.UpsertLink = (req, resp) => {
             Value: parseInt(req.body.contentsCount) + 1,
         }];
 
-        const UpdateRequest = sfmcHelper.UpdateRequestObject('Link', [{
+        const UpdateRequest = sfmcHelper.UpdateRequestObject(process.env.LinkDataExtension, [{
             Name: 'LinkID',
             Value: req.body.LinkID === undefined ? uuidv1() : req.body.LinkID,
         }], Properties);
@@ -283,4 +283,156 @@ exports.UpsertLink = (req, resp) => {
                 return resp.status(200).semd(body);
             }).catch((err) => { return resp.status(500).send(err); });
     });
+};
+function getHtmlOnlyFilter() {
+    return {
+        "page": {
+            "page": 1,
+            "pageSize": 50
+        },
+        "query": {
+            "leftOperand": {
+                "property": "assetType.id",
+                "simpleOperator": "equal",
+                "value": 208
+            },
+            "logicalOperator": "AND",
+            "rightOperand": {
+                "property": "assetType.name",
+                "simpleOperator": "equal",
+                "value": "htmlemail"
+            }
+        },
+        "sort": [
+            {
+                "property": "id",
+                "direction": "ASC"
+            }
+        ]
+    }
+}
+exports.GetContentBuilderEmails = (req, resp) => {
+    sfmcHelper.refreshToken(req.body.accessToken).then((refreshTokenbody) => {
+        const filter = getHtmlOnlyFilter();
+        console.clear();
+        console.log(refreshTokenbody);
+
+        request({
+            url: `${process.env.restEndpoint}asset/v1/content/assets/query`,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${refreshTokenbody.access_token}`,
+            },
+            body: JSON.stringify(filter)
+        }, (err, _response, body) => {
+            console.log(err);
+            console.log(body);
+            if (err) { return resp.status(401).send(err); }
+
+            var response = {
+                refresh_token: refreshTokenbody.refresh_token,
+                body: JSON.parse(body)
+            }
+            // eslint-disable-next-line prefer-const
+            return resp.status(200).send(response);
+        });
+    })
+};
+
+exports.UpdateEmail = (req, resp) => {
+
+
+    sfmcHelper.refreshToken(req.body.accessToken).then((refreshTokenbody) => {
+        request({
+            url: `${process.env.restEndpoint}asset/v1/content/assets/${req.body.id}`,
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${refreshTokenbody.access_token}`,
+            },
+            body: JSON.stringify(req.body.email)
+        }, (err, _response, body) => {
+            if (err) { return resp.status(401).send(err); }
+            console.log(JSON.parse(body));
+            var response = {
+                refresh_token: refreshTokenbody.refresh_token,
+                body: body
+            }
+            // eslint-disable-next-line prefer-const
+            return resp.status(200).send(response);
+        });
+    })
+
+};
+exports.GetEmailByID = (req, resp) => {
+
+    sfmcHelper.refreshToken(req.body.accessToken).then((refreshTokenbody) => {
+        request({
+            url: `${process.env.restEndpoint}asset/v1/content/assets/${req.body.id}`,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${refreshTokenbody.access_token}`,
+            },
+            body: JSON.stringify(filter)
+        }, (err, _response, body) => {
+            if (err) { return resp.status(401).send(err); }
+            console.log(JSON.parse(body));
+            var response = {
+                refresh_token: refreshTokenbody.refresh_token,
+                body: body
+            }
+            // eslint-disable-next-line prefer-const
+            return resp.status(200).send(response);
+        });
+    })
+};
+
+exports.GetCampaigns = (req, resp) => {
+
+    console.log(req);
+    sfmcHelper.refreshToken(req.body.accessToken)
+        .then((refreshTokenbody) => {
+            console.log(refreshTokenbody);
+            request({
+                url: `${process.env.restEndpoint}hub/v1/campaigns`,
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${refreshTokenbody.access_token}`,
+                }
+            }, (err, _response, body) => {
+                console.log(err)
+                if (err) { return resp.status(401).send(err); }
+                console.log(JSON.parse(body));
+                var response = {
+                    refresh_token: refreshTokenbody.refresh_token,
+                    body: JSON.parse(body)
+                }
+                // eslint-disable-next-line prefer-const
+                return resp.status(200).send(response);
+            });
+        })
+};
+
+exports.GetAllContentBuilderAssets = (req, resp) => {
+    sfmcHelper.refreshToken(req.body.accessToken).then((refreshTokenbody) => {
+        request({
+            url: `${process.env.restEndpoint}asset/v1/content/assets/`,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${refreshTokenbody.access_token}`,
+            }
+        }, (err, _response, body) => {
+            if (err) { return resp.status(401).send(err); }
+            var response = {
+                refresh_token: refreshTokenbody.refresh_token,
+                body: body
+            }
+            // eslint-disable-next-line prefer-const
+            return resp.status(200).send(response);
+        });
+    })
 };

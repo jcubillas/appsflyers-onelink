@@ -4,6 +4,12 @@
 /* eslint-disable max-len */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-undef */
+
+var JSONParameter = {
+    AttributtionLinks: [],
+    CustomParameters: []
+}
+
 function getUrlParameters() {
     const url = new URL(window.location.href);
     const urlParams = {
@@ -19,6 +25,22 @@ function getUrlParameters() {
 }
 
 
+
+function upsertJSONCustomParameters(rule){
+    for (let index = 0; index < JSONParameter.CustomParameters.length; index++) {
+        const element = JSONParameter.CustomParameters[index];
+        if(element.name == rule.name){
+            JSONParameter.CustomParameters[index].value = rule.value;
+            isNew = false;
+            break;
+        }
+    }
+
+    if(isNew){
+        JSONParameter.CustomParameters.push({name: name, value: value})
+    }
+}
+
 function buildQueryString() {
     let rules = [];
     const json = $('#rl').val();
@@ -33,6 +55,7 @@ function buildQueryString() {
     // eslint-disable-next-line no-plusplus
     for (let index = 0; index < rules.length; index++) {
         const element = rules[index];
+    
         qs += `${element.name}=`;
         if (element.value !== undefined && element.value !== null && element.value !== '') {
             if (element.value.startsWith("'%%")) {
@@ -69,9 +92,13 @@ function overrideParamsValues(name, value, isCustomOnblur = false) {
         if (alreadyExist === false) {
             const isAttributionLink = getOption(name);
             if (isAttributionLink.Name !== undefined) {
+                JSONParameter.AttributtionLinks.push({ index: rules.length, name: name, value: value, canDelete: true, selectId: `select${rules.length}`, inputValueId: name, isCustom: false, customValue: null })
+
                 rules.push(newRuleObj(rules.length, name, value));
             } else if (isCustomOnblur === false) {
+
                 const customParams = `${$('#customParameters').val()}&${name}=${value}`;
+              upsertJSONCustomParameters({name:name, value:value });
                 $('#customParameters').val(customParams);
             }
         }
@@ -131,8 +158,10 @@ function dinamicInputsOnBlur(element) {
         if (rules[index].name === element[0].id) {
             if (element[0].value !== undefined && element[0].value !== '') {
                 rules[index].value = element[0].value;
+                JSONParameter.AttributtionLinks[index].value = element[0].value;
             } else {
                 rules[index].value = 'Enter Value';
+                JSONParameter.AttributtionLinks[index].value = 'Enter Value';
             }
             rule = rules[index];
             break;
@@ -240,7 +269,7 @@ function setSelectOptions(restantes = false) {
         selectOptions.push({ Name: 'Campaign', Value: 'c' });
     }
     selectOptions.push({ Name: 'Adset', Value: 'af_adset' });
-    selectOptions.push({ Name: 'Ad Name', Value: 'af_ad' });    
+    selectOptions.push({ Name: 'Ad Name', Value: 'af_ad' });
     selectOptions.push({ Name: 'Sub Parameter 1', Value: 'af_sub1' });
     selectOptions.push({ Name: 'Sub Parameter 2', Value: 'af_sub2' });
     selectOptions.push({ Name: 'Sub Parameter 3', Value: 'af_sub3' });
@@ -358,6 +387,23 @@ function newRuleObj(index, name, value, canDelete = false, isCustom = false, cus
     };
 }
 
+
+function removeDynamicParameters(element) {
+    
+    let counter = 0;
+    var array = JSONParameter.AttributtionLinks;
+    JSON.AttributtionLinks = [];
+    for (let i = 0; i < array.length; i++) {
+        const e = array[i];
+        if (e.index !== element.index) {
+            e.index = counter;
+            e.selectId = `select${counter}`;
+            JSON.AttributtionLinks.push(e);
+            counter++;
+        }
+    }   
+}
+
 function parseQuerystringParameters(url) {
     const array = url.split('?');
     if (array.length > 0) {
@@ -407,7 +453,7 @@ function addEventsForComponent(element, array) {
         }
 
         array[element.index] = element;
-
+        JSONParameter.AttributtionLinks[element.index] = element;
         addRules(array);
         $(`#${element.selectId}`).val(selectedOptionValue);
         $(`#${element.name}`).attr('readonly', false);
@@ -435,6 +481,7 @@ function addEventsForComponent(element, array) {
         // const option = $(`#${element.selectId}`).val();
         // selectOptions.push(getOption(option));
         aux = deleteParameter(array, element);
+        removeDynamicParameters(element);
         $('#rules').html('');
         array = addRules(aux);
         fillFullUrl();
@@ -460,7 +507,7 @@ function initializeRules() {
 }
 function removeAttrParamsFromCustomParams(customparams) {
     if (!customparams.startsWith('&')) { customparams = `&${customparams}`; }
-
+    JSONParameter.CustomParameters = [];
     params = customparams.split('&');
     let json = $('#rl').val();
     let customInputValue = '';
@@ -483,7 +530,7 @@ function removeAttrParamsFromCustomParams(customparams) {
             }
 
             if (isCustom === true) {
-                console.log(customInputValue.indexOf(`${queryParam[0]}=`));
+                JSONParameter.CustomParameters.push({name:queryParam[0],value:queryParam[1]})
                 const newParam = `${queryParam[0]}=${queryParam[1]}`;
                 if (customInputValue.indexOf(`${queryParam[0]}=`) > 0) {
                     const oldParam = customInputValue.substring(customInputValue.indexOf(`${queryParam[0]}=`), customInputValue.length);
@@ -513,6 +560,8 @@ function parseParameters() {
 function fillUi(data) {
     $('#linkName').val(data.LinkName);
     $('#baseURL').val(data.BaseURL);
+    $('#JSONParameter').val(data.JSONParameter);
+    JSONParameter = JSON.parse(data.JSONParameters);
     if (data.CustomParameters !== undefined || data.CustomParameters !== '') {
         $('#customParameters').val(data.CustomParameters);
     }
@@ -529,7 +578,11 @@ function fillUi(data) {
 
     for (let index = 0; index < arrayParams.length; index++) {
         const element = arrayParams[index].split('=');
-        if (element[0] !== 'pid' && element[0] !== 'af_channel' && element[0] !== 'c' && element[0] !== 'is_retargeting' && element[0] !== 'Select parameter') { rules.push(newRuleObj(index, element[0], element[1], true)); } else { rules.push(newRuleObj(index, element[0], element[1], false)); }
+        if (element[0] !== 'pid' && element[0] !== 'af_channel' && element[0] !== 'c' && element[0] !== 'is_retargeting' && element[0] !== 'Select parameter') {
+            rules.push(newRuleObj(index, element[0], element[1], true));
+        } else {
+            rules.push(newRuleObj(index, element[0], element[1], false));
+        }
     }
 
     addRules(rules);
@@ -667,6 +720,7 @@ $(document).ready(() => {
             baseUrl: $('#baseURL').val(),
             status: 'Active',
             Parameters: buildQueryString(),
+            JSONParameter: JSONParameter,
             CustomParameters: customParameters,
             Modified: new Date().toISOString(),
         };

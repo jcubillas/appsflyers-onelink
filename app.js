@@ -15,6 +15,7 @@ const dashboard = require('./routes/mcapp/dashboardSfmcReq');
 const appsflyers = require('./routes/mcapp/appsflyers');
 const InstallAppExchange = require('./routes/InstallAppExchange');
 const tokenConfiguration = require('./routes/mcapp/TokenConfiguration');
+const helmet = require("helmet");
 
 const app = express();
 // SET STORAGE
@@ -46,6 +47,9 @@ if (app.get('env') === 'development') {
     app.use(errorhandler());
 }
 
+//Helmet js
+app.use(helmet.xssFilter());
+
 // HubExchange Routes
 
 app.get('/login', routes.login);
@@ -76,11 +80,21 @@ app.get('/sfmc/GetLinks', sfmc.GetLinks);
 app.post('/sfmc/UpsertLink', sfmc.UpsertLink);
 app.post('/sfmc/SaveImage', upload.single('file'), sfmc.SaveImage);
 app.post('/sfmc/GetImageStatus', sfmc.GetImageStatus);
+app.post('/sfmc/GetContentBuilderEmails', sfmc.GetContentBuilderEmails);
+app.post('/sfmc/UpdateEmail', sfmc.UpdateEmail);
+app.post('/sfmc/GetEmailByID', sfmc.GetEmailByID);
+app.post('/sfmc/GetCampaigns', sfmc.GetCampaigns);
+app.post('/sfmc/GetAllContentBuilderAssets', sfmc.GetAllContentBuilderAssets);
+
+
 
 app.get('/dashboard/home', (_request, response) => {
     response.render('mcapp/DashboardHome.html');
 });
 
+app.get('/htmlemails/home', (_request, response) => {
+    response.render('mcapp/htmlEmailsDashboard.html');
+});
 app.get('/validate', (_request, response) => {
     response.render('mcapp/configureToken.html');
 });
@@ -92,7 +106,6 @@ app.get('/dashboard/create', (_request, response) => {
 app.get('/dashboard/edit', (_request, response) => {
     response.render('mcapp/Edit.html');
 });
-
 
 app.post('/LoadDashboards', dashboard.loadDashboards);
 app.post('/UpsertLink', dashboard.UpsertLink);
