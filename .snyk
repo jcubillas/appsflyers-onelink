@@ -22,6 +22,8 @@ patch:
         patched: '2020-06-23T00:31:11.776Z'
     - gulp > vinyl-fs > glob-watcher > gaze > globule > glob > minimatch:
         patched: '2020-06-23T00:31:11.776Z'
+    - gulp > vinyl-fs > glob-stream > minimatch:
+        patched: '2020-06-23T00:52:55.150Z'
   'npm:uglify-js:20151024':
     - require > uglify-js:
         patched: '2020-06-23T00:31:11.776Z'
