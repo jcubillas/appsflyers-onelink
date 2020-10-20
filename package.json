@@ -39,7 +39,7 @@
     "express": "^4.15.4",
     "file-loader": "^2.0.0",
     "fs": "0.0.1-security",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-bower": "0.0.14",
     "gulp-htmlmin": "^4.0.0",
     "gulp-javascript-obfuscator": "^1.1.4",
