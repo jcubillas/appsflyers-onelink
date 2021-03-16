@@ -59,7 +59,7 @@
     "save": "^2.4.0",
     "set-cookie-parser": "^2.4.1",
     "simple-encryptor": "^2.0.0",
-    "soap": "^0.30.0",
+    "soap": "^0.35.0",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
     "uuid": "^3.3.3",
